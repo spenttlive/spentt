@@ -1,0 +1,14 @@
+.greeting-line {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.4;
+  max-width: 240px;
+}
+.greeting-bold {
+  font-family: var(--fh);
+  font-weight: 600;
+  color: var(--text);
+}
+.greeting-rest {
+  color: var(--text3);
+}

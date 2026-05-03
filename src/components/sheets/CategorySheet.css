@@ -1,0 +1,22 @@
+.cat-sheet-inner { max-height: 70vh; overflow-y: auto; }
+.sheet-search-wrap { padding: 0 16px 12px; }
+.sheet-search {
+  width: 100%; background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 10px 14px; font-size: 14px; color: var(--text);
+  outline: none; transition: border-color 0.2s;
+}
+.sheet-search:focus { border-color: var(--accent); background: #fff; }
+.sheet-search::placeholder { color: var(--text3); }
+.cat-group { padding: 0 16px 8px; }
+.cat-group-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; padding: 0 4px; }
+.cat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 4px; }
+.cat-cell {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 12px 8px; border-radius: 14px; cursor: pointer;
+  transition: all 0.15s; border: 1.5px solid transparent; background: var(--bg);
+}
+.cat-cell:active { transform: scale(0.93); }
+.cat-cell.selected { border-color: currentColor; background: #fff; }
+.cat-cell-emoji { font-size: 24px; line-height: 1; }
+.cat-cell-name  { font-size: 11px; font-weight: 500; color: var(--text2); text-align: center; line-height: 1.2; }
+.no-results { text-align: center; padding: 24px; font-size: 14px; color: var(--text3); }

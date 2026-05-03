@@ -1,0 +1,102 @@
+.wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 16px;
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.inputDesc {
+  flex: 1;
+  background: var(--bg);
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputDesc::placeholder { color: var(--text3); }
+.inputDesc:focus { border-color: var(--accent); background: #fff; }
+
+.inputAmt {
+  width: 100px;
+  background: var(--bg);
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 11px 12px;
+  font-size: 14px;
+  font-family: var(--fh);
+  font-weight: 600;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputAmt::placeholder { color: var(--text3); font-weight: 400; font-family: var(--fb); }
+.inputAmt:focus { border-color: var(--accent); background: #fff; }
+
+.metaRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.metaTrigger {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.metaTrigger:active { border-color: var(--accent); }
+
+.metaIcon { font-size: 16px; flex-shrink: 0; }
+
+.metaContent { flex: 1; min-width: 0; }
+
+.metaLabel {
+  font-size: 9px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.metaVal {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addBtn {
+  width: 100%;
+  padding: 13px;
+  background: var(--accent);
+  border: none;
+  border-radius: 14px;
+  font-family: var(--fh);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.addBtn:active { transform: scale(0.97); }

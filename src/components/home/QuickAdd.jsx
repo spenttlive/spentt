@@ -1,0 +1,91 @@
+import { useState } from 'react'
+import { ALL_CATS } from '../../data/categories'
+import { today, daysAgo, dateKey, fmtDateShort } from '../../utils/dateHelpers'
+import CategorySheet from '../sheets/CategorySheet'
+import DateSheet from '../sheets/DateSheet'
+import './QuickAdd.css'
+
+export default function QuickAdd({ onAdd, showToast }) {
+  const [desc, setDesc] = useState('')
+  const [amount, setAmount] = useState('')
+  const [selectedCat, setSelectedCat] = useState(ALL_CATS[0])
+  const [selectedDate, setSelectedDate] = useState(today())
+  const [selectedDateLabel, setSelectedDateLabel] = useState('Today')
+  const [showCatSheet, setShowCatSheet] = useState(false)
+  const [showDateSheet, setShowDateSheet] = useState(false)
+
+  const handleAdd = () => {
+    if (!desc.trim()) { showToast('Enter what you spent on'); return }
+    const amt = parseFloat(amount)
+    if (isNaN(amt) || amt <= 0) { showToast('Enter a valid amount'); return }
+    const ts = new Date(selectedDate)
+    ts.setHours(new Date().getHours(), new Date().getMinutes())
+    onAdd({ desc: desc.trim(), amount: amt, cat: selectedCat.name, ts })
+    setDesc('')
+    setAmount('')
+    setSelectedDate(today())
+    setSelectedDateLabel('Today')
+    showToast(`${selectedCat.emoji} Added ✓`)
+  }
+
+  return (
+    <>
+      <div className="qa-card">
+        <div className="input-row">
+          <input
+            className="input-desc"
+            placeholder="What did you spend on?"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && document.getElementById('qa-amount')?.focus()}
+          />
+          <input
+            id="qa-amount"
+            className="input-amt"
+            placeholder="₹ 0"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
+          />
+        </div>
+
+        <div className="meta-row">
+          <div className="meta-trigger" onClick={() => setShowCatSheet(true)}>
+            <div className="meta-trigger-icon">{selectedCat.emoji}</div>
+            <div className="meta-trigger-content">
+              <div className="meta-trigger-label">Category</div>
+              <div className="meta-trigger-val">{selectedCat.name}</div>
+            </div>
+          </div>
+          <div className="meta-trigger" onClick={() => setShowDateSheet(true)}>
+            <div className="meta-trigger-icon">📅</div>
+            <div className="meta-trigger-content">
+              <div className="meta-trigger-label">Date</div>
+              <div className="meta-trigger-val">{selectedDateLabel}</div>
+            </div>
+          </div>
+        </div>
+
+        <button className="add-btn" onClick={handleAdd}>
+          + Add expense
+        </button>
+      </div>
+
+      <CategorySheet
+        open={showCatSheet}
+        selected={selectedCat}
+        onSelect={(cat) => { setSelectedCat(cat); setShowCatSheet(false) }}
+        onClose={() => setShowCatSheet(false)}
+      />
+
+      <DateSheet
+        open={showDateSheet}
+        selected={selectedDate}
+        label={selectedDateLabel}
+        onSelect={(date, label) => { setSelectedDate(date); setSelectedDateLabel(label) }}
+        onClose={() => setShowDateSheet(false)}
+      />
+    </>
+  )
+}
