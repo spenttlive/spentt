@@ -1,19 +1,19 @@
 import './BottomNav.css'
 
 const NAV_ITEMS = [
-  { id: 'home',    icon: '🏠', label: 'Home'    },
-  { id: 'history', icon: '📋', label: 'History' },
-  { id: 'fab',     icon: '+',  label: null       },
-  { id: 'receipt', icon: '🧾', label: 'Receipt' },
-  { id: 'settings',icon: '⚙️', label: 'Settings'},
+  { id: 'home',     icon: '🏠', label: 'Home'     },
+  { id: 'history',  icon: '📋', label: 'History'  },
+  { id: 'fab',      icon: '+',  label: null        },
+  { id: 'receipt',  icon: '🧾', label: 'Receipt'  },
+  { id: 'settings', icon: '⚙️', label: 'Settings' },
 ]
 
-export default function BottomNav({ current, goTo }) {
+export default function BottomNav({ current, goTo, onAddPress }) {
   return (
     <div className="bnav">
       {NAV_ITEMS.map((item) =>
         item.id === 'fab' ? (
-          <button key="fab" className="fab" onClick={() => goTo('home')}>
+          <button key="fab" className="fab" onClick={onAddPress}>
             +
           </button>
         ) : (

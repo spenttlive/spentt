@@ -1,14 +1,41 @@
+import { useState } from 'react'
 import Logo from '../components/home/Logo'
 import Greeting from '../components/home/Greeting'
 import TotalCard from '../components/home/TotalCard'
 import CardStack from '../components/home/CardStack'
-import QuickAdd from '../components/home/QuickAdd'
 import ExpenseItem from '../components/home/ExpenseItem'
 import ReceiptTeaser from '../components/home/ReceiptTeaser'
 import PWABanner from '../components/home/PWABanner'
+import { dateKey, today } from '../utils/dateHelpers'
 import './HomeScreen.css'
 
+const PERIODS = [
+  { id: 'today',   label: 'Today'     },
+  { id: 'week',    label: 'This week' },
+  { id: 'month',   label: 'This month'},
+]
+
 export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa }) {
+  const [period, setPeriod] = useState('today')
+
+  const now = new Date()
+  const t = today()
+  const dow = now.getDay()
+
+  const filtered = expenses.filter((e) => {
+    const d = new Date(e.ts)
+    d.setHours(0, 0, 0, 0)
+    if (period === 'today') return dateKey(d) === dateKey(t)
+    if (period === 'week') {
+      const ws = new Date(t); ws.setDate(t.getDate() - dow)
+      const we = new Date(ws); we.setDate(ws.getDate() + 6)
+      return d >= ws && d <= we
+    }
+    if (period === 'month') return d.getMonth() === t.getMonth() && d.getFullYear() === t.getFullYear()
+    return true
+  })
+
+  const periodTotal = filtered.reduce((s, e) => s + e.amount, 0)
   const topCat = cardData[0]?.cat || '—'
 
   return (
@@ -23,14 +50,21 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
         </div>
       </div>
 
-      <div className="period-row">
-        <div className="period-pill">
-          <div className="live-dot" />
-          This week ▾
-        </div>
+      {/* Period pills */}
+      <div className="period-pills-row">
+        {PERIODS.map((p) => (
+          <div
+            key={p.id}
+            className={`period-pill ${period === p.id ? 'active' : ''}`}
+            onClick={() => setPeriod(p.id)}
+          >
+            {period === p.id && <div className="live-dot" />}
+            {p.label}
+          </div>
+        ))}
       </div>
 
-      <TotalCard total={totalSpent} txCount={expenses.length} avg={avgPerTx} />
+      <TotalCard total={periodTotal} txCount={filtered.length} avg={filtered.length ? Math.round(periodTotal / filtered.length) : 0} />
 
       <PWABanner show={pwa.showBanner} onInstall={pwa.install} onDismiss={pwa.dismiss} />
 
@@ -41,18 +75,17 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
 
       <CardStack cardData={cardData} showToast={showToast} />
 
-      <div className="qa-wrap">
-        <QuickAdd onAdd={addExpense} showToast={showToast} />
-      </div>
-
       <div className="recent-wrap">
         <div className="sec-hd" style={{ padding: '0 4px', marginBottom: 10 }}>
           <div className="sec-title">Recent</div>
           <div className="sec-link" onClick={() => goTo('history')}>See all</div>
         </div>
-        {expenses.slice(0, 5).map((e, i) => (
-          <ExpenseItem key={e.id} expense={e} style={{ animationDelay: `${i * 0.05}s` }} />
+        {filtered.slice(0, 5).map((e) => (
+          <ExpenseItem key={e.id} expense={e} />
         ))}
+        {filtered.length === 0 && (
+          <div className="empty-state">Nothing logged {period === 'today' ? 'today' : period === 'week' ? 'this week' : 'this month'} yet.</div>
+        )}
       </div>
 
       <ReceiptTeaser
