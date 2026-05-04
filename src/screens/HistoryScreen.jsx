@@ -55,7 +55,7 @@ function MiniCalendar({ expenses, selected, calDate, onSelectDay, onShiftMonth }
   )
 }
 
-export default function HistoryScreen({ expenses, goTo }) {
+export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
   const [view, setView] = useState('daily')
   const [selectedDay, setSelectedDay] = useState(today())
   const [calDate, setCalDate] = useState(new Date())
@@ -135,7 +135,7 @@ export default function HistoryScreen({ expenses, goTo }) {
                 <span style={{ fontFamily: 'var(--fh)', fontSize: 13, fontWeight: 600 }}>₹{dayTotal.toLocaleString()}</span>
               </div>
               <div className="hist-list-wrap">
-                {items.map((e) => <ExpenseItem key={e.id} expense={e} />)}
+                {items.map((e) => <ExpenseItem key={e.id} expense={e} onTap={onExpenseTap} />)}
               </div>
             </div>
           )

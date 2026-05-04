@@ -10,6 +10,7 @@ import ProfileScreen from './screens/ProfileScreen'
 import BottomNav from './components/BottomNav'
 import Toast from './components/Toast'
 import AddSheet from './components/home/AddSheet'
+import EditSheet from './components/home/EditSheet'
 import './App.css'
 
 export const USER = { name: 'Kush', email: 'kush@gmail.com', dailyAvg: 895 }
@@ -18,6 +19,7 @@ export default function App() {
   const [screen, setScreen] = useState('home')
   const [toast, setToast] = useState(null)
   const [showAddSheet, setShowAddSheet] = useState(false)
+  const [editingExpense, setEditingExpense] = useState(null)
   const expensesState = useExpenses()
   const pwa = usePWA()
 
@@ -33,7 +35,15 @@ export default function App() {
     setShowAddSheet(true)
   }
 
-  const ctx = { goTo, showToast, user: USER, pwa, ...expensesState }
+  const handleExpenseTap = (expense) => {
+    setEditingExpense(expense)
+  }
+
+  const ctx = {
+    goTo, showToast, user: USER, pwa,
+    onExpenseTap: handleExpenseTap,
+    ...expensesState
+  }
 
   return (
     <div className="app-shell">
@@ -54,6 +64,15 @@ export default function App() {
           setShowAddSheet(false)
           showToast('Added ✓')
         }}
+        showToast={showToast}
+      />
+
+      <EditSheet
+        open={!!editingExpense}
+        expense={editingExpense}
+        onClose={() => setEditingExpense(null)}
+        onSave={expensesState.editExpense}
+        onDelete={expensesState.deleteExpense}
         showToast={showToast}
       />
 

@@ -19,3 +19,9 @@
 .exp-right { text-align: right; flex-shrink: 0; }
 .exp-amt   { font-family: var(--fh); font-size: 15px; font-weight: 700; }
 .exp-time  { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.exp-edit-hint {
+  font-size: 18px;
+  color: var(--text3);
+  flex-shrink: 0;
+  margin-left: 4px;
+}

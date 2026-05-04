@@ -15,7 +15,7 @@ const PERIODS = [
   { id: 'month',   label: 'This month'},
 ]
 
-export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa }) {
+export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa, onExpenseTap }) {
   const [period, setPeriod] = useState('today')
 
   const now = new Date()
@@ -81,7 +81,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
           <div className="sec-link" onClick={() => goTo('history')}>See all</div>
         </div>
         {filtered.slice(0, 5).map((e) => (
-          <ExpenseItem key={e.id} expense={e} />
+          <ExpenseItem key={e.id} expense={e} onTap={onExpenseTap} />
         ))}
         {filtered.length === 0 && (
           <div className="empty-state">Nothing logged {period === 'today' ? 'today' : period === 'week' ? 'this week' : 'this month'} yet.</div>

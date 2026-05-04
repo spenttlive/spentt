@@ -5,15 +5,15 @@ export function useExpenses() {
   const [expenses, setExpenses] = useState(SAMPLE_EXPENSES)
 
   const addExpense = useCallback(({ desc, amount, cat, ts }) => {
-    const newExp = {
-      id: Date.now(),
-      desc,
-      amount,
-      cat,
-      ts: ts || new Date(),
-    }
+    const newExp = { id: Date.now(), desc, amount, cat, ts: ts || new Date() }
     setExpenses((prev) => [newExp, ...prev])
     return newExp
+  }, [])
+
+  const editExpense = useCallback((id, updates) => {
+    setExpenses((prev) =>
+      prev.map((e) => (e.id === id ? { ...e, ...updates } : e))
+    )
   }, [])
 
   const deleteExpense = useCallback((id) => {
@@ -31,12 +31,9 @@ export function useExpenses() {
   const cardData = Object.entries(categoryTotals)
     .sort((a, b) => b[1] - a[1])
     .map(([cat, amt], i) => ({
-      cat,
-      amt,
-      pct: Math.round((amt / totalSpent) * 100),
-      rank: i,
-      items: expenses.filter((e) => e.cat === cat),
+      cat, amt, pct: Math.round((amt / totalSpent) * 100),
+      rank: i, items: expenses.filter((e) => e.cat === cat),
     }))
 
-  return { expenses, addExpense, deleteExpense, totalSpent, avgPerTx, cardData }
+  return { expenses, addExpense, editExpense, deleteExpense, totalSpent, avgPerTx, cardData }
 }
