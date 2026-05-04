@@ -11,17 +11,6 @@
   --fb: 'DM Sans', sans-serif;
 }
 
-[data-theme="dark"] {
-  --bg: #0F0D0A;
-  --card: #1A1713;
-  --text: #F5EFE6;
-  --text2: #B5A898;
-  --text3: #7A6E63;
-  --accent: #E8623A;
-  --accent2: #F5A623;
-  --border: rgba(255, 255, 255, 0.08);
-}
-
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 body {
@@ -31,9 +20,12 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
-  transition: background 0.3s, color 0.3s;
 }
 
-#root { display: flex; justify-content: center; }
+#root {
+  display: flex;
+  justify-content: center;
+}
+
 button { font-family: var(--fb); cursor: pointer; }
 input  { font-family: var(--fb); }
