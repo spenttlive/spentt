@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useExpenses } from './hooks/useExpenses'
 import { usePWA } from './hooks/usePWA'
+import { useDarkMode } from './hooks/useDarkMode'
 import HomeScreen from './screens/HomeScreen'
 import HistoryScreen from './screens/HistoryScreen'
 import ReceiptScreen from './screens/ReceiptScreen'
@@ -22,6 +23,7 @@ export default function App() {
   const [editingExpense, setEditingExpense] = useState(null)
   const expensesState = useExpenses()
   const pwa = usePWA()
+  const { dark, toggle: toggleDark } = useDarkMode()
 
   const goTo = (s) => { setScreen(s); window.scrollTo(0, 0) }
 
@@ -42,6 +44,7 @@ export default function App() {
   const ctx = {
     goTo, showToast, user: USER, pwa,
     onExpenseTap: handleExpenseTap,
+    dark, toggleDark,
     ...expensesState
   }
 
