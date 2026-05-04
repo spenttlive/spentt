@@ -22,7 +22,13 @@ function MiniCalendar({ expenses, selected, calDate, onSelectDay, onShiftMonth }
   }
   for (let d = 1; d <= daysInMonth; d++) {
     const dt = new Date(y, m, d)
-    cells.push({ day: d, thisMonth: true, date: dt, key: dateKey(dt), isToday: dateKey(dt) === dateKey(t), isSelected: dateKey(dt) === dateKey(selected), hasSpend: spendDays.has(dateKey(dt)) })
+    cells.push({
+      day: d, thisMonth: true, date: dt,
+      key: dateKey(dt),
+      isToday: dateKey(dt) === dateKey(t),
+      isSelected: dateKey(dt) === dateKey(selected),
+      hasSpend: spendDays.has(dateKey(dt)),
+    })
   }
   for (let d = 1; d <= totalCells - (firstDay + daysInMonth); d++) {
     cells.push({ day: d, thisMonth: false })
@@ -44,7 +50,12 @@ function MiniCalendar({ expenses, selected, calDate, onSelectDay, onShiftMonth }
         {cells.map((cell, i) => (
           <div
             key={i}
-            className={`cal-cell ${!cell.thisMonth ? 'other-month' : ''} ${cell.isToday ? 'is-today' : ''} ${cell.isSelected ? 'is-selected' : ''} ${cell.hasSpend ? 'has-spend' : ''}`}
+            className={`cal-cell
+              ${!cell.thisMonth ? 'other-month' : ''}
+              ${cell.isToday ? 'is-today' : ''}
+              ${cell.isSelected ? 'is-selected' : ''}
+              ${cell.hasSpend ? 'has-spend' : ''}
+            `}
             onClick={() => cell.thisMonth && cell.date && onSelectDay(cell.date)}
           >
             <div className="cal-num">{cell.day}</div>
@@ -61,8 +72,8 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
   const [calDate, setCalDate] = useState(new Date())
 
   const t = today()
-  const dow = t.getDay()
 
+  // Filter expenses based on view and selected day
   let filtered = []
   let label = ''
 
@@ -72,23 +83,38 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
     const diff = Math.round((t - selectedDay) / 86400000)
     label = diff === 0 ? 'Today' : diff === 1 ? 'Yesterday' : fmtDateShort(selectedDay)
   } else if (view === 'weekly') {
-    const ws = new Date(selectedDay); ws.setDate(selectedDay.getDate() - selectedDay.getDay())
-    const we = new Date(ws); we.setDate(ws.getDate() + 6)
-    filtered = expenses.filter((e) => { const d = new Date(e.ts); d.setHours(0,0,0,0); return d >= ws && d <= we })
+    const dow = selectedDay.getDay()
+    const ws = new Date(selectedDay)
+    ws.setDate(selectedDay.getDate() - dow)
+    ws.setHours(0, 0, 0, 0)
+    const we = new Date(ws)
+    we.setDate(ws.getDate() + 6)
+    we.setHours(23, 59, 59, 999)
+    filtered = expenses.filter((e) => {
+      const d = new Date(e.ts)
+      return d >= ws && d <= we
+    })
     label = `${fmtDateShort(ws)} – ${fmtDateShort(we)}`
   } else {
-    filtered = expenses.filter((e) => new Date(e.ts).getMonth() === selectedDay.getMonth() && new Date(e.ts).getFullYear() === selectedDay.getFullYear())
+    filtered = expenses.filter((e) => {
+      const d = new Date(e.ts)
+      return d.getMonth() === selectedDay.getMonth() &&
+             d.getFullYear() === selectedDay.getFullYear()
+    })
     label = fmtMonthYear(selectedDay)
   }
 
   const total = filtered.reduce((s, e) => s + e.amount, 0)
 
+  // Group by date
   const groups = {}
-  filtered.sort((a, b) => new Date(b.ts) - new Date(a.ts)).forEach((e) => {
-    const k = dateKey(e.ts)
-    if (!groups[k]) groups[k] = []
-    groups[k].push(e)
-  })
+  filtered
+    .sort((a, b) => new Date(b.ts) - new Date(a.ts))
+    .forEach((e) => {
+      const k = dateKey(e.ts)
+      if (!groups[k]) groups[k] = []
+      groups[k].push(e)
+    })
 
   return (
     <div className="screen hist-screen">
@@ -101,7 +127,11 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
 
       <div className="view-toggle">
         {VIEWS.map((v) => (
-          <div key={v} className={`vt-btn ${view === v ? 'active' : ''}`} onClick={() => setView(v)}>
+          <div
+            key={v}
+            className={`vt-btn ${view === v ? 'active' : ''}`}
+            onClick={() => setView(v)}
+          >
             {v.charAt(0).toUpperCase() + v.slice(1)}
           </div>
         ))}
@@ -111,31 +141,44 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
         expenses={expenses}
         selected={selectedDay}
         calDate={calDate}
-        onSelectDay={setSelectedDay}
-        onShiftMonth={(dir) => setCalDate(new Date(calDate.getFullYear(), calDate.getMonth() + dir, 1))}
+        onSelectDay={(date) => {
+          const d = new Date(date)
+          d.setHours(0, 0, 0, 0)
+          setSelectedDay(d)
+        }}
+        onShiftMonth={(dir) =>
+          setCalDate(new Date(calDate.getFullYear(), calDate.getMonth() + dir, 1))
+        }
       />
 
       <div className="hist-summary">
         <div className="hist-summary-label">{label}</div>
-        <div className="hist-summary-amt">{filtered.length ? `₹${total.toLocaleString()}` : 'Nothing logged'}</div>
+        <div className="hist-summary-amt">
+          {filtered.length ? `₹${total.toLocaleString()}` : 'Nothing logged'}
+        </div>
       </div>
 
       {filtered.length === 0 ? (
         <div className="hist-empty">No expenses for this period.</div>
       ) : (
         Object.entries(groups).map(([key, items]) => {
-          const d = new Date(key + 'T00:00:00')
-          const diff = Math.round((t - d) / 86400000)
-          const dayLabel = diff === 0 ? 'Today' : diff === 1 ? 'Yesterday' : fmtDateShort(d)
+          const d = new Date(key + 'T12:00:00')
+          const tKey = dateKey(t)
+          const yKey = dateKey(new Date(t.getTime() - 86400000))
+          const dayLabel = key === tKey ? 'Today' : key === yKey ? 'Yesterday' : fmtDateShort(d)
           const dayTotal = items.reduce((s, e) => s + e.amount, 0)
           return (
             <div key={key}>
               <div className="group-header">
                 <span>{dayLabel}</span>
-                <span style={{ fontFamily: 'var(--fh)', fontSize: 13, fontWeight: 600 }}>₹{dayTotal.toLocaleString()}</span>
+                <span style={{ fontFamily: 'var(--fh)', fontSize: 13, fontWeight: 600 }}>
+                  ₹{dayTotal.toLocaleString()}
+                </span>
               </div>
               <div className="hist-list-wrap">
-                {items.map((e) => <ExpenseItem key={e.id} expense={e} onTap={onExpenseTap} />)}
+                {items.map((e) => (
+                  <ExpenseItem key={e.id} expense={e} onTap={onExpenseTap} />
+                ))}
               </div>
             </div>
           )

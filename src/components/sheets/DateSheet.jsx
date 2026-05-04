@@ -47,7 +47,7 @@ export default function DateSheet({ open, selected, label, onSelect, onClose }) 
           <input
             className="date-input"
             type="date"
-            max={dateKey(today())}
+            max={new Date().toLocaleDateString('en-CA')}
             defaultValue={dateKey(selected)}
             onChange={(e) => handleCustom(e.target.value)}
           />

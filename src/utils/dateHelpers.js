@@ -1,5 +1,6 @@
 export function dateKey(d) {
-  return new Date(d).toISOString().slice(0, 10)
+  const date = new Date(d)
+  return date.toLocaleDateString('en-CA')
 }
 
 export function today() {

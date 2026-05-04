@@ -31,3 +31,9 @@
 .bc-bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 28px; }
 .bc-num { font-size: 9px; color: var(--text3); letter-spacing: 0.1em; margin-top: 4px; }
 .share-btn { width: calc(100% - 32px); margin: 0 16px 16px; padding: 14px; background: var(--accent); border: none; border-radius: 16px; font-family: var(--fh); font-size: 15px; font-weight: 600; color: #fff; }
+.rec-empty {
+  padding: 24px 18px;
+  font-size: 14px;
+  color: var(--text3);
+  text-align: center;
+}

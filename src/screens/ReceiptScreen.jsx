@@ -1,10 +1,14 @@
 import { getCat } from '../data/categories'
+import { getWeekExpenses, getCategoryBreakdown, generateVerdict, fmtWeekRange, getWeekRange } from '../utils/receipt'
 import './ReceiptScreen.css'
 
-export default function ReceiptScreen({ expenses, totalSpent, goTo }) {
-  const catMap = {}
-  expenses.forEach((e) => { catMap[e.cat] = (catMap[e.cat] || 0) + e.amount })
-  const sorted = Object.entries(catMap).sort((a, b) => b[1] - a[1])
+export default function ReceiptScreen({ expenses, goTo }) {
+  const weekExp = getWeekExpenses(expenses)
+  const breakdown = getCategoryBreakdown(weekExp)
+  const verdict = generateVerdict(weekExp)
+  const total = weekExp.reduce((s, e) => s + e.amount, 0)
+  const { start, end } = getWeekRange()
+  const dateRange = fmtWeekRange(start, end)
 
   const ws = [2,1,3,1,2,3,1,2,1,3,2,1,2,3,1,2,1,3,2,1,3,2,1,2,3,1,2,3,1,2]
   const hs = [26,18,28,16,22,28,20,26,16,28,22,18,28,14,22,26,18,16,28,22,26,16,20,28,14,22,24,16,20,28]
@@ -27,42 +31,43 @@ export default function ReceiptScreen({ expenses, totalSpent, goTo }) {
           </div>
           <div className="rec-tagline">know where it went</div>
           <div className="rec-meta">
-            <span>22 APR – 01 MAY</span>
-            <span>{expenses.length} TRANSACTIONS</span>
+            <span>{dateRange}</span>
+            <span>{weekExp.length} TRANSACTIONS</span>
           </div>
         </div>
 
         <div className="rec-dashed" />
-        <div className="rec-body">
-          <div className="rec-section-label">By category</div>
-          {sorted.map(([cat, amt]) => {
-            const c = getCat(cat)
-            const pct = Math.round((amt / totalSpent) * 100)
-            return (
+
+        {breakdown.length === 0 ? (
+          <div className="rec-empty">No expenses logged this week yet.</div>
+        ) : (
+          <div className="rec-body">
+            <div className="rec-section-label">By category</div>
+            {breakdown.map(({ cat, amt, pct, color, emoji }) => (
               <div key={cat} className="rec-row">
                 <div className="rec-row-top">
-                  <span className="rec-cat">{c.emoji} {cat}</span>
+                  <span className="rec-cat">{emoji} {cat}</span>
                   <span className="rec-amt">₹{amt.toLocaleString()}</span>
                 </div>
                 <div className="rec-bar-wrap">
-                  <div className="rec-bar" style={{ width: `${pct}%`, background: c.color }} />
+                  <div className="rec-bar" style={{ width: `${pct}%`, background: color }} />
                 </div>
               </div>
-            )
-          })}
-        </div>
+            ))}
+          </div>
+        )}
 
         <div className="rec-solid" />
         <div className="rec-total-row">
           <span className="rec-total-label">Total</span>
-          <span className="rec-total-amt">₹{totalSpent.toLocaleString()}</span>
+          <span className="rec-total-amt">₹{total.toLocaleString()}</span>
         </div>
         <div className="rec-dashed" />
 
         <div className="rec-verdict">
           <div className="rec-verdict-label">Verdict</div>
-          <div className="rec-verdict-name">Comfortable Contradictionist</div>
-          <div className="rec-verdict-sub">Coffee costs more than groceries.<br />Your feet live better than your kitchen.</div>
+          <div className="rec-verdict-name">{verdict.personality}</div>
+          <div className="rec-verdict-sub">{verdict.line1}<br />{verdict.line2}</div>
         </div>
 
         <div className="rec-bc">
@@ -71,11 +76,15 @@ export default function ReceiptScreen({ expenses, totalSpent, goTo }) {
               <span key={i} style={{ width: w, height: hs[i], background: 'var(--text)', display: 'block', borderRadius: 1 }} />
             ))}
           </div>
-          <div className="bc-num">{sorted.slice(0, 4).map(([, a]) => a).join(' · ')}</div>
+          <div className="bc-num">
+            {breakdown.slice(0, 4).map((b) => b.amt).join(' · ')}
+          </div>
         </div>
       </div>
 
-      <button className="share-btn" onClick={() => goTo('share')}>Share this receipt ↗</button>
+      <button className="share-btn" onClick={() => goTo('share')}>
+        Share this receipt ↗
+      </button>
     </div>
   )
 }
