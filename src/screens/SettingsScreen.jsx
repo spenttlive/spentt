@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './SettingsScreen.css'
+import { exportToCsv } from '../utils/exportCsv'
 
 const CURRENCIES = ['₹ INR', '$ USD', '€ EUR', '£ GBP']
 
@@ -24,7 +25,7 @@ function SettingsRow({ icon, iconBg, label, value, danger, toggle, onToggle, onC
   )
 }
 
-export default function SettingsScreen({ user, goTo, showToast, dark, toggleDark, logout }) {
+export default function SettingsScreen({ user, goTo, showToast, dark, toggleDark, logout, expenses }) {
   const [currIdx, setCurrIdx] = useState(0)
   const [reminder, setReminder] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
@@ -55,7 +56,17 @@ export default function SettingsScreen({ user, goTo, showToast, dark, toggleDark
         </div>
 
         <div className="settings-group">
-          <SettingsRow icon="📤" iconBg="#EDFAF4" label="Export data" onClick={() => showToast('CSV exported!')} />
+          <SettingsRow
+            icon="📤" iconBg="#EDFAF4" label="Export data"
+            onClick={() => {
+              if (expenses.length === 0) {
+                showToast('No expenses to export')
+                return
+              }
+              exportToCsv(expenses)
+              showToast('CSV downloaded!')
+            }}
+          />
           <SettingsRow icon="🔒" iconBg="#EAF2FF" label="Privacy" value="Your Drive" onClick={() => showToast('Your data lives only in your Google Drive')} />
         </div>
 
