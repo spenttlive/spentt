@@ -6,8 +6,10 @@ export function buildGreeting(name, expenses, dailyAvg = 895) {
   const month = now.getMonth()
   const daysInMonth = new Date(now.getFullYear(), month + 1, 0).getDate()
 
-  const todayStr = new Date().toISOString().slice(0, 10)
-  const todayExp = expenses.filter((e) => new Date(e.ts).toISOString().slice(0, 10) === todayStr)
+  const todayStr = new Date().toLocaleDateString('en-CA')
+  const todayExp = expenses.filter(
+  (e) => new Date(e.ts).toLocaleDateString('en-CA') === todayStr
+  )
   const todayTotal = todayExp.reduce((s, e) => s + e.amount, 0)
 
   const todayDate = new Date(); todayDate.setHours(0,0,0,0)
