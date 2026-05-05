@@ -11,9 +11,8 @@ export function useExpenses(accessToken) {
   // Load from Drive on mount
   useEffect(() => {
     if (!accessToken) {
-      setExpenses(SAMPLE_EXPENSES)
-      setLoaded(true)
-      return
+    setLoaded(true)
+    return
     }
     setSyncing(true)
     readFromDrive(accessToken)

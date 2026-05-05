@@ -25,6 +25,7 @@ body {
 #root {
   display: flex;
   justify-content: center;
+  min-height: 100vh;
 }
 
 button { font-family: var(--fb); cursor: pointer; }

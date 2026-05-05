@@ -23,7 +23,7 @@ export default function App() {
   const [showAddSheet, setShowAddSheet] = useState(false)
   const [editingExpense, setEditingExpense] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState(null)
-  const { user, accessToken, loading, login, logout } = useAuth()
+  const { user, accessToken, driveAccess, loading, login, logout } = useAuth()
   const [showLanding, setShowLanding] = useState(true)
   const expensesState = useExpenses(accessToken)
   const pwa = usePWA()
@@ -84,6 +84,41 @@ export default function App() {
       </div>
     )
   }
+  // Show warning if Drive access was not granted
+if (!driveAccess && user) {
+  console.log('Showing Drive warning — driveAccess:', driveAccess, 'user:', user)
+  return (
+    <div style={{
+      minHeight: '100vh', display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      background: '#FDF8F3', padding: 32, textAlign: 'center', gap: 16,
+    }}>
+      <div style={{ fontSize: 48 }}>🔒</div>
+      <div style={{ fontFamily: 'Gabarito, sans-serif', fontSize: 22, fontWeight: 700, color: '#1C1409' }}>
+        Drive access needed
+      </div>
+      <div style={{ fontSize: 15, color: '#6B5B45', lineHeight: 1.6, maxWidth: 300 }}>
+        Spentt stores your expenses in your own Google Drive. Without access, your data can't be saved.
+      </div>
+      <button
+        onClick={login}
+        style={{
+          marginTop: 8, padding: '14px 32px', background: '#E8623A', border: 'none',
+          borderRadius: 99, fontFamily: 'Gabarito, sans-serif', fontSize: 15,
+          fontWeight: 600, color: '#fff', cursor: 'pointer',
+        }}
+      >
+        Grant Drive access →
+      </button>
+      <div
+        onClick={logout}
+        style={{ fontSize: 13, color: '#A8937A', cursor: 'pointer', marginTop: 8 }}
+      >
+        Sign out
+      </div>
+    </div>
+  )
+}
 
   const ctx = {
     goTo, showToast,
@@ -98,37 +133,62 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell">
-      {screen === 'home'     && <HomeScreen     {...ctx} />}
-      {screen === 'history'  && <HistoryScreen  {...ctx} />}
-      {screen === 'receipt'  && <ReceiptScreen  {...ctx} />}
-      {screen === 'share'    && <ShareScreen    {...ctx} />}
-      {screen === 'settings' && <SettingsScreen {...ctx} />}
-      {screen === 'profile'  && <ProfileScreen  {...ctx} />}
+    <div className="desktop-layout">
+      {/* Desktop left panel — hidden on mobile */}
+      <div className="desktop-left-panel">
+        <div className="dlp-brand">
+          spentt<span className="dlp-brand-dot" />
+        </div>
+        <h1 className="dlp-headline">
+          Know where<br />it went.
+        </h1>
+        <p className="dlp-sub">
+          The honest expense tracker that tells you exactly where your money went — with a smile.
+        </p>
+        <div className="dlp-perks">
+          <div className="dlp-perk">✓ Free forever</div>
+          <div className="dlp-perk">✓ No bank linking</div>
+          <div className="dlp-perk">✓ Your data in your Google Drive</div>
+          <div className="dlp-perk">✓ Installs on your phone as an app</div>
+        </div>
+        <div className="dlp-hint">
+          📱 Best on mobile — open <strong>spentt.live</strong> on your phone
+        </div>
+      </div>
 
-      <BottomNav current={screen} goTo={goTo} onAddPress={handleAddPress} />
+      {/* App */}
+      <div className="app-shell">
+        {screen === 'home'     && <HomeScreen     {...ctx} />}
+        {screen === 'history'  && <HistoryScreen  {...ctx} />}
+        {screen === 'receipt'  && <ReceiptScreen  {...ctx} />}
+        {screen === 'share'    && <ShareScreen    {...ctx} />}
+        {screen === 'settings' && <SettingsScreen {...ctx} />}
+        {screen === 'profile'  && <ProfileScreen  {...ctx} />}
 
-      <AddSheet
-        open={showAddSheet}
-        onClose={() => setShowAddSheet(false)}
-        onAdd={(data) => {
-          expensesState.addExpense(data)
-          setShowAddSheet(false)
-          showToast('Added ✓')
-        }}
-        showToast={showToast}
-      />
+        <BottomNav current={screen} goTo={goTo} onAddPress={handleAddPress} />
 
-      <EditSheet
-        open={!!editingExpense}
-        expense={editingExpense}
-        onClose={() => setEditingExpense(null)}
-        onSave={expensesState.editExpense}
-        onDelete={expensesState.deleteExpense}
-        showToast={showToast}
-      />
+        <AddSheet
+          open={showAddSheet}
+          onClose={() => setShowAddSheet(false)}
+          onAdd={(data) => {
+            expensesState.addExpense(data)
+            setShowAddSheet(false)
+            showToast('Added ✓')
+          }}
+          showToast={showToast}
+        />
 
-      <Toast message={toast} />
+        <EditSheet
+          open={!!editingExpense}
+          expense={editingExpense}
+          onClose={() => setEditingExpense(null)}
+          onSave={expensesState.editExpense}
+          onDelete={expensesState.deleteExpense}
+          showToast={showToast}
+        />
+
+        <Toast message={toast} />
+      </div>
     </div>
   )
 }

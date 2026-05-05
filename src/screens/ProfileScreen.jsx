@@ -12,8 +12,8 @@ export default function ProfileScreen({ user, expenses, totalSpent, goTo, showTo
       </div>
 
       <div className="profile-hero">
-        <div className="profile-avatar-lg">{user.name[0]}</div>
-        <div className="profile-name">{user.name}</div>
+        <div className="profile-avatar-lg">{user?.name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}</div>
+        <div className="profile-name">{user?.name || user?.email?.split('@')[0] || 'User'}</div>
         <div className="profile-email">{user.email}</div>
       </div>
 

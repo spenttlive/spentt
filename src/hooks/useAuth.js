@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { loadGoogleScript } from '../auth/googleAuth'
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
-const SCOPES = 'https://www.googleapis.com/auth/drive.appdata'
 
 export function useAuth() {
   const [user, setUser] = useState(() => {
@@ -12,51 +11,70 @@ export function useAuth() {
   const [accessToken, setAccessToken] = useState(() => {
     return localStorage.getItem('spentt-access-token') || null
   })
+  const [driveAccess, setDriveAccess] = useState(() => {
+    return !!localStorage.getItem('spentt-access-token')
+  })
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadGoogleScript().then(() => {
-      setLoading(false)
-    })
+    loadGoogleScript().then(() => setLoading(false))
   }, [])
 
   const login = () => {
-    const client = window.google.accounts.oauth2.initTokenClient({
+    const tokenClient = window.google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
-      scope: SCOPES,
+      scope: 'https://www.googleapis.com/auth/drive.appdata openid email profile',
       callback: async (tokenResponse) => {
         if (tokenResponse.access_token) {
           const token = tokenResponse.access_token
-          setAccessToken(token)
-          localStorage.setItem('spentt-access-token', token)
+          const grantedScopes = tokenResponse.scope || ''
+          const hasDriveAccess =
+            grantedScopes.includes('drive.appdata') ||
+            grantedScopes.includes('drive')
 
-          // Fetch user profile
-          const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          const profile = await res.json()
-          const userData = {
-            name: profile.given_name || profile.name,
-            email: profile.email,
-            picture: profile.picture,
+          // Always fetch and set user info first
+          try {
+            const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            const profile = await res.json()
+            const userData = {
+              name: profile.given_name || profile.name || profile.email?.split('@')[0],
+              email: profile.email,
+              picture: profile.picture,
+            }
+            setUser(userData)
+            localStorage.setItem('spentt-user', JSON.stringify(userData))
+          } catch (e) {
+            console.error('Failed to fetch user info', e)
           }
-          setUser(userData)
-          localStorage.setItem('spentt-user', JSON.stringify(userData))
+
+          // Then check Drive access
+          if (!hasDriveAccess) {
+            setDriveAccess(false)
+            localStorage.removeItem('spentt-access-token')
+            return
+          }
+
+          setAccessToken(token)
+          setDriveAccess(true)
+          localStorage.setItem('spentt-access-token', token)
         }
       },
     })
-    client.requestAccessToken()
+    tokenClient.requestAccessToken()
   }
 
   const logout = () => {
-    if (accessToken) {
+    if (accessToken && window.google?.accounts?.oauth2) {
       window.google.accounts.oauth2.revoke(accessToken)
     }
     localStorage.removeItem('spentt-user')
     localStorage.removeItem('spentt-access-token')
     setUser(null)
     setAccessToken(null)
+    setDriveAccess(false)
   }
 
-  return { user, accessToken, loading, login, logout }
+  return { user, accessToken, driveAccess, loading, login, logout }
 }

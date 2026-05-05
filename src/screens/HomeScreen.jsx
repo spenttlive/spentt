@@ -46,7 +46,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
           <Greeting user={user} expenses={expenses} />
         </div>
         <div className="avatar" onClick={() => goTo('profile')}>
-          {user.name[0]}
+          {user?.name?.[0] || user?.email?.[0] || 'U'}
         </div>
       </div>
 

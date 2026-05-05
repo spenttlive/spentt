@@ -25,22 +25,56 @@ export default function LandingScreen({ onGetStarted }) {
 
       {/* HERO */}
       <section className="landing-hero">
-        <div className="landing-hero-eyebrow">
-          <span className="landing-eyebrow-dot" />
-          Free · No bank linking · Your data only
+  <div>
+    <div className="landing-hero-eyebrow">
+      <span className="landing-eyebrow-dot" />
+      Free · No bank linking · Your data only
+    </div>
+    <h1 className="landing-h1">
+      Already<br />
+      <span className="landing-h1-accent">Spentt?</span>
+    </h1>
+    <p className="landing-sub">
+      The honest expense tracker that tells you exactly where your money went — with a smile.
+    </p>
+    <button className="landing-cta-btn" onClick={onGetStarted}>
+      Start tracking free →
+    </button>
+    <div className="landing-cta-note">No credit card. No bank account. Takes 30 seconds.</div>
+  </div>
+
+  {/* Phone preview — shows on desktop as second column */}
+  <div className="landing-hero-phone">
+    <div className="landing-phone">
+      <div className="lp-topbar">
+        <div>
+          <div className="lp-logo">spentt<span className="lp-dot" /></div>
+          <div className="lp-greeting">Fresh week, <strong>Kushal</strong>. What's the first spend?</div>
         </div>
-        <h1 className="landing-h1">
-          Already<br />
-          <span className="landing-h1-accent">Spentt?</span>
-        </h1>
-        <p className="landing-sub">
-          The honest expense tracker that tells you exactly where your money went — with a smile.
-        </p>
-        <button className="landing-cta-btn" onClick={onGetStarted}>
-          Start tracking free →
-        </button>
-        <div className="landing-cta-note">No credit card. No bank account. Takes 30 seconds.</div>
-      </section>
+        <div className="lp-avatar">K</div>
+      </div>
+      <div className="lp-total-card">
+        <div className="lp-total-label">Total spent</div>
+        <div className="lp-total-amt"><sup>₹</sup>12,534</div>
+        <div className="lp-chips">
+          <span className="lp-chip"><span style={{background:'#F5A623'}} className="lp-chip-dot"/>14 expenses</span>
+          <span className="lp-chip"><span style={{background:'#3AAE8A'}} className="lp-chip-dot"/>₹895 avg</span>
+        </div>
+      </div>
+      <div className="lp-card" style={{background:'#F5EEFF',borderColor:'#9B6EE820'}}>
+        <div>
+          <div className="lp-card-badge" style={{color:'#9B6EE8'}}>Top spend · 26%</div>
+          <div className="lp-card-cat" style={{color:'#9B6EE8'}}>👟 Shopping</div>
+          <div className="lp-card-sub" style={{color:'#9B6EE899'}}>1 transaction</div>
+        </div>
+        <div>
+          <div className="lp-card-amt" style={{color:'#9B6EE8'}}>₹3,200</div>
+          <div className="lp-card-pct" style={{color:'#9B6EE899'}}>of total</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* APP PREVIEW */}
       <section className="landing-preview">
@@ -48,7 +82,7 @@ export default function LandingScreen({ onGetStarted }) {
           <div className="lp-topbar">
             <div>
               <div className="lp-logo">spentt<span className="lp-dot" /></div>
-              <div className="lp-greeting">Fresh week, <strong>Kush</strong>. What's the first spend?</div>
+              <div className="lp-greeting">Fresh week, <strong>Kushal</strong>. What's the first spend?</div>
             </div>
             <div className="lp-avatar">K</div>
           </div>

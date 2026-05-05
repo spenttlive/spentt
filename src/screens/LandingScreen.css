@@ -321,3 +321,116 @@
   align-items: center;
 }
 .landing-footer-note { font-size: 12px; color: var(--text3); }
+
+/* ── DESKTOP ── */
+@media (min-width: 768px) {
+  .landing {
+    max-width: 100%;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  .landing-nav {
+    padding: 20px 60px;
+  }
+
+  /* HERO — two column layout */
+  .landing-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 60px;
+    padding: 80px 60px;
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .landing-hero-eyebrow {
+    margin-bottom: 20px;
+  }
+  .landing-h1 {
+    font-size: 80px;
+  }
+  .landing-sub {
+    font-size: 18px;
+    margin-bottom: 28px;
+  }
+  .landing-cta-btn {
+    width: auto;
+    padding: 16px 40px;
+    display: inline-block;
+  }
+  .landing-cta-note {
+    margin-top: 12px;
+  }
+
+  /* Phone preview sits in the second column */
+  .landing-preview {
+    display: none;
+  }
+  .landing-hero-phone {
+    display: flex;
+    justify-content: center;
+  }
+  .landing-phone {
+    max-width: 320px;
+    width: 100%;
+  }
+
+  /* STEPS */
+  .landing-section {
+    padding: 80px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .landing-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .landing-section-title {
+    font-size: 44px;
+  }
+
+  /* FEATURES */
+  .landing-features-section {
+    padding: 80px 60px;
+  }
+  .landing-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* PRIVACY */
+  .landing-privacy {
+    padding: 80px 60px;
+  }
+  .landing-privacy-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .landing-privacy-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* FINAL CTA */
+  .landing-final-cta {
+    padding: 100px 60px;
+  }
+  .landing-final-title {
+    font-size: 72px;
+  }
+  .landing-final-btn {
+    width: auto;
+    padding: 18px 48px;
+    display: inline-block;
+  }
+
+  /* FOOTER */
+  .landing-footer {
+    padding: 32px 60px;
+  }
+}
