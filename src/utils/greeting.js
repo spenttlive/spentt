@@ -51,7 +51,7 @@ export function buildGreeting(name, expenses, dailyAvg = 895) {
     if (diff < -20) return { bold: `${Math.abs(diff)}% less`, rest: `than last week, ${name}. Restrained.` }
   }
 
-  const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+  const greet = hour < 5 ? 'Good night' : hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : hour < 21 ? 'Good evening' : 'Good night'
   if (todayTotal > 0) return { bold: greet, rest: `${name}. ₹${todayTotal.toLocaleString()} logged today.` }
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
   return { bold: greet, rest: `${name}. Happy ${days[dow]}.` }
