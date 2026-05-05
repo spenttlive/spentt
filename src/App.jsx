@@ -14,6 +14,7 @@ import BottomNav from './components/BottomNav'
 import Toast from './components/Toast'
 import AddSheet from './components/home/AddSheet'
 import EditSheet from './components/home/EditSheet'
+import LandingScreen from './screens/LandingScreen'
 import './App.css'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
   const [editingExpense, setEditingExpense] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState(null)
   const { user, accessToken, loading, login, logout } = useAuth()
+  const [showLanding, setShowLanding] = useState(true)
   const expensesState = useExpenses(accessToken)
   const pwa = usePWA()
   const { dark, toggle: toggleDark } = useDarkMode()
@@ -62,6 +64,9 @@ export default function App() {
   }
 
   if (!user) {
+    if (showLanding) {
+      return <LandingScreen onGetStarted={() => setShowLanding(false)} />
+    }
     return <LoginScreen onLogin={login} />
   }
 
