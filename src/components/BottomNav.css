@@ -53,3 +53,13 @@
   transition: transform 0.2s;
 }
 .fab:active { transform: scale(0.9); }
+
+@media (min-width: 768px) {
+  .bnav {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 480px;
+    max-width: 480px;
+    border-radius: 0 0 32px 32px;
+  }
+}

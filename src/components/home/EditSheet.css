@@ -71,3 +71,11 @@
   color: #EF4444;
 }
 .delete-btn:active { transform: scale(0.97); }
+
+@media (min-width: 768px) {
+  .edit-sheet {
+    right: 0;
+    left: auto;
+    width: 390px;
+  }
+}

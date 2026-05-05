@@ -59,3 +59,11 @@
   font-weight: 600; color: #fff; transition: all 0.18s;
 }
 .add-submit-btn:active { transform: scale(0.97); }
+
+@media (min-width: 768px) {
+  .add-sheet {
+    right: 0;
+    left: auto;
+    width: 390px;
+  }
+}

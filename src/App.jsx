@@ -134,27 +134,6 @@ if (!driveAccess && user) {
 
   return (
     <div className="desktop-layout">
-      {/* Desktop left panel — hidden on mobile */}
-      <div className="desktop-left-panel">
-        <div className="dlp-brand">
-          spentt<span className="dlp-brand-dot" />
-        </div>
-        <h1 className="dlp-headline">
-          Know where<br />it went.
-        </h1>
-        <p className="dlp-sub">
-          The honest expense tracker that tells you exactly where your money went — with a smile.
-        </p>
-        <div className="dlp-perks">
-          <div className="dlp-perk">✓ Free forever</div>
-          <div className="dlp-perk">✓ No bank linking</div>
-          <div className="dlp-perk">✓ Your data in your Google Drive</div>
-          <div className="dlp-perk">✓ Installs on your phone as an app</div>
-        </div>
-        <div className="dlp-hint">
-          📱 Best on mobile — open <strong>spentt.live</strong> on your phone
-        </div>
-      </div>
 
       {/* App */}
       <div className="app-shell">

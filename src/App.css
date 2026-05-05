@@ -13,101 +13,30 @@
   display: none;
 }
 
+.desktop-layout {
+  display: contents;
+}
+
 /* ── DESKTOP ── */
 @media (min-width: 768px) {
-
-  /* Full page layout — two columns */
   .desktop-layout {
     display: flex;
+    justify-content: center;
+    align-items: flex-start;
     min-height: 100vh;
     width: 100%;
+    background: #EDE0CE;
+    padding: 40px 0;
   }
 
-  /* Left — marketing */
-  .desktop-left-panel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-    padding: 60px;
-    background: #F5EDE2;
-    min-height: 100vh;
-  }
-
-  /* Right — app */
   .app-shell {
-    width: 390px;
-    min-width: 390px;
-    max-width: 390px;
-    min-height: 100vh;
-    height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
+    width: 480px;
+    max-width: 480px;
+    min-height: calc(100vh - 80px);
+    border-radius: 32px;
+    box-shadow: 0 24px 80px rgba(28,20,9,0.18);
+    overflow: hidden;
+    position: relative;
     padding-bottom: 110px;
-    scrollbar-width: none;
-    box-shadow: -8px 0 48px rgba(28,20,9,0.15);
-    position: sticky;
-    top: 0;
   }
-  .app-shell::-webkit-scrollbar { display: none; }
-
-  .dlp-brand {
-    font-family: 'Gabarito', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #1C1409;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    margin-bottom: 40px;
-  }
-  .dlp-brand-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #E8623A;
-    display: inline-block;
-    margin-bottom: 1px;
-  }
-  .dlp-headline {
-    font-family: 'Gabarito', sans-serif;
-    font-size: 52px;
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    color: #1C1409;
-    margin-bottom: 16px;
-  }
-  .dlp-sub {
-    font-size: 17px;
-    color: #6B5B45;
-    line-height: 1.65;
-    margin-bottom: 36px;
-    font-family: 'DM Sans', sans-serif;
-    max-width: 400px;
-  }
-  .dlp-perks {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 36px;
-  }
-  .dlp-perk {
-    font-size: 15px;
-    color: #E8623A;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .dlp-hint {
-    font-size: 13px;
-    color: #A8937A;
-    line-height: 1.5;
-    background: #FFFCF9;
-    border: 1px solid rgba(28,20,9,0.08);
-    border-radius: 12px;
-    padding: 12px 16px;
-    font-family: 'DM Sans', sans-serif;
-    max-width: 400px;
-  }
-  .dlp-hint strong { color: #1C1409; }
 }

@@ -26,6 +26,7 @@ body {
   display: flex;
   justify-content: center;
   min-height: 100vh;
+  width: 100%;
 }
 
 button { font-family: var(--fb); cursor: pointer; }

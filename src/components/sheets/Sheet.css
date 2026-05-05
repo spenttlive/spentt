@@ -20,3 +20,19 @@
 .sheet-header { padding: 14px 20px 10px; display: flex; justify-content: space-between; align-items: center; }
 .sheet-title { font-family: var(--fh); font-size: 18px; font-weight: 700; }
 .sheet-close { font-size: 20px; cursor: pointer; color: var(--text3); padding: 4px; }
+
+@media (min-width: 768px) {
+  .sheet-overlay {
+    position: fixed;
+    inset: 0;
+  }
+  .bottom-sheet {
+    right: 0;
+    left: auto;
+    transform: translateY(100%);
+    width: 390px;
+  }
+  .bottom-sheet.open {
+    transform: translateY(0);
+  }
+}
