@@ -15,7 +15,7 @@ const PERIODS = [
   { id: 'month',   label: 'This month'},
 ]
 
-export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa, onExpenseTap }) {
+export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa, onExpenseTap, onCardTap }) {
   const [period, setPeriod] = useState('today')
 
   const now = new Date()
@@ -73,7 +73,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
         <div className="sec-link" onClick={() => goTo('history')}>See all</div>
       </div>
 
-      <CardStack cardData={cardData} showToast={showToast} />
+      <CardStack cardData={cardData} showToast={showToast} onCardTap={onCardTap} />
 
       <div className="recent-wrap">
         <div className="sec-hd" style={{ padding: '0 4px', marginBottom: 10 }}>

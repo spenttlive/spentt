@@ -94,7 +94,7 @@ function SpendCard({ card, onSwipe, onTap, isTop, offset }) {
   )
 }
 
-export default function CardStack({ cardData, showToast }) {
+export default function CardStack({ cardData, showToast, onCardTap }) {
   const [current, setCurrent] = useState(0)
 
   const visible = cardData.slice(current, current + 3)
@@ -113,7 +113,7 @@ export default function CardStack({ cardData, showToast }) {
               onSwipe={() => {
                 if (current < cardData.length - 1) setCurrent((c) => c + 1)
               }}
-              onTap={() => showToast(`${getCat(card.cat).emoji} ${card.cat} · ₹${card.amt.toLocaleString()}`)}
+              onTap={() => onCardTap?.(card.cat)}
             />
           )
         })}

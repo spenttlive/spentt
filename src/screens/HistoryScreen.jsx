@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ExpenseItem from '../components/home/ExpenseItem'
 import { dateKey, today, fmtDateShort, fmtMonthYear, getDaysInMonth, getFirstDayOfMonth } from '../utils/dateHelpers'
 import './HistoryScreen.css'
 
-const VIEWS = ['daily', 'weekly', 'monthly']
+const VIEWS = ['daily', 'weekly', 'monthly', 'category']
 const DAY_LABELS = ['Su','Mo','Tu','We','Th','Fr','Sa']
 
 function MiniCalendar({ expenses, selected, calDate, onSelectDay, onShiftMonth }) {
@@ -66,18 +66,26 @@ function MiniCalendar({ expenses, selected, calDate, onSelectDay, onShiftMonth }
   )
 }
 
-export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
-  const [view, setView] = useState('daily')
+export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFilter, setCategoryFilter }) {
+  const [view, setView] = useState(categoryFilter ? 'category' : 'daily')
   const [selectedDay, setSelectedDay] = useState(today())
   const [calDate, setCalDate] = useState(new Date())
 
+  // Switch to category view when filter is set
+  useEffect(() => {
+    if (categoryFilter) setView('category')
+  }, [categoryFilter])
+
   const t = today()
 
-  // Filter expenses based on view and selected day
   let filtered = []
   let label = ''
 
-  if (view === 'daily') {
+  if (view === 'category' && categoryFilter) {
+    filtered = expenses.filter((e) => e.cat === categoryFilter)
+    filtered.sort((a, b) => new Date(b.ts) - new Date(a.ts))
+    label = categoryFilter
+  } else if (view === 'daily') {
     const key = dateKey(selectedDay)
     filtered = expenses.filter((e) => dateKey(e.ts) === key)
     const diff = Math.round((t - selectedDay) / 86400000)
@@ -106,15 +114,22 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
 
   const total = filtered.reduce((s, e) => s + e.amount, 0)
 
-  // Group by date
+  // Group by date for non-category views
   const groups = {}
-  filtered
-    .sort((a, b) => new Date(b.ts) - new Date(a.ts))
-    .forEach((e) => {
-      const k = dateKey(e.ts)
-      if (!groups[k]) groups[k] = []
-      groups[k].push(e)
-    })
+  if (view !== 'category') {
+    filtered
+      .sort((a, b) => new Date(b.ts) - new Date(a.ts))
+      .forEach((e) => {
+        const k = dateKey(e.ts)
+        if (!groups[k]) groups[k] = []
+        groups[k].push(e)
+      })
+  }
+
+  const handleViewChange = (v) => {
+    setView(v)
+    if (v !== 'category') setCategoryFilter(null)
+  }
 
   return (
     <div className="screen hist-screen">
@@ -123,33 +138,50 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
           <div style={{ fontSize: 12, color: 'var(--text3)' }}>Transactions</div>
           <div style={{ fontFamily: 'var(--fh)', fontSize: 26, fontWeight: 700 }}>History</div>
         </div>
+        {view === 'category' && (
+          <div
+            style={{ fontSize: 13, color: 'var(--accent)', fontWeight: 500, cursor: 'pointer' }}
+            onClick={() => { setCategoryFilter(null); setView('daily') }}
+          >
+            Clear ✕
+          </div>
+        )}
       </div>
 
+      {/* View toggle — show all 3 date views + category if active */}
       <div className="view-toggle">
-        {VIEWS.map((v) => (
+        {['daily', 'weekly', 'monthly'].map((v) => (
           <div
             key={v}
             className={`vt-btn ${view === v ? 'active' : ''}`}
-            onClick={() => setView(v)}
+            onClick={() => handleViewChange(v)}
           >
             {v.charAt(0).toUpperCase() + v.slice(1)}
           </div>
         ))}
+        {categoryFilter && (
+          <div className="vt-btn active" style={{ background: 'var(--accent)', color: '#fff' }}>
+            {categoryFilter}
+          </div>
+        )}
       </div>
 
-      <MiniCalendar
-        expenses={expenses}
-        selected={selectedDay}
-        calDate={calDate}
-        onSelectDay={(date) => {
-          const d = new Date(date)
-          d.setHours(0, 0, 0, 0)
-          setSelectedDay(d)
-        }}
-        onShiftMonth={(dir) =>
-          setCalDate(new Date(calDate.getFullYear(), calDate.getMonth() + dir, 1))
-        }
-      />
+      {/* Hide calendar in category view */}
+      {view !== 'category' && (
+        <MiniCalendar
+          expenses={expenses}
+          selected={selectedDay}
+          calDate={calDate}
+          onSelectDay={(date) => {
+            const d = new Date(date)
+            d.setHours(0, 0, 0, 0)
+            setSelectedDay(d)
+          }}
+          onShiftMonth={(dir) =>
+            setCalDate(new Date(calDate.getFullYear(), calDate.getMonth() + dir, 1))
+          }
+        />
+      )}
 
       <div className="hist-summary">
         <div className="hist-summary-label">{label}</div>
@@ -159,8 +191,16 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap }) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="hist-empty">No expenses for this period.</div>
+        <div className="hist-empty">No expenses found.</div>
+      ) : view === 'category' ? (
+        // Category view — flat list
+        <div className="hist-list-wrap">
+          {filtered.map((e) => (
+            <ExpenseItem key={e.id} expense={e} showDate onTap={onExpenseTap} />
+          ))}
+        </div>
       ) : (
+        // Date grouped view
         Object.entries(groups).map(([key, items]) => {
           const d = new Date(key + 'T12:00:00')
           const tKey = dateKey(t)

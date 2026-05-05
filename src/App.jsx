@@ -21,6 +21,7 @@ export default function App() {
   const [toast, setToast] = useState(null)
   const [showAddSheet, setShowAddSheet] = useState(false)
   const [editingExpense, setEditingExpense] = useState(null)
+  const [categoryFilter, setCategoryFilter] = useState(null)
   const { user, accessToken, loading, login, logout } = useAuth()
   const expensesState = useExpenses(accessToken)
   const pwa = usePWA()
@@ -40,6 +41,11 @@ export default function App() {
 
   const handleExpenseTap = (expense) => {
     setEditingExpense(expense)
+  }
+
+  const handleCardTap = (cat) => {
+    setCategoryFilter(cat)
+    goTo('history')
   }
 
   if (loading) {
@@ -79,6 +85,9 @@ export default function App() {
     user: { ...user, dailyAvg: 895 },
     pwa, dark, toggleDark,
     onExpenseTap: handleExpenseTap,
+    onCardTap: handleCardTap,
+    categoryFilter,
+    setCategoryFilter,
     logout,
     ...expensesState,
   }
