@@ -24,7 +24,7 @@ function SettingsRow({ icon, iconBg, label, value, danger, toggle, onToggle, onC
   )
 }
 
-export default function SettingsScreen({ user, goTo, showToast }) {
+export default function SettingsScreen({ user, goTo, showToast, dark, toggleDark, logout }) {
   const [currIdx, setCurrIdx] = useState(0)
   const [reminder, setReminder] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
@@ -60,7 +60,10 @@ export default function SettingsScreen({ user, goTo, showToast }) {
         </div>
 
         <div className="settings-group">
-          <SettingsRow icon="🚪" iconBg="#FFE8E8" label="Sign out" danger onClick={() => showToast('Signed out')} />
+          <SettingsRow
+            icon="🚪" iconBg="#FFE8E8" label="Sign out" danger
+            onClick={() => { logout(); }}
+          />
         </div>
       </div>
     </div>

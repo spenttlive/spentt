@@ -1,19 +1,20 @@
 import { useState } from 'react'
 import { useExpenses } from './hooks/useExpenses'
 import { usePWA } from './hooks/usePWA'
+import { useDarkMode } from './hooks/useDarkMode'
+import { useAuth } from './hooks/useAuth'
 import HomeScreen from './screens/HomeScreen'
 import HistoryScreen from './screens/HistoryScreen'
 import ReceiptScreen from './screens/ReceiptScreen'
 import ShareScreen from './screens/ShareScreen'
 import SettingsScreen from './screens/SettingsScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import LoginScreen from './screens/LoginScreen'
 import BottomNav from './components/BottomNav'
 import Toast from './components/Toast'
 import AddSheet from './components/home/AddSheet'
 import EditSheet from './components/home/EditSheet'
 import './App.css'
-
-export const USER = { name: 'Kush', email: 'kush@gmail.com', dailyAvg: 895 }
 
 export default function App() {
   const [screen, setScreen] = useState('home')
@@ -22,12 +23,19 @@ export default function App() {
   const [editingExpense, setEditingExpense] = useState(null)
   const expensesState = useExpenses()
   const pwa = usePWA()
+  const { dark, toggle: toggleDark } = useDarkMode()
+  const { user, loading, logout } = useAuth()
 
   const goTo = (s) => { setScreen(s); window.scrollTo(0, 0) }
 
   const showToast = (msg) => {
     setToast(msg)
     setTimeout(() => setToast(null), 2200)
+  }
+
+  const handleLogin = (userData) => {
+    localStorage.setItem('spentt-user', JSON.stringify(userData))
+    window.location.reload()
   }
 
   const handleAddPress = () => {
@@ -39,9 +47,31 @@ export default function App() {
     setEditingExpense(expense)
   }
 
+  // Show loading state
+  if (loading) {
+    return (
+      <div style={{
+        minHeight: '100vh', display: 'flex', alignItems: 'center',
+        justifyContent: 'center', background: 'var(--bg)'
+      }}>
+        <div style={{ fontFamily: 'var(--fh)', fontSize: 24, fontWeight: 700, color: 'var(--text3)' }}>
+          spentt<span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#E8623A', marginLeft: 2, marginBottom: 2 }} />
+        </div>
+      </div>
+    )
+  }
+
+  // Show login if not authenticated
+  if (!user) {
+    return <LoginScreen onLogin={handleLogin} />
+  }
+
   const ctx = {
-    goTo, showToast, user: USER, pwa,
+    goTo, showToast,
+    user: { ...user, dailyAvg: 895 },
+    pwa, dark, toggleDark,
     onExpenseTap: handleExpenseTap,
+    logout,
     ...expensesState
   }
 

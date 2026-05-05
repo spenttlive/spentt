@@ -1,3 +1,5 @@
+import { useRef, useState } from 'react'
+import html2canvas from 'html2canvas'
 import { getWeekExpenses, getCategoryBreakdown, generateVerdict, fmtWeekRange, getWeekRange } from '../utils/receipt'
 import './ShareScreen.css'
 
@@ -8,6 +10,45 @@ export default function ShareScreen({ expenses, goTo, showToast }) {
   const total = weekExp.reduce((s, e) => s + e.amount, 0)
   const { start, end } = getWeekRange()
   const dateRange = fmtWeekRange(start, end)
+  const cardRef = useRef(null)
+  const [generating, setGenerating] = useState(false)
+
+  const handleShare = async () => {
+    if (!cardRef.current) return
+    setGenerating(true)
+    showToast('Generating image…')
+    try {
+      const canvas = await html2canvas(cardRef.current, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: '#1C1409',
+        logging: false,
+      })
+      canvas.toBlob(async (blob) => {
+        const file = new File([blob], 'spentt-receipt.png', { type: 'image/png' })
+        if (navigator.share && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: 'My Spentt receipt',
+          })
+        } else {
+          // Fallback — download the image
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.href = url
+          a.download = 'spentt-receipt.png'
+          a.click()
+          URL.revokeObjectURL(url)
+          showToast('Image downloaded!')
+        }
+      }, 'image/png')
+    } catch (err) {
+      showToast('Could not generate image')
+      console.error(err)
+    } finally {
+      setGenerating(false)
+    }
+  }
 
   return (
     <div className="screen share-screen">
@@ -19,7 +60,8 @@ export default function ShareScreen({ expenses, goTo, showToast }) {
       </div>
 
       <div className="share-wrap">
-        <div className="share-card" id="share-card-el">
+        {/* This is the card that gets captured as image */}
+        <div className="share-card" ref={cardRef} id="share-card-el">
           <div className="sc-inner">
             <div className="sc-brand-row">
               <span className="sc-brand-name">spentt</span>
@@ -56,8 +98,12 @@ export default function ShareScreen({ expenses, goTo, showToast }) {
           </div>
         </div>
 
-        <button className="sc-action-btn" onClick={() => showToast('Screenshot this card to share!')}>
-          Share receipt ↗
+        <button
+          className="sc-action-btn"
+          onClick={handleShare}
+          disabled={generating}
+        >
+          {generating ? 'Generating…' : 'Share receipt ↗'}
         </button>
         <button className="sc-cancel-btn" onClick={() => goTo('receipt')}>
           Cancel
