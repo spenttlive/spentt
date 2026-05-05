@@ -21,21 +21,16 @@ export default function App() {
   const [toast, setToast] = useState(null)
   const [showAddSheet, setShowAddSheet] = useState(false)
   const [editingExpense, setEditingExpense] = useState(null)
-  const expensesState = useExpenses()
+  const { user, accessToken, loading, login, logout } = useAuth()
+  const expensesState = useExpenses(accessToken)
   const pwa = usePWA()
   const { dark, toggle: toggleDark } = useDarkMode()
-  const { user, loading, logout } = useAuth()
 
   const goTo = (s) => { setScreen(s); window.scrollTo(0, 0) }
 
   const showToast = (msg) => {
     setToast(msg)
     setTimeout(() => setToast(null), 2200)
-  }
-
-  const handleLogin = (userData) => {
-    localStorage.setItem('spentt-user', JSON.stringify(userData))
-    window.location.reload()
   }
 
   const handleAddPress = () => {
@@ -47,23 +42,36 @@ export default function App() {
     setEditingExpense(expense)
   }
 
-  // Show loading state
   if (loading) {
     return (
       <div style={{
         minHeight: '100vh', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', background: 'var(--bg)'
+        justifyContent: 'center', background: '#FDF8F3',
       }}>
-        <div style={{ fontFamily: 'var(--fh)', fontSize: 24, fontWeight: 700, color: 'var(--text3)' }}>
-          spentt<span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#E8623A', marginLeft: 2, marginBottom: 2 }} />
+        <div style={{ fontFamily: 'Gabarito, sans-serif', fontSize: 24, fontWeight: 700, color: '#A8937A', display: 'flex', alignItems: 'center', gap: 3 }}>
+          spentt<span style={{ width: 7, height: 7, borderRadius: '50%', background: '#E8623A', display: 'inline-block', marginBottom: 2 }} />
         </div>
       </div>
     )
   }
 
-  // Show login if not authenticated
   if (!user) {
-    return <LoginScreen onLogin={handleLogin} />
+    return <LoginScreen onLogin={login} />
+  }
+
+  // Show loading while expenses load from Drive
+  if (!expensesState.loaded) {
+    return (
+      <div style={{
+        minHeight: '100vh', display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center', background: '#FDF8F3', gap: 12,
+      }}>
+        <div style={{ fontFamily: 'Gabarito, sans-serif', fontSize: 24, fontWeight: 700, color: '#A8937A', display: 'flex', alignItems: 'center', gap: 3 }}>
+          spentt<span style={{ width: 7, height: 7, borderRadius: '50%', background: '#E8623A', display: 'inline-block', marginBottom: 2 }} />
+        </div>
+        <div style={{ fontSize: 13, color: '#A8937A' }}>Loading your expenses…</div>
+      </div>
+    )
   }
 
   const ctx = {
@@ -72,7 +80,7 @@ export default function App() {
     pwa, dark, toggleDark,
     onExpenseTap: handleExpenseTap,
     logout,
-    ...expensesState
+    ...expensesState,
   }
 
   return (

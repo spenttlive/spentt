@@ -1,40 +1,10 @@
 import { useEffect } from 'react'
 import './LoginScreen.css'
 
-const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
-
 export default function LoginScreen({ onLogin }) {
   useEffect(() => {
     if (!window.google) return
-    window.google.accounts.id.initialize({
-      client_id: CLIENT_ID,
-      callback: (response) => {
-        if (response.credential) {
-          const base64 = response.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
-          const json = decodeURIComponent(
-            atob(base64).split('').map((c) =>
-              '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-            ).join('')
-          )
-          const profile = JSON.parse(json)
-          onLogin({
-            name: profile.given_name || profile.name,
-            email: profile.email,
-            picture: profile.picture,
-          })
-        }
-      },
-    })
-    window.google.accounts.id.renderButton(
-      document.getElementById('google-btn'),
-      {
-        theme: 'outline',
-        size: 'large',
-        width: 280,
-        text: 'continue_with',
-        shape: 'pill',
-      }
-    )
+    // Render button handled by onLogin from useAuth
   }, [])
 
   return (
@@ -62,7 +32,15 @@ export default function LoginScreen({ onLogin }) {
           <div className="login-perk">✓ Privacy first</div>
         </div>
 
-        <div id="google-btn" className="google-btn-wrap" />
+        <button className="google-login-btn" onClick={onLogin}>
+          <img
+            src="https://developers.google.com/identity/images/g-logo.png"
+            alt="Google"
+            width="20"
+            height="20"
+          />
+          Continue with Google
+        </button>
 
         <div className="login-note">
           By continuing you agree to our terms. Your data lives in your Google Drive.

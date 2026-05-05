@@ -1,47 +1,62 @@
 import { useState, useEffect } from 'react'
-import { loadGoogleScript, signOut } from '../auth/googleAuth'
+import { loadGoogleScript } from '../auth/googleAuth'
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
+const SCOPES = 'https://www.googleapis.com/auth/drive.appdata'
 
 export function useAuth() {
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('spentt-user')
     return saved ? JSON.parse(saved) : null
   })
+  const [accessToken, setAccessToken] = useState(() => {
+    return localStorage.getItem('spentt-access-token') || null
+  })
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     loadGoogleScript().then(() => {
-      window.google.accounts.id.initialize({
-        client_id: CLIENT_ID,
-        callback: (response) => {
-          if (response.credential) {
-            const base64 = response.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
-            const json = decodeURIComponent(
-              atob(base64).split('').map((c) =>
-                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-              ).join('')
-            )
-            const profile = JSON.parse(json)
-            const userData = {
-              name: profile.given_name || profile.name,
-              email: profile.email,
-              picture: profile.picture,
-            }
-            setUser(userData)
-            localStorage.setItem('spentt-user', JSON.stringify(userData))
-          }
-        },
-        auto_select: true,
-      })
       setLoading(false)
     })
   }, [])
 
-  const logout = () => {
-    signOut()
-    setUser(null)
+  const login = () => {
+    const client = window.google.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      callback: async (tokenResponse) => {
+        if (tokenResponse.access_token) {
+          const token = tokenResponse.access_token
+          setAccessToken(token)
+          localStorage.setItem('spentt-access-token', token)
+
+          // Fetch user profile
+          const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          const profile = await res.json()
+          const userData = {
+            name: profile.given_name || profile.name,
+            email: profile.email,
+            picture: profile.picture,
+          }
+          setUser(userData)
+          localStorage.setItem('spentt-user', JSON.stringify(userData))
+        }
+      },
+    })
+    client.requestAccessToken()
   }
 
-  return { user, loading, logout }
+  const logout = () => {
+    if (accessToken) {
+      window.google.accounts.oauth2.revoke(accessToken)
+    }
+    localStorage.removeItem('spentt-user')
+    localStorage.removeItem('spentt-access-token')
+    setUser(null)
+    setAccessToken(null)
+  }
+
+  return { user, accessToken, loading, login, logout }
 }

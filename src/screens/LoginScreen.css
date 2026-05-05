@@ -82,3 +82,24 @@
   line-height: 1.5;
   max-width: 260px;
 }
+
+.google-login-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 99px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.2s;
+  font-family: var(--fb);
+}
+.google-login-btn:active {
+  transform: scale(0.97);
+}

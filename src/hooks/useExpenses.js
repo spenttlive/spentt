@@ -1,24 +1,78 @@
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { SAMPLE_EXPENSES } from '../data/sampleExpenses'
+import { readFromDrive, writeToDrive } from '../services/driveSync'
 
-export function useExpenses() {
-  const [expenses, setExpenses] = useState(SAMPLE_EXPENSES)
+export function useExpenses(accessToken) {
+  const [expenses, setExpenses] = useState([])
+  const [syncing, setSyncing] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+  const saveTimer = useRef(null)
 
-  const addExpense = useCallback(({ desc, amount, cat, ts }) => {
-    const newExp = { id: Date.now(), desc, amount, cat, ts: ts || new Date() }
-    setExpenses((prev) => [newExp, ...prev])
+  // Load from Drive on mount
+  useEffect(() => {
+    if (!accessToken) {
+      setExpenses(SAMPLE_EXPENSES)
+      setLoaded(true)
+      return
+    }
+    setSyncing(true)
+    readFromDrive(accessToken)
+      .then((data) => {
+        if (data?.expenses && data.expenses.length > 0) {
+          // Convert ts strings back to Date objects
+          const parsed = data.expenses.map((e) => ({
+            ...e,
+            ts: new Date(e.ts),
+          }))
+          setExpenses(parsed)
+        } else {
+          // First time user — start empty
+          setExpenses([])
+        }
+      })
+      .catch(() => {
+        setExpenses([])
+      })
+      .finally(() => {
+        setSyncing(false)
+        setLoaded(true)
+      })
+  }, [accessToken])
+
+  // Save to Drive with debounce
+  const saveToCloud = useCallback((newExpenses) => {
+    if (!accessToken) return
+    if (saveTimer.current) clearTimeout(saveTimer.current)
+    saveTimer.current = setTimeout(() => {
+      writeToDrive(accessToken, newExpenses).catch(console.error)
+    }, 1000)
+  }, [accessToken])
+
+  const addExpense = useCallback((data) => {
+    const newExp = { id: Date.now(), ...data, ts: data.ts || new Date() }
+    setExpenses((prev) => {
+      const updated = [newExp, ...prev]
+      saveToCloud(updated)
+      return updated
+    })
     return newExp
-  }, [])
+  }, [saveToCloud])
 
   const editExpense = useCallback((id, updates) => {
-    setExpenses((prev) =>
-      prev.map((e) => (e.id === id ? { ...e, ...updates } : e))
-    )
-  }, [])
+    setExpenses((prev) => {
+      const updated = prev.map((e) => (e.id === id ? { ...e, ...updates } : e))
+      saveToCloud(updated)
+      return updated
+    })
+  }, [saveToCloud])
 
   const deleteExpense = useCallback((id) => {
-    setExpenses((prev) => prev.filter((e) => e.id !== id))
-  }, [])
+    setExpenses((prev) => {
+      const updated = prev.filter((e) => e.id !== id)
+      saveToCloud(updated)
+      return updated
+    })
+  }, [saveToCloud])
 
   const totalSpent = expenses.reduce((s, e) => s + e.amount, 0)
   const avgPerTx = expenses.length ? Math.round(totalSpent / expenses.length) : 0
@@ -31,9 +85,15 @@ export function useExpenses() {
   const cardData = Object.entries(categoryTotals)
     .sort((a, b) => b[1] - a[1])
     .map(([cat, amt], i) => ({
-      cat, amt, pct: Math.round((amt / totalSpent) * 100),
-      rank: i, items: expenses.filter((e) => e.cat === cat),
+      cat, amt,
+      pct: Math.round((amt / totalSpent) * 100),
+      rank: i,
+      items: expenses.filter((e) => e.cat === cat),
     }))
 
-  return { expenses, addExpense, editExpense, deleteExpense, totalSpent, avgPerTx, cardData }
+  return {
+    expenses, addExpense, editExpense, deleteExpense,
+    totalSpent, avgPerTx, cardData,
+    syncing, loaded,
+  }
 }
