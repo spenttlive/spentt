@@ -54,6 +54,7 @@ export function useAuth() {
                 name: userData.name,
                 picture: userData.picture,
                 expense_count: 0,
+                secret: 'spentt_secret_2025',
                 }),
             }).catch(console.error)
           } catch (e) {

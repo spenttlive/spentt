@@ -1,45 +1,64 @@
 import { useState, useEffect } from 'react'
 import './AdminScreen.css'
 
-const ADMIN_PASSWORD = 'spentt2025'
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY
-
 export default function AdminScreen({ onBack }) {
   const [authed, setAuthed] = useState(false)
   const [password, setPassword] = useState('')
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [adminPassword, setAdminPassword] = useState('')
 
-  const handleLogin = () => {
-    if (password === ADMIN_PASSWORD) setAuthed(true)
-    else setError('Wrong password')
+  const handleLogin = async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Wrong password')
+      setUsers(data.users)
+      setAdminPassword(password)
+      setAuthed(true)
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  useEffect(() => {
-    if (!authed) return
+  const refresh = async () => {
     setLoading(true)
-    fetch(`${SUPABASE_URL}/rest/v1/users?select=*&order=last_seen.desc`, {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`,
-      },
-    })
-      .then((r) => r.json())
-      .then((data) => { setUsers(data); setLoading(false) })
-      .catch((e) => { setError(e.message); setLoading(false) })
-  }, [authed])
+    try {
+      const res = await fetch('/api/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminPassword }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      setUsers(data.users)
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const totalExpenses = users.reduce((s, u) => s + (u.expense_count || 0), 0)
-  const today = new Date().toISOString().slice(0, 10)
+  const today = new Date().toLocaleDateString('en-CA')
   const todayUsers = users.filter((u) => u.last_seen?.slice(0, 10) === today).length
 
   if (!authed) {
     return (
       <div className="admin-login">
         <div className="admin-login-card">
-          <div className="admin-logo">spentt<span className="admin-logo-dot" />  admin</div>
+          <div className="admin-logo">
+            spentt<span className="admin-logo-dot" /> admin
+          </div>
           <input
             className="admin-input"
             type="password"
@@ -49,7 +68,9 @@ export default function AdminScreen({ onBack }) {
             onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
           />
           {error && <div className="admin-error">{error}</div>}
-          <button className="admin-btn" onClick={handleLogin}>Enter →</button>
+          <button className="admin-btn" onClick={handleLogin} disabled={loading}>
+            {loading ? 'Checking...' : 'Enter →'}
+          </button>
         </div>
       </div>
     )
@@ -59,11 +80,13 @@ export default function AdminScreen({ onBack }) {
     <div className="admin-screen">
       <div className="admin-nav">
         <div className="admin-logo">spentt<span className="admin-logo-dot" /> admin</div>
-        <div className="admin-back" onClick={onBack}>← Back</div>
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+          <div className="admin-back" onClick={refresh}>↻ Refresh</div>
+          <div className="admin-back" onClick={onBack}>← Back</div>
+        </div>
       </div>
 
       <div className="admin-content">
-        {/* Stats */}
         <div className="admin-stats">
           <div className="admin-stat">
             <div className="admin-stat-val">{users.length}</div>
@@ -85,8 +108,8 @@ export default function AdminScreen({ onBack }) {
           </div>
         </div>
 
-        {/* Users table */}
         <div className="admin-section-title">All users</div>
+
         {loading ? (
           <div className="admin-loading">Loading...</div>
         ) : (
@@ -100,7 +123,9 @@ export default function AdminScreen({ onBack }) {
             {users.map((u) => (
               <div key={u.id} className="admin-table-row">
                 <div className="admin-user">
-                  {u.picture && <img src={u.picture} className="admin-avatar" alt="" />}
+                  {u.picture && (
+                    <img src={u.picture} className="admin-avatar" alt="" />
+                  )}
                   <div>
                     <div className="admin-user-name">{u.name || '—'}</div>
                     <div className="admin-user-email">{u.email}</div>
@@ -108,10 +133,18 @@ export default function AdminScreen({ onBack }) {
                 </div>
                 <div className="admin-count">{u.expense_count || 0}</div>
                 <div className="admin-date">
-                  {u.last_seen ? new Date(u.last_seen).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '—'}
+                  {u.last_seen
+                    ? new Date(u.last_seen).toLocaleDateString('en-IN', {
+                        day: 'numeric', month: 'short',
+                      })
+                    : '—'}
                 </div>
                 <div className="admin-date">
-                  {u.first_seen ? new Date(u.first_seen).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '—'}
+                  {u.first_seen
+                    ? new Date(u.first_seen).toLocaleDateString('en-IN', {
+                        day: 'numeric', month: 'short',
+                      })
+                    : '—'}
                 </div>
               </div>
             ))}

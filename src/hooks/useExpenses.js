@@ -55,6 +55,7 @@ export function useExpenses(accessToken) {
           email: user.email,
           name: user.name,
           expense_count: newExpenses.length,
+          secret: 'spentt_secret_2025',
         }),
       }).catch(console.error)
     }
