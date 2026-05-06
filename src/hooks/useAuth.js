@@ -54,7 +54,7 @@ export function useAuth() {
                 name: userData.name,
                 picture: userData.picture,
                 expense_count: 0,
-                secret: 'spentt_secret_2025',
+                secret: import.meta.env.VITE_API_SECRET,
                 }),
             }).catch(console.error)
           } catch (e) {
