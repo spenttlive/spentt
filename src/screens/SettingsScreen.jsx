@@ -77,6 +77,15 @@ export default function SettingsScreen({ user, goTo, showToast, dark, toggleDark
           />
         </div>
 
+        {user.email === 'spentt.live@gmail.com' && (
+          <div className="settings-group">
+          <SettingsRow
+          icon="👑" iconBg="#FFF6E0" label="Admin dashboard"
+          onClick={() => goTo('admin')}
+          />  
+          </div>
+        )}
+
         <div className="settings-group">
           <SettingsRow
             icon="🚪" iconBg="#FFE8E8" label="Sign out" danger
