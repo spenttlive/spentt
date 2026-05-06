@@ -8,24 +8,279 @@
     <meta name="apple-mobile-web-app-title" content="Spentt" />
     <meta name="theme-color" content="#1C1409" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="description" content="Spentt — Know where it went. The honest expense tracker that stores your data in your own Google Drive. Free forever, no bank linking." />
+    <meta name="google-site-verification" content="your-verification-code-here" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icon-512.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-    <title>Spentt</title>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <meta name="google-site-verification" content="-QBEem71Z87EKEobFCqMCyGOigWIeYRQxfYlQ67oEFM" />
+
+    <!-- Open Graph for sharing -->
+    <meta property="og:title" content="Spentt — Know where it went" />
+    <meta property="og:description" content="The honest expense tracker. Your data lives in your Google Drive. Free forever." />
+    <meta property="og:url" content="https://www.spentt.live" />
+    <meta property="og:type" content="website" />
+
+    <title>Spentt — Know where it went</title>
+
+    <style>
+      /* Static landing page styles — visible before React loads */
+      #static-landing {
+        font-family: 'DM Sans', sans-serif;
+        background: #FDF8F3;
+        min-height: 100vh;
+        color: #1C1409;
+      }
+      #static-landing nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        border-bottom: 1px solid rgba(28,20,9,0.08);
+        background: #FDF8F3;
+      }
+      #static-landing .logo {
+        font-family: 'Gabarito', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: #1C1409;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      #static-landing .logo-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #E8623A;
+        display: inline-block;
+        margin-bottom: 1px;
+      }
+      #static-landing .nav-cta {
+        background: #1C1409;
+        color: #fff;
+        border: none;
+        border-radius: 99px;
+        padding: 8px 18px;
+        font-family: 'Gabarito', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      #static-landing .hero {
+        padding: 48px 24px 40px;
+        text-align: center;
+      }
+      #static-landing .eyebrow {
+        display: inline-block;
+        background: #FFFCF9;
+        border: 1px solid rgba(28,20,9,0.08);
+        border-radius: 99px;
+        padding: 6px 16px;
+        font-size: 12px;
+        color: #6B5B45;
+        margin-bottom: 24px;
+      }
+      #static-landing h1 {
+        font-family: 'Gabarito', sans-serif;
+        font-size: 56px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: #1C1409;
+        margin-bottom: 16px;
+      }
+      #static-landing h1 span { color: #E8623A; }
+      #static-landing .sub {
+        font-size: 16px;
+        color: #6B5B45;
+        line-height: 1.6;
+        margin-bottom: 32px;
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #static-landing .cta {
+        display: block;
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto 12px;
+        padding: 16px;
+        background: #1C1409;
+        color: #fff;
+        border: none;
+        border-radius: 16px;
+        font-family: 'Gabarito', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+      }
+      #static-landing .cta-note {
+        font-size: 12px;
+        color: #A8937A;
+        text-align: center;
+      }
+      #static-landing .features {
+        padding: 40px 24px;
+        background: #FFFCF9;
+      }
+      #static-landing .features h2 {
+        font-family: 'Gabarito', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      #static-landing .feature-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+      #static-landing .feature {
+        background: #FDF8F3;
+        border: 1px solid rgba(28,20,9,0.08);
+        border-radius: 16px;
+        padding: 16px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      #static-landing .feature-icon { font-size: 24px; flex-shrink: 0; }
+      #static-landing .feature-title {
+        font-family: 'Gabarito', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      #static-landing .feature-desc { font-size: 13px; color: #6B5B45; line-height: 1.5; }
+      #static-landing .privacy-section {
+        padding: 40px 24px;
+        background: #1C1409;
+        text-align: center;
+      }
+      #static-landing .privacy-section h2 {
+        font-family: 'Gabarito', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 12px;
+      }
+      #static-landing .privacy-section p {
+        font-size: 15px;
+        color: rgba(255,255,255,0.5);
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      #static-landing .privacy-link {
+        color: #E8623A;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      #static-landing footer {
+        padding: 24px;
+        border-top: 1px solid rgba(28,20,9,0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      #static-landing .footer-links { display: flex; gap: 16px; }
+      #static-landing .footer-links a { font-size: 13px; color: #A8937A; text-decoration: none; }
+      #static-landing .footer-note { font-size: 13px; color: #A8937A; }
+    </style>
   </head>
   <body>
+
+    <!-- STATIC LANDING PAGE — visible to crawlers and before React loads -->
+    <div id="static-landing">
+      <nav>
+        <div class="logo">spentt<span class="logo-dot"></span></div>
+        <a href="#" class="nav-cta" onclick="document.getElementById('static-landing').style.display='none'">Get started →</a>
+      </nav>
+
+      <div class="hero">
+        <div class="eyebrow">Free · No bank linking · Your data only</div>
+        <h1>Already<br/><span>Spentt?</span></h1>
+        <p class="sub">The honest expense tracker that tells you exactly where your money went — with a smile.</p>
+        <a href="#" class="cta" onclick="document.getElementById('static-landing').style.display='none';return false;">Start tracking free →</a>
+        <div class="cta-note">No credit card. No bank account. Takes 30 seconds.</div>
+      </div>
+
+      <div class="features">
+        <h2>Built to feel good,<br/>not overwhelming.</h2>
+        <div class="feature-list">
+          <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <div>
+              <div class="feature-title">Log in 5 seconds</div>
+              <div class="feature-desc">Description, amount, category, date. Four taps. Done.</div>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">🧾</div>
+            <div>
+              <div class="feature-title">Weekly receipt</div>
+              <div class="feature-desc">Every Sunday, a beautiful summary with your spending personality verdict.</div>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">🔒</div>
+            <div>
+              <div class="feature-title">Your data, your Drive</div>
+              <div class="feature-desc">Expenses live in your Google Drive. We never see them. Ever.</div>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">📱</div>
+            <div>
+              <div class="feature-title">Installs on your phone</div>
+              <div class="feature-desc">Add to home screen — works like a native app. No App Store needed.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="privacy-section">
+        <h2>Your data never touches our servers.</h2>
+        <p>Most apps store your financial data on their servers. Spentt doesn't. Your expenses live in your own Google Drive — only you can access them.</p>
+        <a href="/privacy.html" class="privacy-link">Read our privacy policy →</a>
+      </div>
+
+      <footer>
+        <div class="logo">spentt<span class="logo-dot"></span></div>
+        <div class="footer-links">
+          <a href="/privacy.html">Privacy policy</a>
+          <a href="/terms.html">Terms of service</a>
+        </div>
+        <div class="footer-note">© 2025 Spentt</div>
+      </footer>
+    </div>
+
+    <!-- React app mounts here -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <!-- Static footer for crawlers -->
-    <noscript>
-      <div style="text-align:center;padding:20px;font-family:sans-serif;">
-        <a href="/privacy.html" style="color:#E8623A;margin-right:16px;">Privacy Policy</a>
-        <a href="/terms.html" style="color:#E8623A;">Terms of Service</a>
-      </div>
-    </noscript>
+
+    <!-- Hide static landing when React loads -->
+    <script>
+      window.addEventListener('load', function() {
+        // React will handle showing/hiding the landing page
+        // Hide static version after React takes over
+        setTimeout(function() {
+          var static_landing = document.getElementById('static-landing');
+          var root = document.getElementById('root');
+          if (root && root.children.length > 0) {
+            static_landing.style.display = 'none';
+          }
+        }, 500);
+      });
+    </script>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
   </body>
 </html>
