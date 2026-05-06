@@ -15,6 +15,8 @@ import Toast from './components/Toast'
 import AddSheet from './components/home/AddSheet'
 import EditSheet from './components/home/EditSheet'
 import LandingScreen from './screens/LandingScreen'
+import PrivacyScreen from './screens/PrivacyScreen'
+import TermsScreen from './screens/TermsScreen'
 import './App.css'
 
 export default function App() {
@@ -64,10 +66,14 @@ export default function App() {
   }
 
   if (!user) {
-    if (showLanding) {
-      return <LandingScreen onGetStarted={() => setShowLanding(false)} />
-    }
-    return <LoginScreen onLogin={login} />
+  if (showLanding === 'privacy') return <PrivacyScreen onBack={() => setShowLanding(true)} />
+  if (showLanding === 'terms') return <TermsScreen onBack={() => setShowLanding(true)} />
+  if (showLanding === true) return <LandingScreen onGetStarted={(page) => {
+    if (page === 'privacy') setShowLanding('privacy')
+    else if (page === 'terms') setShowLanding('terms')
+    else setShowLanding(false)
+  }} />
+  return <LoginScreen onLogin={login} />
   }
 
   // Show loading while expenses load from Drive
@@ -143,6 +149,8 @@ if (!driveAccess && user) {
         {screen === 'share'    && <ShareScreen    {...ctx} />}
         {screen === 'settings' && <SettingsScreen {...ctx} />}
         {screen === 'profile'  && <ProfileScreen  {...ctx} />}
+        {screen === 'privacy'  && <PrivacyScreen  onBack={() => goTo('settings')} />}
+        {screen === 'terms'    && <TermsScreen    onBack={() => goTo('settings')} />}
 
         <BottomNav current={screen} goTo={goTo} onAddPress={handleAddPress} />
 

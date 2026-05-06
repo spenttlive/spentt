@@ -67,7 +67,14 @@ export default function SettingsScreen({ user, goTo, showToast, dark, toggleDark
               showToast('CSV downloaded!')
             }}
           />
-          <SettingsRow icon="🔒" iconBg="#EAF2FF" label="Privacy" value="Your Drive" onClick={() => showToast('Your data lives only in your Google Drive')} />
+          <SettingsRow
+            icon="🔒" iconBg="#EAF2FF" label="Privacy policy"
+            onClick={() => goTo('privacy')}
+          />
+          <SettingsRow
+            icon="📄" iconBg="#F5EEFF" label="Terms of service"
+            onClick={() => goTo('terms')}
+          />
         </div>
 
         <div className="settings-group">

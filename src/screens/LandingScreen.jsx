@@ -190,7 +190,11 @@ export default function LandingScreen({ onGetStarted }) {
       {/* FOOTER */}
       <footer className="landing-footer">
         <div className="landing-logo">spentt<span className="landing-logo-dot" /></div>
-        <div className="landing-footer-note">© 2026 Spentt · spentt.live</div>
+        <div className="landing-footer-links">
+            <span onClick={() => onGetStarted('privacy')} className="landing-footer-link">Privacy</span>
+            <span onClick={() => onGetStarted('terms')} className="landing-footer-link">Terms</span>
+            <span className="landing-footer-note">© 2026 Spentt</span>
+        </div>
       </footer>
 
     </div>
