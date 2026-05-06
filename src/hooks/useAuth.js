@@ -45,6 +45,17 @@ export function useAuth() {
             }
             setUser(userData)
             localStorage.setItem('spentt-user', JSON.stringify(userData))
+            // Track user in Supabase
+            fetch('/api/track-user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                email: userData.email,
+                name: userData.name,
+                picture: userData.picture,
+                expense_count: 0,
+                }),
+            }).catch(console.error)
           } catch (e) {
             console.error('Failed to fetch user info', e)
           }

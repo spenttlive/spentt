@@ -40,11 +40,25 @@ export function useExpenses(accessToken) {
 
   // Save to Drive with debounce
   const saveToCloud = useCallback((newExpenses) => {
-    if (!accessToken) return
-    if (saveTimer.current) clearTimeout(saveTimer.current)
-    saveTimer.current = setTimeout(() => {
-      writeToDrive(accessToken, newExpenses).catch(console.error)
-    }, 1000)
+  if (!accessToken) return
+  if (saveTimer.current) clearTimeout(saveTimer.current)
+  saveTimer.current = setTimeout(() => {
+    writeToDrive(accessToken, newExpenses).catch(console.error)
+    // Track expense count
+    const userStr = localStorage.getItem('spentt-user')
+    if (userStr) {
+      const user = JSON.parse(userStr)
+      fetch('/api/track-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          name: user.name,
+          expense_count: newExpenses.length,
+        }),
+      }).catch(console.error)
+    }
+  }, 1000)
   }, [accessToken])
 
   const addExpense = useCallback((data) => {
