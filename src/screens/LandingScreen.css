@@ -114,6 +114,7 @@
 /* PHONE PREVIEW */
 .landing-preview {
   padding: 0 24px 48px;
+  display: none;
 }
 .landing-phone {
   background: var(--text);
