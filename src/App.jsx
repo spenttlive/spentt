@@ -29,7 +29,7 @@ export default function App() {
   const [categoryFilter, setCategoryFilter] = useState(null)
   const { user, accessToken, driveAccess, loading, login, logout } = useAuth()
   const [showLanding, setShowLanding] = useState(true)
-  const expensesState = useExpenses(accessToken)
+  const expensesState = useExpenses(accessToken, user?.email)
   const pwa = usePWA()
   const { dark, toggle: toggleDark } = useDarkMode()
 

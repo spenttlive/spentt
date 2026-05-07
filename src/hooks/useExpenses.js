@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { SAMPLE_EXPENSES } from '../data/sampleExpenses'
 import { readFromDrive, writeToDrive } from '../services/driveSync'
 
-export function useExpenses(accessToken) {
+export function useExpenses(accessToken, userEmail) {
   const [expenses, setExpenses] = useState([])
   const [syncing, setSyncing] = useState(false)
   const [loaded, setLoaded] = useState(false)
@@ -24,20 +24,17 @@ export function useExpenses(accessToken) {
     }))
     setExpenses(parsed)
 
-    // Sync count to Supabase after loading
-    const userStr = localStorage.getItem('spentt-user')
-    if (userStr) {
-      const user = JSON.parse(userStr)
-      fetch('/api/track-user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: user.email,
-          name: user.name,
-          expense_count: data.expenses.length,
-          secret: import.meta.env.VITE_API_SECRET,
-        }),
-      }).catch(console.error)
+    // Sync count using the email passed directly — not from localStorage
+    if (userEmail) {
+    fetch('/api/track-user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: userEmail,
+      expense_count: data.expenses.length,
+      secret: import.meta.env.VITE_API_SECRET,
+    }),
+    }).catch(console.error)
     }
     } else {
     setExpenses([])
@@ -59,22 +56,19 @@ export function useExpenses(accessToken) {
   saveTimer.current = setTimeout(() => {
     writeToDrive(accessToken, newExpenses).catch(console.error)
     // Track expense count
-    const userStr = localStorage.getItem('spentt-user')
-    if (userStr) {
-      const user = JSON.parse(userStr)
-      fetch('/api/track-user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: user.email,
-          name: user.name,
-          expense_count: newExpenses.length,
-          secret: import.meta.env.VITE_API_SECRET,
-        }),
-      }).catch(console.error)
+    if (userEmail) {
+    fetch('/api/track-user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: userEmail,
+      expense_count: newExpenses.length,
+      secret: import.meta.env.VITE_API_SECRET,
+    }),
+    }).catch(console.error)
     }
   }, 1000)
-  }, [accessToken])
+  }, [accessToken, userEmail])
 
   const addExpense = useCallback((data) => {
     const newExp = { id: Date.now(), ...data, ts: data.ts || new Date() }
