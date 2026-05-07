@@ -16,19 +16,33 @@ export function useExpenses(accessToken) {
     }
     setSyncing(true)
     readFromDrive(accessToken)
-      .then((data) => {
-        if (data?.expenses && data.expenses.length > 0) {
-          // Convert ts strings back to Date objects
-          const parsed = data.expenses.map((e) => ({
-            ...e,
-            ts: new Date(e.ts),
-          }))
-          setExpenses(parsed)
-        } else {
-          // First time user — start empty
-          setExpenses([])
-        }
-      })
+    .then((data) => {
+    if (data?.expenses && data.expenses.length > 0) {
+    const parsed = data.expenses.map((e) => ({
+      ...e,
+      ts: new Date(e.ts),
+    }))
+    setExpenses(parsed)
+
+    // Sync count to Supabase after loading
+    const userStr = localStorage.getItem('spentt-user')
+    if (userStr) {
+      const user = JSON.parse(userStr)
+      fetch('/api/track-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          name: user.name,
+          expense_count: data.expenses.length,
+          secret: import.meta.env.VITE_API_SECRET,
+        }),
+      }).catch(console.error)
+    }
+    } else {
+    setExpenses([])
+    }
+    })
       .catch(() => {
         setExpenses([])
       })
