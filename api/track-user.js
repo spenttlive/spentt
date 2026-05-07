@@ -15,7 +15,6 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  // Verify secret
   const { email, name, picture, expense_count, secret } = req.body
 
   if (!secret || secret !== API_SECRET) {
@@ -25,24 +24,28 @@ export default async function handler(req, res) {
   if (!email) return res.status(400).json({ error: 'Email required' })
 
   try {
+    // Build update object — only include expense_count if explicitly provided
+    const updateData = {
+      email,
+      name,
+      picture,
+      last_seen: new Date().toISOString(),
+    }
+
+    if (expense_count !== undefined && expense_count !== null) {
+      updateData.expense_count = expense_count
+    }
+
     const { data, error } = await supabase
       .from('users')
-      .upsert(
-        {
-          email,
-          name,
-          picture,
-          expense_count: expense_count || 0,
-          last_seen: new Date().toISOString(),
-        },
-        { onConflict: 'email' }
-      )
+      .upsert(updateData, { onConflict: 'email' })
       .select()
 
     if (error) throw error
 
     return res.status(200).json({ success: true })
   } catch (err) {
+    console.error('Track user error:', err)
     return res.status(500).json({ error: err.message })
   }
 }

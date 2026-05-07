@@ -53,9 +53,8 @@ export function useAuth() {
                 email: userData.email,
                 name: userData.name,
                 picture: userData.picture,
-                expense_count: 0,
                 secret: import.meta.env.VITE_API_SECRET,
-                }),
+            }),
             }).catch(console.error)
           } catch (e) {
             console.error('Failed to fetch user info', e)
