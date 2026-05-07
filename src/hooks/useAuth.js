@@ -17,18 +17,23 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadGoogleScript().then(() => {
-      // If user was previously logged in, try silent token refresh
-      const savedUser = localStorage.getItem('spentt-user')
-      const hadDriveAccess = localStorage.getItem('spentt-had-drive-access')
+  // Safety timeout — never stay on loading screen more than 5 seconds
+  const safetyTimer = setTimeout(() => {
+    setLoading(false)
+  }, 5000)
 
-      if (savedUser && hadDriveAccess) {
-        // Silently request new access token
+  loadGoogleScript().then(() => {
+    const savedUser = localStorage.getItem('spentt-user')
+    const hadDriveAccess = localStorage.getItem('spentt-had-drive-access')
+
+    if (savedUser && hadDriveAccess) {
+      try {
         const tokenClient = window.google.accounts.oauth2.initTokenClient({
           client_id: CLIENT_ID,
           scope: 'https://www.googleapis.com/auth/drive.appdata openid email profile',
-          prompt: '', // Empty string = no prompt if previously authorized
+          prompt: '',
           callback: async (tokenResponse) => {
+            clearTimeout(safetyTimer)
             if (tokenResponse.access_token) {
               const grantedScopes = tokenResponse.scope || ''
               const hasDrive = grantedScopes.includes('drive.appdata') || grantedScopes.includes('drive')
@@ -40,13 +45,27 @@ export function useAuth() {
             }
             setLoading(false)
           },
+          error_callback: () => {
+            clearTimeout(safetyTimer)
+            setLoading(false)
+          }
         })
         tokenClient.requestAccessToken({ prompt: '' })
-      } else {
+      } catch (e) {
+        clearTimeout(safetyTimer)
         setLoading(false)
       }
-    })
-  }, [])
+    } else {
+      clearTimeout(safetyTimer)
+      setLoading(false)
+    }
+  }).catch(() => {
+    clearTimeout(safetyTimer)
+    setLoading(false)
+  })
+
+  return () => clearTimeout(safetyTimer)
+}, [])
 
   const login = () => {
     const tokenClient = window.google.accounts.oauth2.initTokenClient({
