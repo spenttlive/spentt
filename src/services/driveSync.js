@@ -20,6 +20,11 @@ export async function readFromDrive(token) {
     `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`,
     { headers: { Authorization: `Bearer ${token}` } }
   )
+  if (!res.ok) {
+    const err = new Error(`Drive read failed: ${res.status}`)
+    err.status = res.status
+    throw err
+  }
   const data = await res.json()
   return data
 }
@@ -32,7 +37,7 @@ export async function writeToDrive(token, expenses) {
 
   if (file) {
     // Update existing file
-    await fetch(
+    const res = await fetch(
       `https://www.googleapis.com/upload/drive/v3/files/${file.id}?uploadType=media`,
       {
         method: 'PATCH',
@@ -43,6 +48,11 @@ export async function writeToDrive(token, expenses) {
         body: blob,
       }
     )
+    if (!res.ok) {
+      const err = new Error(`Drive write failed: ${res.status}`)
+      err.status = res.status
+      throw err
+    }
   } else {
     // Create new file
     const metadata = {
@@ -53,7 +63,7 @@ export async function writeToDrive(token, expenses) {
     form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }))
     form.append('file', blob)
 
-    await fetch(
+    const res = await fetch(
       'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
       {
         method: 'POST',
@@ -61,5 +71,10 @@ export async function writeToDrive(token, expenses) {
         body: form,
       }
     )
+    if (!res.ok) {
+      const err = new Error(`Drive create failed: ${res.status}`)
+      err.status = res.status
+      throw err
+    }
   }
 }

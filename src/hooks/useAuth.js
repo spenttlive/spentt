@@ -17,55 +17,22 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-  // Safety timeout — never stay on loading screen more than 5 seconds
-  const safetyTimer = setTimeout(() => {
-    setLoading(false)
-  }, 5000)
+    const safetyTimer = setTimeout(() => {
+      setLoading(false)
+    }, 3000)
 
-  loadGoogleScript().then(() => {
-    const savedUser = localStorage.getItem('spentt-user')
-    const hadDriveAccess = localStorage.getItem('spentt-had-drive-access')
-
-    if (savedUser && hadDriveAccess) {
-      try {
-        const tokenClient = window.google.accounts.oauth2.initTokenClient({
-          client_id: CLIENT_ID,
-          scope: 'https://www.googleapis.com/auth/drive.appdata openid email profile',
-          prompt: '',
-          callback: async (tokenResponse) => {
-            clearTimeout(safetyTimer)
-            if (tokenResponse.access_token) {
-              const grantedScopes = tokenResponse.scope || ''
-              const hasDrive = grantedScopes.includes('drive.appdata') || grantedScopes.includes('drive')
-              if (hasDrive) {
-                setAccessToken(tokenResponse.access_token)
-                setDriveAccess(true)
-                localStorage.setItem('spentt-access-token', tokenResponse.access_token)
-              }
-            }
-            setLoading(false)
-          },
-          error_callback: () => {
-            clearTimeout(safetyTimer)
-            setLoading(false)
-          }
-        })
-        tokenClient.requestAccessToken({ prompt: '' })
-      } catch (e) {
+    loadGoogleScript()
+      .then(() => {
         clearTimeout(safetyTimer)
         setLoading(false)
-      }
-    } else {
-      clearTimeout(safetyTimer)
-      setLoading(false)
-    }
-  }).catch(() => {
-    clearTimeout(safetyTimer)
-    setLoading(false)
-  })
+      })
+      .catch(() => {
+        clearTimeout(safetyTimer)
+        setLoading(false)
+      })
 
-  return () => clearTimeout(safetyTimer)
-}, [])
+    return () => clearTimeout(safetyTimer)
+  }, [])
 
   const login = () => {
     const tokenClient = window.google.accounts.oauth2.initTokenClient({
@@ -88,10 +55,10 @@ export function useAuth() {
             const existingUser = localStorage.getItem('spentt-user')
             const existingData = existingUser ? JSON.parse(existingUser) : null
             const userData = {
-                name: profile.given_name || profile.name || profile.email?.split('@')[0],
-                email: profile.email,
-                picture: profile.picture,
-                first_seen: existingData?.first_seen || new Date().toISOString(),
+              name: profile.given_name || profile.name || profile.email?.split('@')[0],
+              email: profile.email,
+              picture: profile.picture,
+              first_seen: existingData?.first_seen || new Date().toISOString(),
             }
             setUser(userData)
             localStorage.setItem('spentt-user', JSON.stringify(userData))
@@ -122,7 +89,6 @@ export function useAuth() {
           setAccessToken(token)
           setDriveAccess(true)
           localStorage.setItem('spentt-access-token', token)
-          // Remember that this user previously granted Drive access
           localStorage.setItem('spentt-had-drive-access', 'true')
         }
       },

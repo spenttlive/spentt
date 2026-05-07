@@ -54,7 +54,14 @@ export function useExpenses(accessToken, userEmail) {
   if (!accessToken) return
   if (saveTimer.current) clearTimeout(saveTimer.current)
   saveTimer.current = setTimeout(() => {
-    writeToDrive(accessToken, newExpenses).catch(console.error)
+    writeToDrive(accessToken, newExpenses).catch((err) => {
+    console.error('Drive write failed:', err)
+    // Clear expired token so user gets prompted to re-login
+    if (err?.status === 401 || err?.message?.includes('401')) {
+    localStorage.removeItem('spentt-access-token')
+    localStorage.removeItem('spentt-had-drive-access')
+    }
+    })
     // Track expense count
     if (userEmail) {
     fetch('/api/track-user', {
