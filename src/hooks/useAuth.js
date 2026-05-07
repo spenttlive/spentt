@@ -17,7 +17,35 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadGoogleScript().then(() => setLoading(false))
+    loadGoogleScript().then(() => {
+      // If user was previously logged in, try silent token refresh
+      const savedUser = localStorage.getItem('spentt-user')
+      const hadDriveAccess = localStorage.getItem('spentt-had-drive-access')
+
+      if (savedUser && hadDriveAccess) {
+        // Silently request new access token
+        const tokenClient = window.google.accounts.oauth2.initTokenClient({
+          client_id: CLIENT_ID,
+          scope: 'https://www.googleapis.com/auth/drive.appdata openid email profile',
+          prompt: '', // Empty string = no prompt if previously authorized
+          callback: async (tokenResponse) => {
+            if (tokenResponse.access_token) {
+              const grantedScopes = tokenResponse.scope || ''
+              const hasDrive = grantedScopes.includes('drive.appdata') || grantedScopes.includes('drive')
+              if (hasDrive) {
+                setAccessToken(tokenResponse.access_token)
+                setDriveAccess(true)
+                localStorage.setItem('spentt-access-token', tokenResponse.access_token)
+              }
+            }
+            setLoading(false)
+          },
+        })
+        tokenClient.requestAccessToken({ prompt: '' })
+      } else {
+        setLoading(false)
+      }
+    })
   }, [])
 
   const login = () => {
@@ -32,7 +60,7 @@ export function useAuth() {
             grantedScopes.includes('drive.appdata') ||
             grantedScopes.includes('drive')
 
-          // Always fetch and set user info first
+          // Always fetch user info
           try {
             const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
               headers: { Authorization: `Bearer ${token}` },
@@ -45,31 +73,35 @@ export function useAuth() {
             }
             setUser(userData)
             localStorage.setItem('spentt-user', JSON.stringify(userData))
-            // Track user in Supabase
+
+            // Track user
             fetch('/api/track-user', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
                 email: userData.email,
                 name: userData.name,
                 picture: userData.picture,
                 secret: import.meta.env.VITE_API_SECRET,
-            }),
+              }),
             }).catch(console.error)
           } catch (e) {
             console.error('Failed to fetch user info', e)
           }
 
-          // Then check Drive access
+          // Check Drive access
           if (!hasDriveAccess) {
             setDriveAccess(false)
             localStorage.removeItem('spentt-access-token')
+            localStorage.removeItem('spentt-had-drive-access')
             return
           }
 
           setAccessToken(token)
           setDriveAccess(true)
           localStorage.setItem('spentt-access-token', token)
+          // Remember that this user previously granted Drive access
+          localStorage.setItem('spentt-had-drive-access', 'true')
         }
       },
     })
@@ -82,6 +114,7 @@ export function useAuth() {
     }
     localStorage.removeItem('spentt-user')
     localStorage.removeItem('spentt-access-token')
+    localStorage.removeItem('spentt-had-drive-access')
     setUser(null)
     setAccessToken(null)
     setDriveAccess(false)
