@@ -58,10 +58,14 @@ export default function ProfileScreen({ user, expenses, totalSpent, goTo, showTo
         <div className="settings-group">
           <div className="settings-row">
             <div className="settings-row-left">
-              <div className="settings-icon" style={{ background: '#EDFAF4' }}>📅</div>
-              <div className="settings-label">Member since</div>
+            <div className="settings-icon" style={{ background: '#EDFAF4' }}>📅</div>
+            <div className="settings-label">Member since</div>
             </div>
-            <span className="settings-value">April 2025</span>
+            <span className="settings-value">
+            {user?.first_seen
+             ? new Date(user.first_seen).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })
+             : new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}
+            </span>
           </div>
         </div>
       </div>

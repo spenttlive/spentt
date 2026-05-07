@@ -66,10 +66,13 @@ export function useAuth() {
               headers: { Authorization: `Bearer ${token}` },
             })
             const profile = await res.json()
+            const existingUser = localStorage.getItem('spentt-user')
+            const existingData = existingUser ? JSON.parse(existingUser) : null
             const userData = {
-              name: profile.given_name || profile.name || profile.email?.split('@')[0],
-              email: profile.email,
-              picture: profile.picture,
+                name: profile.given_name || profile.name || profile.email?.split('@')[0],
+                email: profile.email,
+                picture: profile.picture,
+                first_seen: existingData?.first_seen || new Date().toISOString(),
             }
             setUser(userData)
             localStorage.setItem('spentt-user', JSON.stringify(userData))

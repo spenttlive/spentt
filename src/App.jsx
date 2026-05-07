@@ -18,6 +18,7 @@ import LandingScreen from './screens/LandingScreen'
 import PrivacyScreen from './screens/PrivacyScreen'
 import TermsScreen from './screens/TermsScreen'
 import AdminScreen from './screens/AdminScreen'
+import FAQScreen from './screens/FAQScreen'
 import './App.css'
 
 export default function App() {
@@ -153,6 +154,7 @@ if (!driveAccess && user) {
         {screen === 'privacy'  && <PrivacyScreen  onBack={() => goTo('settings')} />}
         {screen === 'terms'    && <TermsScreen    onBack={() => goTo('settings')} />}
         {screen === 'admin' && <AdminScreen onBack={() => goTo('settings')} />}
+        {screen === 'faq' && <FAQScreen onBack={() => goTo('settings')} />}  
 
         <BottomNav current={screen} goTo={goTo} onAddPress={handleAddPress} />
 

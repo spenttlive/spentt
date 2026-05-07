@@ -75,6 +75,10 @@ export default function SettingsScreen({ user, goTo, showToast, dark, toggleDark
             icon="📄" iconBg="#F5EEFF" label="Terms of service"
             onClick={() => goTo('terms')}
           />
+          <SettingsRow
+            icon="❓" iconBg="#EAF2FF" label="FAQ"
+            onClick={() => goTo('faq')}
+          />          
         </div>
 
         {user.email === 'spentt.live@gmail.com' && (
