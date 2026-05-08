@@ -8,29 +8,37 @@ export function useAuth() {
     const saved = localStorage.getItem('spentt-user')
     return saved ? JSON.parse(saved) : null
   })
+
   const [accessToken, setAccessToken] = useState(() => {
-    // Check if token is expired
     const token = localStorage.getItem('spentt-access-token')
+    if (!token) return null
     const expiry = localStorage.getItem('spentt-token-expiry')
-    if (token && expiry && Date.now() < parseInt(expiry)) {
-      return token
+    if (!expiry) return token
+    if (Date.now() >= parseInt(expiry)) {
+      localStorage.removeItem('spentt-access-token')
+      return null
     }
-    // Token expired — clear it
-    localStorage.removeItem('spentt-access-token')
-    return null
+    return token
   })
+
   const [driveAccess, setDriveAccess] = useState(() => {
     const token = localStorage.getItem('spentt-access-token')
+    if (!token) return false
     const expiry = localStorage.getItem('spentt-token-expiry')
-    return !!(token && expiry && Date.now() < parseInt(expiry))
+    if (!expiry) return true
+    return Date.now() < parseInt(expiry)
   })
+
   const [tokenExpired, setTokenExpired] = useState(() => {
     const hadAccess = localStorage.getItem('spentt-had-drive-access')
     const token = localStorage.getItem('spentt-access-token')
     const expiry = localStorage.getItem('spentt-token-expiry')
-    // Had access before but token is now expired
-    return !!(hadAccess && (!token || !expiry || Date.now() >= parseInt(expiry)))
+    if (!hadAccess) return false
+    if (!token) return true
+    if (!expiry) return false
+    return Date.now() >= parseInt(expiry)
   })
+
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -106,7 +114,6 @@ export function useAuth() {
             return
           }
 
-          // Store token with expiry (55 minutes to be safe)
           const expiry = Date.now() + 55 * 60 * 1000
           setAccessToken(token)
           setDriveAccess(true)
