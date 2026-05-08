@@ -19,6 +19,7 @@ import PrivacyScreen from './screens/PrivacyScreen'
 import TermsScreen from './screens/TermsScreen'
 import AdminScreen from './screens/AdminScreen'
 import FAQScreen from './screens/FAQScreen'
+import TokenExpiredBanner from './components/TokenExpiredBanner'
 import './App.css'
 
 export default function App() {
@@ -27,7 +28,7 @@ export default function App() {
   const [showAddSheet, setShowAddSheet] = useState(false)
   const [editingExpense, setEditingExpense] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState(null)
-  const { user, accessToken, driveAccess, loading, login, logout } = useAuth()
+  const { user, accessToken, driveAccess, tokenExpired, loading, login, logout } = useAuth()
   const [showLanding, setShowLanding] = useState(true)
   const expensesState = useExpenses(accessToken, user?.email)
   const pwa = usePWA()
@@ -137,6 +138,8 @@ if (!driveAccess && user) {
     categoryFilter,
     setCategoryFilter,
     logout,
+    tokenExpired,
+    login,
     ...expensesState,
   }
 
@@ -145,6 +148,9 @@ if (!driveAccess && user) {
 
       {/* App */}
       <div className="app-shell">
+        {tokenExpired && (
+        <TokenExpiredBanner onRefresh={login} />
+        )}
         {screen === 'home'     && <HomeScreen     {...ctx} />}
         {screen === 'history'  && <HistoryScreen  {...ctx} />}
         {screen === 'receipt'  && <ReceiptScreen  {...ctx} />}
