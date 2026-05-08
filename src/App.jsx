@@ -95,7 +95,6 @@ export default function App() {
   }
   // Show warning if Drive access was not granted
 if (!driveAccess && user) {
-  console.log('Showing Drive warning — driveAccess:', driveAccess, 'user:', user)
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
