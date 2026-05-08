@@ -20,7 +20,48 @@ import TermsScreen from './screens/TermsScreen'
 import AdminScreen from './screens/AdminScreen'
 import FAQScreen from './screens/FAQScreen'
 import TokenExpiredBanner from './components/TokenExpiredBanner'
+import React, { useState } from 'react'
 import './App.css'
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          minHeight: '100vh', display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          background: '#FDF8F3', gap: 16, padding: 24, textAlign: 'center'
+        }}>
+          <div style={{ fontSize: 48 }}>😕</div>
+          <div style={{ fontFamily: 'Gabarito, sans-serif', fontSize: 20, fontWeight: 700, color: '#1C1409' }}>
+            Something went wrong
+          </div>
+          <div style={{ fontSize: 14, color: '#6B5B45' }}>
+            Please refresh the page
+          </div>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '12px 28px', background: '#E8623A', border: 'none',
+              borderRadius: 99, fontFamily: 'Gabarito, sans-serif',
+              fontSize: 15, fontWeight: 600, color: '#fff', cursor: 'pointer'
+            }}
+          >
+            Refresh
+          </button>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
 
 export default function App() {
   const [screen, setScreen] = useState('home')
@@ -29,7 +70,10 @@ export default function App() {
   const [editingExpense, setEditingExpense] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState(null)
   const { user, accessToken, driveAccess, tokenExpired, loading, login, logout } = useAuth()
-  const [showLanding, setShowLanding] = useState(true)
+  const [showLanding, setShowLanding] = useState(() => {
+  // If user is already stored, skip landing page
+  return !localStorage.getItem('spentt-user')
+  })
   const expensesState = useExpenses(accessToken, user?.email)
   const pwa = usePWA()
   const { dark, toggle: toggleDark } = useDarkMode()
@@ -140,6 +184,7 @@ if (!driveAccess && user && !tokenExpired) {
   }
 
   return (
+    <ErrorBoundary>
     <div className="desktop-layout">
 
       {/* App */}
@@ -183,5 +228,6 @@ if (!driveAccess && user && !tokenExpired) {
         <Toast message={toast} />
       </div>
     </div>
+    </ErrorBoundary>
   )
 }
