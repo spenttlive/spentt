@@ -93,8 +93,8 @@ export default function App() {
       </div>
     )
   }
-  // Show warning if Drive access was not granted
-if (!driveAccess && user) {
+  // Show warning if Drive access was not granted (first time)
+if (!driveAccess && user && !tokenExpired) {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
@@ -118,10 +118,7 @@ if (!driveAccess && user) {
       >
         Grant Drive access →
       </button>
-      <div
-        onClick={logout}
-        style={{ fontSize: 13, color: '#A8937A', cursor: 'pointer', marginTop: 8 }}
-      >
+      <div onClick={logout} style={{ fontSize: 13, color: '#A8937A', cursor: 'pointer', marginTop: 8 }}>
         Sign out
       </div>
     </div>
