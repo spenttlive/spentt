@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useExpenses } from './hooks/useExpenses'
 import { usePWA } from './hooks/usePWA'
 import { useDarkMode } from './hooks/useDarkMode'
