@@ -46,7 +46,16 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
           <Greeting user={user} expenses={expenses} />
         </div>
         <div className="avatar" onClick={() => goTo('profile')}>
-          {user?.name?.[0] || user?.email?.[0] || 'U'}
+        {user?.picture ? (
+        <img
+        src={user.picture}
+        alt={user?.name || 'User'}
+        style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+        onError={(e) => { e.target.style.display = 'none' }}
+        />
+        ) : (
+        user?.name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'
+        )}
         </div>
       </div>
 

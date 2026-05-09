@@ -12,7 +12,18 @@ export default function ProfileScreen({ user, expenses, totalSpent, goTo, showTo
       </div>
 
       <div className="profile-hero">
-        <div className="profile-avatar-lg">{user?.name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}</div>
+        <div className="profile-avatar-lg" style={{ padding: 0, overflow: 'hidden' }}>
+        {user?.picture ? (
+        <img
+        src={user.picture}
+        alt={user?.name || 'User'}
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        onError={(e) => { e.target.style.display = 'none' }}
+        />
+        ) : (
+        user?.name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'
+        )}
+        </div>
         <div className="profile-name">{user?.name || user?.email?.split('@')[0] || 'User'}</div>
         <div className="profile-email">{user.email}</div>
       </div>
