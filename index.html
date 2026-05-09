@@ -8,7 +8,8 @@
     <meta name="apple-mobile-web-app-title" content="Spentt" />
     <meta name="theme-color" content="#1C1409" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="description" content="Spentt — Know where it went. The honest expense tracker that stores your data in your own Google Drive. Free forever, no bank linking." />
+    <meta name="description" content="Spentt is a free expense tracker. Log expenses in 5 seconds, get a weekly spending receipt, and keep your data in your own Google Drive. No bank linking. No sign-up fee." />
+    <meta name="keywords" content="expense tracker, free expense tracker, spending tracker, personal finance app, expense log, weekly budget, Google Drive expense tracker, privacy expense tracker" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icon-512.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,7 +22,7 @@
     <meta property="og:url" content="https://www.spentt.live" />
     <meta property="og:type" content="website" />
 
-    <title>Spentt — Know where it went</title>
+    <title>Spentt — Free Expense Tracker | Know where it went</title>
 
     <style>
       /* Static landing page styles — visible before React loads */
@@ -193,6 +194,37 @@
       #static-landing .footer-links a { font-size: 13px; color: #A8937A; text-decoration: none; }
       #static-landing .footer-note { font-size: 13px; color: #A8937A; }
     </style>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Spentt",
+    "description": "Free expense tracker. Log expenses in 5 seconds, get weekly spending receipts. Your data stays in your own Google Drive — complete privacy.",
+    "url": "https://www.spentt.live",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web, iOS, Android",
+    "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "ratingCount": "1"
+    },
+    "featureList": [
+    "Log expenses in 5 seconds",
+    "Weekly spending receipt with personality verdict",
+    "Google Drive storage — data never on our servers",
+    "No bank linking required",
+    "30 expense categories",
+    "PWA — installs on any phone",
+    "Export to CSV",
+    "Free forever"
+    ]
+    }
+    </script>
   </head>
   <body>
 

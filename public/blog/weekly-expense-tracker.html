@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Weekly Expense Tracker — Track Spending Week by Week | Spentt</title>
+<meta name="description" content="Spentt is a weekly expense tracker that gives you a spending receipt every Sunday. See exactly where your money went each week with a personality verdict."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Weekly Expense Tracking Works Better Than Daily or Monthly",
+  "description": "The case for weekly expense reviews and how Spentt's receipt system makes it effortless.",
+  "url": "https://www.spentt.live/blog/weekly-expense-tracker.html",
+  "author": { "@type": "Organization", "name": "Spentt" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" }
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--text);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.content{max-width:680px;margin:0 auto;padding:48px 40px 80px;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:36px;font-weight:700;line-height:1.2;margin-bottom:16px;}
+.meta{font-size:13px;color:var(--text3);margin-bottom:32px;}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+h2{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:700;margin:32px 0 12px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+.highlight{background:#FFFCF9;border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin:24px 0;}
+.highlight p{margin:0;font-size:14px;}
+.receipt-preview{background:var(--text);border-radius:20px;padding:24px;margin:32px 0;}
+.receipt-preview .store{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:700;color:#fff;text-align:center;margin-bottom:4px;}
+.receipt-preview .tagline{font-size:10px;color:rgba(255,255,255,0.3);text-align:center;letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;}
+.receipt-preview .row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;}
+.receipt-preview .cat{color:rgba(255,255,255,0.7);}
+.receipt-preview .amt{font-family:'Gabarito',sans-serif;font-weight:600;color:#fff;}
+.receipt-preview .total{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.1);padding-top:12px;margin-top:12px;}
+.receipt-preview .total-label{font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;}
+.receipt-preview .total-amt{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:700;color:#fff;}
+.receipt-preview .verdict{text-align:center;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);}
+.receipt-preview .verdict-name{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:rgba(255,255,255,0.9);}
+.receipt-preview .verdict-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;}
+.cta-box{background:var(--text);border-radius:20px;padding:32px;text-align:center;margin:40px 0;}
+.cta-box h3{font-family:'Gabarito',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;}
+.cta-box p{color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:20px;}
+.cta-box a{background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;margin-left:20px;}
+@media(max-width:600px){nav,footer{padding:16px 20px;}.content{padding:32px 20px 60px;}h1{font-size:28px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try free →</a>
+</nav>
+<div class="content">
+  <div class="eyebrow">Expense Tracking</div>
+  <h1>Why Weekly Expense Tracking Works Better Than Daily or Monthly</h1>
+  <div class="meta">By Spentt · May 2025 · 4 min read</div>
+
+  <p>Most personal finance advice falls into two extremes: obsessively track every penny daily, or do a big monthly review. Both have serious problems. Daily tracking leads to burnout. Monthly reviews are too far removed from actual spending to change behaviour.</p>
+
+  <p>The weekly review hits the sweet spot — recent enough to remember, broad enough to see patterns.</p>
+
+  <h2>The problem with daily tracking</h2>
+  <p>Daily expense reviews create anxiety without insight. You see individual transactions but can't easily identify patterns. Did you overspend this week? Hard to tell from one day's data. The granularity is too high and the mental overhead too heavy for most people to sustain.</p>
+
+  <h2>The problem with monthly reviews</h2>
+  <p>Monthly reviews suffer from the opposite problem. By the time you review March's spending in early April, you barely remember the context of half those transactions. "Why did I spend £180 at that restaurant?" Good question. You have no idea. The distance makes course correction impossible.</p>
+
+  <h2>Why weekly works</h2>
+  <p>Seven days is the perfect review window:</p>
+  <ul>
+    <li><strong>Memorable</strong> — You remember most of last week's purchases</li>
+    <li><strong>Actionable</strong> — You can change behaviour for next week</li>
+    <li><strong>Pattern-revealing</strong> — You can see trends across multiple categories</li>
+    <li><strong>Manageable</strong> — Once a week is a sustainable habit</li>
+  </ul>
+
+  <h2>The Spentt weekly receipt</h2>
+  <p>Every Sunday, Spentt generates a receipt-style summary of your week. It shows every spending category, the amount you spent in each, and a total. Then it gives you a spending personality verdict based on your actual patterns.</p>
+
+  <div class="receipt-preview">
+    <div class="store">spentt</div>
+    <div class="tagline">know where it went</div>
+    <div class="row"><span class="cat">☕ Coffee</span><span class="amt">$42</span></div>
+    <div class="row"><span class="cat">🛒 Groceries</span><span class="amt">$89</span></div>
+    <div class="row"><span class="cat">🚗 Transport</span><span class="amt">$34</span></div>
+    <div class="row"><span class="cat">🍔 Dining</span><span class="amt">$67</span></div>
+    <div class="total">
+      <span class="total-label">Total</span>
+      <span class="total-amt">$232</span>
+    </div>
+    <div class="verdict">
+      <div class="verdict-name">Comfortable Contradictionist</div>
+      <div class="verdict-sub">Coffee cost more than groceries. Your kitchen runs on vibes.</div>
+    </div>
+  </div>
+
+  <h2>The personality verdict</h2>
+  <p>The spending personality isn't just a gimmick. It's a memorable label that captures your actual spending pattern in a way a chart never could. "Comfortable Contradictionist" sticks in your head. "You spent 18% on coffee" doesn't.</p>
+
+  <p>Spentt calculates your personality from 8 different patterns — The Foodie, The Investor, The Impulse Engine, The Minimalist, and more. Each week it recalculates based on your actual data.</p>
+
+  <h2>How to use the weekly receipt</h2>
+  <p>The receipt is most powerful when you share it. Send it to your partner, a friend, or post it to your story. The accountability of sharing your spending summary — even anonymously — changes behaviour more than any notification or reminder.</p>
+
+  <p>Spentt generates the receipt as a shareable image with one tap. The watermark just says "spentt" — clean enough to share without embarrassment.</p>
+
+  <div class="cta-box">
+    <h3>Get your first weekly receipt</h3>
+    <p>Start logging expenses today. Your first receipt arrives Sunday.</p>
+    <a href="/">Try Spentt free →</a>
+  </div>
+</div>
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/blog/free-expense-tracker-google-drive.html">Google Drive tracker</a>
+  </div>
+</footer>
+</body>
+</html>

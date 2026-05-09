@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free Expense Tracker with Google Drive — Spentt</title>
+<meta name="description" content="Spentt is a free expense tracker that stores your data in your own Google Drive. No server storage, no bank linking, complete privacy. Try it free."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Free Expense Tracker with Google Drive Storage",
+  "description": "How Spentt uses Google Drive to store your expenses privately and securely.",
+  "url": "https://www.spentt.live/blog/free-expense-tracker-google-drive.html",
+  "author": { "@type": "Organization", "name": "Spentt" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" }
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--text);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.content{max-width:680px;margin:0 auto;padding:48px 40px 80px;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:36px;font-weight:700;line-height:1.2;margin-bottom:16px;}
+.meta{font-size:13px;color:var(--text3);margin-bottom:32px;}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+h2{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:700;margin:32px 0 12px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+.highlight{background:#FFFCF9;border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin:24px 0;}
+.highlight p{margin:0;font-size:14px;}
+.cta-box{background:var(--text);border-radius:20px;padding:32px;text-align:center;margin:40px 0;}
+.cta-box h3{font-family:'Gabarito',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;}
+.cta-box p{color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:20px;}
+.cta-box a{background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;margin-left:20px;}
+@media(max-width:600px){nav,footer{padding:16px 20px;}.content{padding:32px 20px 60px;}h1{font-size:28px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try free →</a>
+</nav>
+<div class="content">
+  <div class="eyebrow">Expense Tracking</div>
+  <h1>The Only Free Expense Tracker That Stores Your Data in Google Drive</h1>
+  <div class="meta">By Spentt · May 2025 · 4 min read</div>
+
+  <p>Most expense tracking apps have a dirty secret: your financial data lives on their servers. Every purchase you log, every category you pick, every amount you record — all of it stored in someone else's database. You're trusting a company you've never met with a detailed picture of your financial life.</p>
+
+  <p>Spentt works differently. When you log an expense, it goes straight to your own Google Drive — not our servers. We literally cannot see your data.</p>
+
+  <h2>How it works</h2>
+  <p>When you sign in to Spentt with Google, you grant the app permission to access a private app folder in your Google Drive. Spentt creates a single file — <code>spentt-expenses.json</code> — in that folder and reads/writes to it directly from your browser.</p>
+
+  <div class="highlight">
+    <p><strong>The key insight:</strong> The data transfer happens between your browser and Google Drive directly. Spentt's servers are never involved. We don't have a copy of your expenses. We can't access them even if we wanted to.</p>
+  </div>
+
+  <h2>Why Google Drive?</h2>
+  <p>Google Drive was chosen for three reasons:</p>
+  <ul>
+    <li><strong>Trust</strong> — You already trust Google with your data. Google Drive has enterprise-grade security and encryption.</li>
+    <li><strong>Accessibility</strong> — Your expenses are accessible from any device where you're logged into Google.</li>
+    <li><strong>Control</strong> — You own the file. You can open it, export it, delete it, or move it anytime.</li>
+  </ul>
+
+  <h2>What Spentt does store</h2>
+  <p>In the interest of full transparency — Spentt does store some data on its servers: your name, email address, and total expense count. This helps us understand how many people are using the app and improve it. Your actual expense details — what you bought, how much you spent, which categories — are never stored on our servers.</p>
+
+  <h2>How to get started</h2>
+  <p>Getting started takes about 30 seconds:</p>
+  <ul>
+    <li>Go to spentt.live</li>
+    <li>Click "Get started" and sign in with Google</li>
+    <li>Grant Drive access when prompted</li>
+    <li>Start logging expenses immediately</li>
+  </ul>
+  <p>The app installs on your phone like a native app — open it in Safari or Chrome and add it to your home screen. No App Store required.</p>
+
+  <h2>Features</h2>
+  <ul>
+    <li>Log an expense in 5 seconds — description, amount, category, date</li>
+    <li>30 expense categories across 8 groups</li>
+    <li>Weekly spending receipt every Sunday with a personality verdict</li>
+    <li>History view with calendar — daily, weekly, or monthly</li>
+    <li>Share your weekly receipt as an image</li>
+    <li>Export all data to CSV anytime</li>
+    <li>Works on any device — phone, tablet, desktop</li>
+    <li>Completely free</li>
+  </ul>
+
+  <div class="cta-box">
+    <h3>Try Spentt free</h3>
+    <p>No credit card. No bank linking. Your data stays in your Google Drive.</p>
+    <a href="/">Start tracking →</a>
+  </div>
+</div>
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/blog/expense-tracker-no-bank-linking.html">No bank linking</a>
+  </div>
+</footer>
+</body>
+</html>

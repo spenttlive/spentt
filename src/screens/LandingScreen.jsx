@@ -191,6 +191,7 @@ export default function LandingScreen({ onGetStarted }) {
       <footer className="landing-footer">
         <div className="landing-logo">spentt<span className="landing-logo-dot" /></div>
         <div className="landing-footer-links">
+            <a href="/blog/" className="landing-footer-link">Blog</a>
             <a href="/privacy.html" className="landing-footer-link">Privacy</a>
             <a href="/terms.html" className="landing-footer-link">Terms</a>
             <span className="landing-footer-note">© 2026 Spentt</span>
