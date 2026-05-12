@@ -101,12 +101,6 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
       <PersonalityTeaser expenses={expenses} showToast={showToast} />
 
       <ReceiptTeaser
-      total={totalSpent}
-      topCat={topCat}
-      onOpen={() => goTo('receipt')}
-      />
-
-      <ReceiptTeaser
         total={totalSpent}
         topCat={topCat}
         onOpen={() => goTo('receipt')}
