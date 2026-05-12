@@ -139,8 +139,8 @@ export default function FAQScreen({ onBack }) {
         <div className="faq-contact">
           <div className="faq-contact-title">Still have questions?</div>
           <div className="faq-contact-sub">We're happy to help.</div>
-          <a href="mailto:hello@spentt.live" className="faq-contact-btn">
-            hello@spentt.live
+          <a href="mailto:spentt.live@gmail.com" className="faq-contact-btn">
+            spentt.live@gmail.com
           </a>
         </div>
       </div>
