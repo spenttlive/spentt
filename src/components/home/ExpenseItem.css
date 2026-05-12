@@ -25,3 +25,7 @@
   flex-shrink: 0;
   margin-left: 4px;
 }
+.exp-recurring {
+  font-size: 10px;
+  margin-right: 2px;
+}

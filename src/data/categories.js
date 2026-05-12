@@ -67,6 +67,7 @@ export const GROUPS = [
   {
     label: 'Other',
     cats: [
+      { name: 'House Help',    emoji: '🧹', color: '#06B6D4', bg: '#ECFEFF' },
       { name: 'Donations',     emoji: '🤝', color: '#F59E0B', bg: '#FFFBEB' },
       { name: 'Miscellaneous', emoji: '✨', color: '#A8937A', bg: '#FDF8F3' },
     ],

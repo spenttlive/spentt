@@ -10,6 +10,7 @@ export default function ExpenseItem({ expense, showDate = false, onTap }) {
       <div className="exp-info">
         <div className="exp-desc">{expense.desc}</div>
         <div className="exp-cat">
+          {expense.recurring && <span className="exp-recurring">🔁 </span>}
           {expense.cat}{showDate ? ` · ${fmtDateShort(expense.ts)}` : ''}
         </div>
       </div>

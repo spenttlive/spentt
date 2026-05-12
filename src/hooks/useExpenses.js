@@ -9,45 +9,91 @@ export function useExpenses(accessToken, userEmail) {
   const saveTimer = useRef(null)
 
   // Load from Drive on mount
-  useEffect(() => {
-    if (!accessToken) {
+useEffect(() => {
+  if (!accessToken) {
     setLoaded(true)
     return
-    }
-    setSyncing(true)
-    readFromDrive(accessToken)
+  }
+  setSyncing(true)
+  readFromDrive(accessToken)
     .then((data) => {
-    if (data?.expenses && data.expenses.length > 0) {
-    const parsed = data.expenses.map((e) => ({
-      ...e,
-      ts: new Date(e.ts),
-    }))
-    setExpenses(parsed)
+      if (data?.expenses && data.expenses.length > 0) {
+        const parsed = data.expenses.map((e) => ({
+          ...e,
+          ts: new Date(e.ts),
+        }))
 
-    // Sync count using the email passed directly — not from localStorage
-    if (userEmail) {
-    fetch('/api/track-user', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      email: userEmail,
-      expense_count: data.expenses.length,
-      secret: import.meta.env.VITE_API_SECRET,
-    }),
-    }).catch(console.error)
-    }
-    } else {
-    setExpenses([])
-    }
-    })
-      .catch(() => {
+        // Auto-add recurring expenses for current month
+        const now = new Date()
+        const currentMonth = now.getMonth()
+        const currentYear = now.getFullYear()
+        const recurringExpenses = parsed.filter((e) => e.recurring)
+        const newRecurring = []
+
+        recurringExpenses.forEach((e) => {
+          const expDay = new Date(e.ts).getDate()
+          const alreadyExists = parsed.some((p) => {
+            const pDate = new Date(p.ts)
+            return (
+              p.desc === e.desc &&
+              p.cat === e.cat &&
+              p.amount === e.amount &&
+              pDate.getMonth() === currentMonth &&
+              pDate.getFullYear() === currentYear
+            )
+          })
+          if (!alreadyExists) {
+            const newDate = new Date(currentYear, currentMonth, expDay)
+            if (newDate <= now) {
+              newRecurring.push({
+                ...e,
+                id: Date.now() + Math.random(),
+                ts: newDate,
+                recurring: true,
+              })
+            }
+          }
+        })
+
+        const finalExpenses = newRecurring.length > 0
+          ? [...newRecurring, ...parsed]
+          : parsed
+
+        setExpenses(finalExpenses)
+
+        if (newRecurring.length > 0) {
+          writeToDrive(accessToken, finalExpenses).catch(console.error)
+        }
+
+        // Sync count to Supabase
+        if (userEmail) {
+          fetch('/api/track-user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: userEmail,
+              expense_count: finalExpenses.length,
+              secret: import.meta.env.VITE_API_SECRET,
+            }),
+          }).catch(console.error)
+        }
+      } else {
         setExpenses([])
-      })
-      .finally(() => {
-        setSyncing(false)
-        setLoaded(true)
-      })
-  }, [accessToken])
+      }
+    })
+    .catch((err) => {
+      console.error('Drive read failed:', err)
+      if (err?.status === 401) {
+        localStorage.removeItem('spentt-access-token')
+        localStorage.removeItem('spentt-had-drive-access')
+      }
+      setExpenses([])
+    })
+    .finally(() => {
+      setSyncing(false)
+      setLoaded(true)
+    })
+}, [accessToken])
 
   // Save to Drive with debounce
   const saveToCloud = useCallback((newExpenses) => {
@@ -78,7 +124,12 @@ export function useExpenses(accessToken, userEmail) {
   }, [accessToken, userEmail])
 
   const addExpense = useCallback((data) => {
-    const newExp = { id: Date.now(), ...data, ts: data.ts || new Date() }
+    const newExp = {
+    id: Date.now(),
+    ...data,
+    ts: data.ts || new Date(),
+    recurring: data.recurring || false,
+    }
     setExpenses((prev) => {
       const updated = [newExp, ...prev]
       saveToCloud(updated)

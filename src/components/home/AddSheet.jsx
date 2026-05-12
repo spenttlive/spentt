@@ -14,6 +14,7 @@ export default function AddSheet({ open, onClose, onAdd, showToast }) {
   const [selectedDateLabel, setSelectedDateLabel] = useState('Today')
   const [showCatSheet, setShowCatSheet] = useState(false)
   const [showDateSheet, setShowDateSheet] = useState(false)
+  const [recurring, setRecurring] = useState(false)
 
   const handleAdd = () => {
     if (!desc.trim()) { showToast('Enter what you spent on'); return }
@@ -21,11 +22,12 @@ export default function AddSheet({ open, onClose, onAdd, showToast }) {
     if (isNaN(amt) || amt <= 0) { showToast('Enter a valid amount'); return }
     const ts = new Date(selectedDate)
     ts.setHours(new Date().getHours(), new Date().getMinutes())
-    onAdd({ desc: desc.trim(), amount: amt, cat: selectedCat.name, ts })
+    onAdd({ desc: desc.trim(), amount: amt, cat: selectedCat.name, ts, recurring })
     setDesc('')
     setAmount('')
     setSelectedDate(today())
     setSelectedDateLabel('Today')
+    setRecurring(false)
   }
 
   if (!open && !showCatSheet && !showDateSheet) return null
@@ -72,6 +74,17 @@ export default function AddSheet({ open, onClose, onAdd, showToast }) {
                 <div className="meta-trigger-val">{selectedDateLabel}</div>
               </div>
             </div>
+          </div>
+          
+          <div className="recurring-row" onClick={() => setRecurring(!recurring)}>
+            <div className="recurring-left">
+            <div className="recurring-icon">🔁</div>
+            <div className="recurring-text">
+            <div className="recurring-label">Recurring expense</div>
+            <div className="recurring-sub">Repeats monthly on the same date</div>
+            </div>
+            </div>
+            <div className={`toggle ${recurring ? 'on' : ''}`} />
           </div>
 
           <button className="add-submit-btn" onClick={handleAdd}>

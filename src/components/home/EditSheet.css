@@ -79,3 +79,21 @@
     width: 390px;
   }
 }
+
+.recurring-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.recurring-row:active { border-color: var(--accent); }
+.recurring-left { display: flex; align-items: center; gap: 10px; }
+.recurring-icon { font-size: 18px; }
+.recurring-label { font-size: 13px; font-weight: 500; color: var(--text); }
+.recurring-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
