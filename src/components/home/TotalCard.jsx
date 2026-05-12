@@ -16,10 +16,6 @@ export default function TotalCard({ total, txCount, avg }) {
           <div className="chipdot" style={{ background: '#3AAE8A' }} />
           <span>₹{avg.toLocaleString()} avg</span>
         </div>
-        <div className="chip">
-          <div className="chipdot" style={{ background: '#E85480' }} />
-          <span>10 days</span>
-        </div>
       </div>
     </div>
   )
