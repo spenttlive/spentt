@@ -7,6 +7,7 @@ import ExpenseItem from '../components/home/ExpenseItem'
 import ReceiptTeaser from '../components/home/ReceiptTeaser'
 import PWABanner from '../components/home/PWABanner'
 import { dateKey, today } from '../utils/dateHelpers'
+import PersonalityTeaser from '../components/home/PersonalityTeaser'
 import './HomeScreen.css'
 
 const PERIODS = [
@@ -96,6 +97,14 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
           <div className="empty-state">Nothing logged {period === 'today' ? 'today' : period === 'week' ? 'this week' : 'this month'} yet.</div>
         )}
       </div>
+
+      <PersonalityTeaser expenses={expenses} showToast={showToast} />
+
+      <ReceiptTeaser
+      total={totalSpent}
+      topCat={topCat}
+      onOpen={() => goTo('receipt')}
+      />
 
       <ReceiptTeaser
         total={totalSpent}
