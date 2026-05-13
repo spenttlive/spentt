@@ -1,0 +1,39 @@
+.streak-banner {
+  margin: 0 16px 16px;
+  background: linear-gradient(135deg, #1C1409, #2E1F0A);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideUp 0.3s ease both;
+}
+.streak-emoji {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.streak-text {
+  flex: 1;
+  min-width: 0;
+}
+.streak-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+.streak-message {
+  font-family: var(--fh);
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+.streak-count {
+  font-family: var(--fh);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--accent);
+  flex-shrink: 0;
+  line-height: 1;
+}
