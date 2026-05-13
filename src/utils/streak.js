@@ -12,16 +12,26 @@ export function calculateStreak(expenses) {
   let streak = 0
   let current = new Date(today)
 
-  // Start from today, go backwards
-  while (true) {
-    const key = dateKey(current)
-    if (daysWithExpenses.has(key)) {
-      streak++
-      current.setDate(current.getDate() - 1)
-    } else {
-      break
-    }
+// Check yesterday first — today is still "in progress"
+// If today has expenses, count from today
+// If today has no expenses yet, count from yesterday (streak still alive)
+const todayKey = dateKey(today)
+const hasTodayExpense = daysWithExpenses.has(todayKey)
+
+if (!hasTodayExpense) {
+  // Start from yesterday — today hasn't ended yet
+  current.setDate(current.getDate() - 1)
+}
+
+while (true) {
+  const key = dateKey(current)
+  if (daysWithExpenses.has(key)) {
+    streak++
+    current.setDate(current.getDate() - 1)
+  } else {
+    break
   }
+}
 
   return streak
 }
