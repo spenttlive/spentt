@@ -12,7 +12,7 @@ export default function MonthlyRecap({ expenses, showToast, currency }) {
   // Only show on 1st-7th of month or if user has data
   const now = new Date()
   const dayOfMonth = now.getDate()
-  if (!recap || dayOfMonth > 31) return null
+  if (!recap) return null
 
   const handleShare = async () => {
     setSharing(true)
