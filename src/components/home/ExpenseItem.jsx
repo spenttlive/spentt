@@ -2,7 +2,7 @@ import { getCat } from '../../data/categories'
 import { fmtDateShort, fmtTime } from '../../utils/dateHelpers'
 import './ExpenseItem.css'
 
-export default function ExpenseItem({ expense, showDate = false, onTap }) {
+export default function ExpenseItem({ expense, showDate = false, onTap, currency }) {
   const c = getCat(expense.cat)
   return (
     <div className="exp-item" onClick={() => onTap?.(expense)}>
@@ -15,7 +15,7 @@ export default function ExpenseItem({ expense, showDate = false, onTap }) {
         </div>
       </div>
       <div className="exp-right">
-        <div className="exp-amt">₹{expense.amount.toLocaleString()}</div>
+        <div className="exp-amt">{currency?.symbol || '₹'}{expense.amount.toLocaleString()}</div>
         <div className="exp-time">{fmtTime(expense.ts)}</div>
       </div>
       <div className="exp-edit-hint">›</div>

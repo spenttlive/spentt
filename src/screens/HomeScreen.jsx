@@ -17,7 +17,7 @@ const PERIODS = [
   { id: 'month',   label: 'This month'},
 ]
 
-export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa, onExpenseTap, onCardTap }) {
+export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa, onExpenseTap, onCardTap, currency }) {
   const [period, setPeriod] = useState('today')
 
   const now = new Date()
@@ -78,7 +78,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
         ))}
       </div>
 
-      <TotalCard total={periodTotal} txCount={filtered.length} avg={filtered.length ? Math.round(periodTotal / filtered.length) : 0} />
+      <TotalCard total={periodTotal} txCount={filtered.length} avg={filtered.length ? Math.round(periodTotal / filtered.length) : 0} currency={currency} />
 
       <PWABanner show={pwa.showBanner} onInstall={pwa.install} onDismiss={pwa.dismiss} />
 
@@ -95,7 +95,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
           <div className="sec-link" onClick={() => goTo('history')}>See all</div>
         </div>
         {filtered.slice(0, 5).map((e) => (
-          <ExpenseItem key={e.id} expense={e} onTap={onExpenseTap} />
+          <ExpenseItem key={e.id} expense={e} onTap={onExpenseTap} currency={currency}/>
         ))}
         {filtered.length === 0 && (
           <div className="empty-state">Nothing logged {period === 'today' ? 'today' : period === 'week' ? 'this week' : 'this month'} yet.</div>

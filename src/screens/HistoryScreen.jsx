@@ -217,7 +217,7 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
               </div>
               <div className="hist-list-wrap">
                 {items.map((e) => (
-                  <ExpenseItem key={e.id} expense={e} onTap={onExpenseTap} />
+                  <ExpenseItem key={e.id} expense={e} onTap={onExpenseTap} currency={currency} />
                 ))}
               </div>
             </div>

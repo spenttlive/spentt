@@ -2,6 +2,7 @@ import { useExpenses } from './hooks/useExpenses'
 import { usePWA } from './hooks/usePWA'
 import { useDarkMode } from './hooks/useDarkMode'
 import { useAuth } from './hooks/useAuth'
+import { useCurrency } from './hooks/useCurrency'
 import HomeScreen from './screens/HomeScreen'
 import HistoryScreen from './screens/HistoryScreen'
 import ReceiptScreen from './screens/ReceiptScreen'
@@ -69,6 +70,7 @@ export default function App() {
   const [editingExpense, setEditingExpense] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState(null)
   const { user, accessToken, driveAccess, tokenExpired, loading, login, logout } = useAuth()
+  const { currency, setCurrency, CURRENCIES } = useCurrency()
   const [showLanding, setShowLanding] = useState(() => {
   // If user is already stored, skip landing page
   return !localStorage.getItem('spentt-user')
@@ -179,6 +181,9 @@ if (!driveAccess && user && !tokenExpired) {
     logout,
     tokenExpired,
     login,
+    currency,
+    setCurrency,
+    CURRENCIES,
     ...expensesState,
   }
 

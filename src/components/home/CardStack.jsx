@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { getCat } from '../../data/categories'
 import './CardStack.css'
 
-function SpendCard({ card, onSwipe, onTap, isTop, offset }) {
+function SpendCard({ card, onSwipe, onTap, isTop, offset, currency }) {
   const startX = useRef(null)
   const el = useRef(null)
   const c = getCat(card.cat)
@@ -73,7 +73,7 @@ function SpendCard({ card, onSwipe, onTap, isTop, offset }) {
           </div>
           <div>
             <div className="card-amt" style={{ color: c.color }}>
-              ₹{card.amt.toLocaleString()}
+              {currency?.symbol || '₹'}{card.amt.toLocaleString()}
             </div>
             <div className="card-pct" style={{ color: c.color }}>
               {card.pct}% of total
@@ -94,7 +94,7 @@ function SpendCard({ card, onSwipe, onTap, isTop, offset }) {
   )
 }
 
-export default function CardStack({ cardData, showToast, onCardTap }) {
+export default function CardStack({ cardData, showToast, onCardTap, currency }) {
   const [current, setCurrent] = useState(0)
 
   const visible = cardData.slice(current, current + 3)
@@ -110,10 +110,14 @@ export default function CardStack({ cardData, showToast, onCardTap }) {
               card={card}
               offset={offset}
               isTop={offset === 0}
+              currency={currency}
               onSwipe={() => {
                 if (current < cardData.length - 1) setCurrent((c) => c + 1)
               }}
-              onTap={() => onCardTap?.(card.cat)}
+              onTap={() => {
+              showToast(`${getCat(card.cat).emoji} ${card.cat} · ${currency?.symbol || '₹'}${card.amt.toLocaleString()}`)
+              onCardTap?.(card.cat)
+              }}
             />
           )
         })}
