@@ -1,6 +1,7 @@
 .streak-banner {
   margin: 0 16px 16px;
-  background: linear-gradient(135deg, #1C1409, #2E1F0A);
+  background: var(--card);
+  border: 1.5px solid var(--border);
   border-radius: 16px;
   padding: 14px 16px;
   display: flex;
@@ -18,7 +19,7 @@
 }
 .streak-label {
   font-size: 10px;
-  color: rgba(255,255,255,0.4);
+  color: var(--text3);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 2px;
@@ -27,7 +28,7 @@
   font-family: var(--fh);
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
+  color: var(--text);
 }
 .streak-count {
   font-family: var(--fh);
