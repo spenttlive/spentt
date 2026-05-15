@@ -2,7 +2,8 @@ import { getCat } from '../data/categories'
 import { getWeekExpenses, getCategoryBreakdown, generateVerdict, fmtWeekRange, getWeekRange } from '../utils/receipt'
 import './ReceiptScreen.css'
 
-export default function ReceiptScreen({ expenses, goTo }) {
+export default function ReceiptScreen({ expenses, goTo, currency }) {
+  const sym = currency?.symbol || '₹'
   const weekExp = getWeekExpenses(expenses)
   const breakdown = getCategoryBreakdown(weekExp)
   const verdict = generateVerdict(weekExp)
@@ -47,7 +48,7 @@ export default function ReceiptScreen({ expenses, goTo }) {
               <div key={cat} className="rec-row">
                 <div className="rec-row-top">
                   <span className="rec-cat">{emoji} {cat}</span>
-                  <span className="rec-amt">₹{amt.toLocaleString()}</span>
+                  <span className="rec-amt">{sym}{amt.toLocaleString()}</span>
                 </div>
                 <div className="rec-bar-wrap">
                   <div className="rec-bar" style={{ width: `${pct}%`, background: color }} />
@@ -60,7 +61,7 @@ export default function ReceiptScreen({ expenses, goTo }) {
         <div className="rec-solid" />
         <div className="rec-total-row">
           <span className="rec-total-label">Total</span>
-          <span className="rec-total-amt">₹{total.toLocaleString()}</span>
+          <span className="rec-total-amt">{sym}{total.toLocaleString()}</span>
         </div>
         <div className="rec-dashed" />
 

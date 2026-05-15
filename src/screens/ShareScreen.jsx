@@ -3,7 +3,8 @@ import html2canvas from 'html2canvas'
 import { getWeekExpenses, getCategoryBreakdown, generateVerdict, fmtWeekRange, getWeekRange } from '../utils/receipt'
 import './ShareScreen.css'
 
-export default function ShareScreen({ expenses, goTo, showToast }) {
+export default function ShareScreen({ expenses, goTo, showToast, currency }) {
+  const sym = currency?.symbol || '₹'
   const weekExp = getWeekExpenses(expenses)
   const breakdown = getCategoryBreakdown(weekExp)
   const verdict = generateVerdict(weekExp)
@@ -70,7 +71,7 @@ export default function ShareScreen({ expenses, goTo, showToast }) {
             <div className="sc-tagline">know where it went</div>
             <div className="sc-period">{dateRange}</div>
             <div className="sc-total">
-              <sup>₹</sup>{total.toLocaleString()}
+              <sup>{sym}</sup>{total.toLocaleString()}
             </div>
             <div className="sc-tx">{weekExp.length} transactions</div>
             <div className="sc-cats">
@@ -80,7 +81,7 @@ export default function ShareScreen({ expenses, goTo, showToast }) {
                   <div className="sc-cat-bar-wrap">
                     <div className="sc-cat-bar" style={{ width: `${pct}%`, background: color }} />
                   </div>
-                  <span className="sc-cat-amt">₹{amt.toLocaleString()}</span>
+                  <span className="sc-cat-amt">{sym}{amt.toLocaleString()}</span>
                 </div>
               ))}
             </div>

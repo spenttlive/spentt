@@ -4,6 +4,7 @@ import './ExpenseItem.css'
 
 export default function ExpenseItem({ expense, showDate = false, onTap, currency }) {
   const c = getCat(expense.cat)
+  const sym = currency?.symbol || '₹'
   return (
     <div className="exp-item" onClick={() => onTap?.(expense)}>
       <div className="exp-icon" style={{ background: c.bg }}>{c.emoji}</div>
@@ -15,7 +16,7 @@ export default function ExpenseItem({ expense, showDate = false, onTap, currency
         </div>
       </div>
       <div className="exp-right">
-        <div className="exp-amt">{currency?.symbol || '₹'}{expense.amount.toLocaleString()}</div>
+        <div className="exp-amt">{sym}{expense.amount.toLocaleString()}</div>
         <div className="exp-time">{fmtTime(expense.ts)}</div>
       </div>
       <div className="exp-edit-hint">›</div>

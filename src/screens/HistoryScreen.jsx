@@ -66,7 +66,7 @@ function MiniCalendar({ expenses, selected, calDate, onSelectDay, onShiftMonth }
   )
 }
 
-export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFilter, setCategoryFilter }) {
+export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFilter, setCategoryFilter, currency }) {
   const [view, setView] = useState(categoryFilter ? 'category' : 'daily')
   const [selectedDay, setSelectedDay] = useState(today())
   const [calDate, setCalDate] = useState(new Date())
@@ -196,7 +196,7 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
         // Category view — flat list
         <div className="hist-list-wrap">
           {filtered.map((e) => (
-            <ExpenseItem key={e.id} expense={e} showDate onTap={onExpenseTap} />
+            <ExpenseItem key={e.id} expense={e} showDate onTap={onExpenseTap} currency={currency} />
           ))}
         </div>
       ) : (

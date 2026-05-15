@@ -78,7 +78,11 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
         ))}
       </div>
 
-      <TotalCard total={periodTotal} txCount={filtered.length} avg={filtered.length ? Math.round(periodTotal / filtered.length) : 0} currency={currency} />
+      <TotalCard
+      total={periodTotal}
+      txCount={filtered.length}
+      avg={filtered.length ? Math.round(periodTotal / filtered.length) : 0}
+      currency={currency} />
 
       <PWABanner show={pwa.showBanner} onInstall={pwa.install} onDismiss={pwa.dismiss} />
 
@@ -87,7 +91,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
         <div className="sec-link" onClick={() => goTo('history')}>See all</div>
       </div>
 
-      <CardStack cardData={cardData} showToast={showToast} onCardTap={onCardTap} />
+      <CardStack cardData={cardData} showToast={showToast} onCardTap={onCardTap} currency={currency} />
 
       <div className="recent-wrap">
         <div className="sec-hd" style={{ padding: '0 4px', marginBottom: 10 }}>

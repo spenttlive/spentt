@@ -6,6 +6,7 @@ function SpendCard({ card, onSwipe, onTap, isTop, offset, currency }) {
   const startX = useRef(null)
   const el = useRef(null)
   const c = getCat(card.cat)
+  const sym = currency?.symbol || '₹'
 
   const handleStart = (x) => { startX.current = x }
 
@@ -23,7 +24,6 @@ function SpendCard({ card, onSwipe, onTap, isTop, offset, currency }) {
     startX.current = null
     if (!el.current) return
     el.current.style.transition = ''
-
     if (Math.abs(dx) > 65) {
       el.current.style.transform = `translateX(${dx > 0 ? 420 : -420}px) rotate(${dx > 0 ? 18 : -18}deg)`
       el.current.style.opacity = '0'
@@ -73,7 +73,7 @@ function SpendCard({ card, onSwipe, onTap, isTop, offset, currency }) {
           </div>
           <div>
             <div className="card-amt" style={{ color: c.color }}>
-              {currency?.symbol || '₹'}{card.amt.toLocaleString()}
+              {sym}{card.amt.toLocaleString()}
             </div>
             <div className="card-pct" style={{ color: c.color }}>
               {card.pct}% of total
@@ -86,7 +86,7 @@ function SpendCard({ card, onSwipe, onTap, isTop, offset, currency }) {
             {c.emoji} {card.cat}
           </div>
           <div style={{ fontFamily: 'var(--fh)', fontSize: 16, fontWeight: 700, color: `${c.color}99` }}>
-            ₹{card.amt.toLocaleString()}
+            {sym}{card.amt.toLocaleString()}
           </div>
         </>
       )}
@@ -96,8 +96,8 @@ function SpendCard({ card, onSwipe, onTap, isTop, offset, currency }) {
 
 export default function CardStack({ cardData, showToast, onCardTap, currency }) {
   const [current, setCurrent] = useState(0)
-
   const visible = cardData.slice(current, current + 3)
+  const sym = currency?.symbol || '₹'
 
   return (
     <div className="stack-section">
@@ -115,8 +115,8 @@ export default function CardStack({ cardData, showToast, onCardTap, currency }) 
                 if (current < cardData.length - 1) setCurrent((c) => c + 1)
               }}
               onTap={() => {
-              showToast(`${getCat(card.cat).emoji} ${card.cat} · ${currency?.symbol || '₹'}${card.amt.toLocaleString()}`)
-              onCardTap?.(card.cat)
+                showToast(`${getCat(card.cat).emoji} ${card.cat} · ${sym}${card.amt.toLocaleString()}`)
+                onCardTap?.(card.cat)
               }}
             />
           )
