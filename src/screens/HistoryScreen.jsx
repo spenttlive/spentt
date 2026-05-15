@@ -186,7 +186,7 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
       <div className="hist-summary">
         <div className="hist-summary-label">{label}</div>
         <div className="hist-summary-amt">
-          {filtered.length ? `₹${total.toLocaleString()}` : 'Nothing logged'}
+          {filtered.length ? `${currency?.symbol || '₹'}${total.toLocaleString()}` : 'Nothing logged'}
         </div>
       </div>
 
@@ -212,7 +212,7 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
               <div className="group-header">
                 <span>{dayLabel}</span>
                 <span style={{ fontFamily: 'var(--fh)', fontSize: 13, fontWeight: 600 }}>
-                  ₹{dayTotal.toLocaleString()}
+                  {currency?.symbol || '₹'}{dayTotal.toLocaleString()}
                 </span>
               </div>
               <div className="hist-list-wrap">

@@ -112,6 +112,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
         total={totalSpent}
         topCat={topCat}
         onOpen={() => goTo('receipt')}
+        currency={currency}
       />
     </div>
   )
