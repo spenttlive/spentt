@@ -9,6 +9,7 @@ import PWABanner from '../components/home/PWABanner'
 import { dateKey, today } from '../utils/dateHelpers'
 import PersonalityTeaser from '../components/home/PersonalityTeaser'
 import StreakBanner from '../components/home/StreakBanner'
+import MonthlyRecap from '../components/home/MonthlyRecap'
 import './HomeScreen.css'
 
 const PERIODS = [
@@ -63,6 +64,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
 
       {/* Period pills */}
       <StreakBanner expenses={expenses} />
+      <MonthlyRecap expenses={expenses} showToast={showToast} currency={currency} />
 
       <div className="period-pills-row"></div>
       <div className="period-pills-row">
