@@ -315,17 +315,17 @@
 
     <!-- Hide static landing when React loads -->
     <script>
-      window.addEventListener('load', function() {
-        // React will handle showing/hiding the landing page
-        // Hide static version after React takes over
-        setTimeout(function() {
-          var static_landing = document.getElementById('static-landing');
-          var root = document.getElementById('root');
-          if (root && root.children.length > 0) {
-            static_landing.style.display = 'none';
-          }
-        }, 500);
-      });
+    // Hide static landing as soon as React module starts loading
+    document.addEventListener('DOMContentLoaded', function() {
+    var script = document.querySelector('script[type="module"]')
+    if (script) {
+      // Hide static landing immediately when JS executes
+      var staticLanding = document.getElementById('static-landing')
+      if (staticLanding) {
+        staticLanding.style.display = 'none'
+      }
+    }
+    })
     </script>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
