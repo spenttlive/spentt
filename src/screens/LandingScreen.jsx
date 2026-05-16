@@ -17,11 +17,11 @@ export default function LandingScreen({ onGetStarted }) {
       {/* Hero */}
       <section className="landing-hero">
         <div className="landing-hero-inner">
-          <div className="landing-eyebrow">Free · No bank linking · Your data only</div>
+          <div className="landing-eyebrow">The 5-second habit that changes how you spend.</div>
           <h1 className="landing-h1">
-            Money spent<br />
-            <span className="landing-h1-accent">without thinking</span><br />
-            is money lost.
+            Finally know<br />
+            where your<br />
+            <span className="landing-h1-accent">money goes.</span>
           </h1>
           <p className="landing-hero-sub">
             Spentt builds the habit of conscious spending — log what you spend in 5 seconds, get a weekly receipt every Sunday, and finally know where your money actually goes.
