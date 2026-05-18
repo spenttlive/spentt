@@ -1,15 +1,32 @@
+import { useState } from 'react'
 import { getCat } from '../data/categories'
-import { getWeekExpenses, getCategoryBreakdown, generateVerdict, fmtWeekRange, getWeekRange } from '../utils/receipt'
+import {
+  getWeekExpenses, getLastWeekExpenses,
+  getCategoryBreakdown, generateVerdict,
+  fmtWeekRange, fmtLastWeekRange, getWeekRange
+} from '../utils/receipt'
 import './ReceiptScreen.css'
 
 export default function ReceiptScreen({ expenses, goTo, currency }) {
   const sym = currency?.symbol || '₹'
+  const [selectedWeek, setSelectedWeek] = useState('current')
+
   const weekExp = getWeekExpenses(expenses)
-  const breakdown = getCategoryBreakdown(weekExp)
-  const verdict = generateVerdict(weekExp)
-  const total = weekExp.reduce((s, e) => s + e.amount, 0)
+  const lastWeekExp = getLastWeekExpenses(expenses)
+
+  // Auto switch to last week if current week is empty
+  const activeExp = selectedWeek === 'current'
+    ? (weekExp.length > 0 ? weekExp : lastWeekExp)
+    : lastWeekExp
+
+  const isShowingLastWeek = selectedWeek === 'last' ||
+    (selectedWeek === 'current' && weekExp.length === 0)
+
+  const breakdown = getCategoryBreakdown(activeExp)
+  const verdict = generateVerdict(activeExp)
+  const total = activeExp.reduce((s, e) => s + e.amount, 0)
   const { start, end } = getWeekRange()
-  const dateRange = fmtWeekRange(start, end)
+  const dateRange = isShowingLastWeek ? fmtLastWeekRange() : fmtWeekRange(start, end)
 
   const ws = [2,1,3,1,2,3,1,2,1,3,2,1,2,3,1,2,1,3,2,1,3,2,1,2,3,1,2,3,1,2]
   const hs = [26,18,28,16,22,28,20,26,16,28,22,18,28,14,22,26,18,16,28,22,26,16,20,28,14,22,24,16,20,28]
@@ -24,6 +41,33 @@ export default function ReceiptScreen({ expenses, goTo, currency }) {
         <span className="share-icon" onClick={() => goTo('share')}>⬆</span>
       </div>
 
+      {/* Week selector */}
+      <div className="week-selector">
+        <div
+          className={`week-tab ${selectedWeek === 'current' ? 'active' : ''}`}
+          onClick={() => setSelectedWeek('current')}
+        >
+          This week
+          {weekExp.length === 0 && <span className="week-tab-empty"> · empty</span>}
+        </div>
+        <div
+          className={`week-tab ${selectedWeek === 'last' ? 'active' : ''}`}
+          onClick={() => setSelectedWeek('last')}
+        >
+          Last week
+          {lastWeekExp.length > 0 && selectedWeek !== 'last' && (
+            <span className="week-tab-dot" />
+          )}
+        </div>
+      </div>
+
+      {/* Auto-switched notice */}
+      {selectedWeek === 'current' && weekExp.length === 0 && lastWeekExp.length > 0 && (
+        <div className="week-notice">
+          Nothing logged this week yet — showing last week's receipt.
+        </div>
+      )}
+
       <div className="rec-card">
         <div className="rec-head">
           <div className="rec-brand">
@@ -33,14 +77,18 @@ export default function ReceiptScreen({ expenses, goTo, currency }) {
           <div className="rec-tagline">know where it went</div>
           <div className="rec-meta">
             <span>{dateRange}</span>
-            <span>{weekExp.length} TRANSACTIONS</span>
+            <span>{activeExp.length} TRANSACTIONS</span>
           </div>
         </div>
 
         <div className="rec-dashed" />
 
         {breakdown.length === 0 ? (
-          <div className="rec-empty">No expenses logged this week yet.</div>
+          <div className="rec-empty">
+            {isShowingLastWeek
+              ? 'No expenses logged last week either.'
+              : 'No expenses logged this week yet.'}
+          </div>
         ) : (
           <div className="rec-body">
             <div className="rec-section-label">By category</div>

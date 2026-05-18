@@ -298,3 +298,38 @@ export function getCurrentPersonality(expenses) {
   if (weekExp.length === 0) return null
   return generateVerdict(weekExp)
 }
+
+export function getLastWeekExpenses(expenses) {
+  const now = new Date()
+  const day = now.getDay()
+  const startOfThisWeek = new Date(now)
+  startOfThisWeek.setDate(now.getDate() - day)
+  startOfThisWeek.setHours(0, 0, 0, 0)
+
+  const startOfLastWeek = new Date(startOfThisWeek)
+  startOfLastWeek.setDate(startOfThisWeek.getDate() - 7)
+
+  const endOfLastWeek = new Date(startOfThisWeek)
+  endOfLastWeek.setMilliseconds(-1)
+
+  return expenses.filter((e) => {
+    const d = new Date(e.ts)
+    return d >= startOfLastWeek && d <= endOfLastWeek
+  })
+}
+
+export function fmtLastWeekRange() {
+  const now = new Date()
+  const day = now.getDay()
+  const startOfThisWeek = new Date(now)
+  startOfThisWeek.setDate(now.getDate() - day)
+  startOfThisWeek.setHours(0, 0, 0, 0)
+
+  const start = new Date(startOfThisWeek)
+  start.setDate(startOfThisWeek.getDate() - 7)
+  const end = new Date(startOfThisWeek)
+  end.setDate(startOfThisWeek.getDate() - 1)
+
+  const fmt = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  return `${fmt(start)} – ${fmt(end)}`
+}
