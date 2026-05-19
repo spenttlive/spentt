@@ -469,22 +469,108 @@
 
 /* Desktop */
 @media (min-width: 768px) {
-  .landing-h1 { font-size: 72px; }
-  .landing-h2 { font-size: 38px; }
-  .landing-hero-inner,
+  .landing-h1 { font-size: 64px; }
+  .landing-h2 { font-size: 36px; }
+
+  /* Hero — two column */
+  .landing-hero { padding: 60px 0; }
+  .landing-hero-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    text-align: left;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+  .landing-hero-text {
+    flex: 1;
+    max-width: 520px;
+  }
+  .landing-hero-phone {
+    flex-shrink: 0;
+    width: auto;
+    justify-content: flex-end;
+  }
+  .landing-cta-btn {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .landing-hero-sub {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 440px;
+  }
+  .landing-eyebrow { margin-bottom: 20px; }
+
+  /* All sections — wider max width */
   .landing-problem-inner,
   .landing-habit-inner,
   .landing-features-inner,
   .landing-receipt-inner,
   .landing-privacy-inner,
   .landing-final-inner {
-    max-width: 680px;
+    max-width: 900px;
     margin: 0 auto;
+    padding: 0 60px;
   }
-  .landing-loop { flex-direction: row; align-items: flex-start; }
-  .landing-loop-arrow { transform: rotate(0deg); padding: 20px 0 0; }
-  .landing-loop-step { flex-direction: column; flex: 1; }
-  .landing-stat-row { grid-template-columns: repeat(3, 1fr); }
+
+  /* Problem stats */
+  .landing-stat-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .landing-stat-num { font-size: 36px; }
+
+  /* Habit loop — horizontal */
+  .landing-loop {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .landing-loop-step {
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+  }
+  .landing-loop-icon { font-size: 28px; }
+  .landing-loop-arrow {
+    transform: rotate(0deg);
+    padding: 28px 8px 0;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Features grid */
+  .landing-feature-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .landing-feature-card--large {
+    grid-column: span 2;
+  }
+
+  /* Receipt card */
+  .landing-receipt-inner { text-align: center; }
+  .landing-receipt-card {
+    max-width: 480px;
+    margin: 0 auto 28px;
+  }
+
+  /* Privacy section */
+  .landing-privacy-inner { padding: 0 60px; }
+  .landing-privacy-sub { max-width: 560px; }
+
+  /* Final CTA */
+  .landing-final-inner { text-align: center; }
+  .landing-cta-btn--large { max-width: 400px; }
+
+  /* Footer */
+  .landing-footer { padding: 28px 60px; }
+
+  /* Nav */
+  .landing-nav { padding: 20px 60px; }
 }
 
 /* Phone demo */
