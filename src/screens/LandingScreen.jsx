@@ -1,6 +1,52 @@
 import './LandingScreen.css'
+import { useEffect } from 'react'
 
 export default function LandingScreen({ onGetStarted }) {
+  useEffect(() => {
+  const slides = ['lpd-s1', 'lpd-s2', 'lpd-s3', 'lpd-s4']
+  const labels = ['Home screen', 'Log in 5 seconds', 'Sunday receipt', 'Streaks & personality']
+  const dots = ['lpd-d0', 'lpd-d1', 'lpd-d2', 'lpd-d3']
+  let current = 0
+  let timer
+
+  const goTo = (n) => {
+    const prevEl = document.getElementById(slides[current])
+    if (prevEl) {
+      prevEl.classList.remove('lpd-active')
+      prevEl.classList.add('lpd-exit')
+      setTimeout(() => prevEl?.classList.remove('lpd-exit'), 500)
+    }
+    current = n
+    const nextEl = document.getElementById(slides[current])
+    if (nextEl) nextEl.classList.add('lpd-active')
+    dots.forEach((d, i) => {
+      const el = document.getElementById(d)
+      if (el) {
+        el.classList.toggle('lpd-dot-active', i === current)
+        el.classList.toggle('lpd-dot', i !== current || true)
+      }
+    })
+    const labelEl = document.getElementById('lpd-label')
+    if (labelEl) labelEl.textContent = labels[current]
+  }
+
+  timer = setInterval(() => {
+    goTo((current + 1) % slides.length)
+  }, 2800)
+
+  dots.forEach((d, i) => {
+    const el = document.getElementById(d)
+    if (el) {
+      el.addEventListener('click', () => {
+        clearInterval(timer)
+        goTo(i)
+        timer = setInterval(() => goTo((current + 1) % slides.length), 2800)
+      })
+    }
+  })
+
+  return () => clearInterval(timer)
+}, [])
   return (
     <div className="landing">
 
@@ -32,6 +78,145 @@ export default function LandingScreen({ onGetStarted }) {
           <div className="landing-cta-note">
             No credit card. No bank account. Takes 30 seconds to set up.
           </div>
+          <div className="landing-phone-demo">
+  <div className="lpd-phone">
+    <div className="lpd-notch"></div>
+    <div className="lpd-screen" id="lpd-screen">
+
+      {/* Screen 1 — Home */}
+      <div className="lpd-slide lpd-active" id="lpd-s1">
+        <div className="lpd-topbar">
+          <div>
+            <div className="lpd-greeting-sub">Good morning</div>
+            <div className="lpd-greeting">Kushal 👋</div>
+          </div>
+          <div className="lpd-avatar">K</div>
+        </div>
+        <div className="lpd-card">
+          <div className="lpd-card-label">Total spent</div>
+          <div className="lpd-card-amt">₹12,534</div>
+          <div className="lpd-chips">
+            <span className="lpd-chip">14 expenses</span>
+            <span className="lpd-chip">₹895 avg</span>
+          </div>
+        </div>
+        <div className="lpd-spendcard">
+          <div className="lpd-sc-badge">Top spend · 26%</div>
+          <div className="lpd-sc-row">
+            <div className="lpd-sc-cat">👟 Shopping</div>
+            <div className="lpd-sc-amt">₹3,200</div>
+          </div>
+        </div>
+        <div className="lpd-items">
+          {[
+            { icon: '☕', bg: '#EDFAF4', name: 'Blue Tokai', cat: 'Coffee', amt: '₹320' },
+            { icon: '🛒', bg: '#FFF3EB', name: 'Groceries', cat: 'Groceries', amt: '₹1,240' },
+            { icon: '🚗', bg: '#F0F7FF', name: 'Ola cab', cat: 'Transport', amt: '₹180' },
+          ].map((item) => (
+            <div key={item.name} className="lpd-item">
+              <div className="lpd-item-icon" style={{ background: item.bg }}>{item.icon}</div>
+              <div className="lpd-item-info">
+                <div className="lpd-item-name">{item.name}</div>
+                <div className="lpd-item-cat">{item.cat}</div>
+              </div>
+              <div className="lpd-item-amt">{item.amt}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Screen 2 — Add expense */}
+      <div className="lpd-slide" id="lpd-s2">
+        <div className="lpd-topbar2">
+          <span className="lpd-back">←</span>
+          <span className="lpd-title2">Add expense</span>
+        </div>
+        <div className="lpd-field">
+          <div className="lpd-field-label">Description</div>
+          <div className="lpd-field-val">Dinner at Punjab Grill</div>
+        </div>
+        <div className="lpd-amt-big">
+          <div className="lpd-amt-val">₹1,450</div>
+        </div>
+        <div className="lpd-field">
+          <div className="lpd-field-label">Date</div>
+          <div className="lpd-field-val">Today</div>
+        </div>
+        <div className="lpd-cat-pills">
+          {['☕ Coffee', '🍔 Dining', '🛒 Groceries', '🚗 Transport'].map((c) => (
+            <div key={c} className={`lpd-pill ${c.includes('Dining') ? 'lpd-pill-active' : ''}`}>{c}</div>
+          ))}
+        </div>
+        <div className="lpd-save-btn">Save expense ✓</div>
+      </div>
+
+      {/* Screen 3 — Receipt */}
+      <div className="lpd-slide" id="lpd-s3">
+        <div className="lpd-topbar">
+          <div className="lpd-greeting">Weekly Receipt</div>
+          <div style={{ fontSize: 10, color: '#E8623A' }}>⬆ Share</div>
+        </div>
+        <div className="lpd-receipt">
+          <div className="lpd-rec-brand">spentt<span className="lpd-rec-dot" /></div>
+          <div className="lpd-rec-tag">know where it went</div>
+          <div className="lpd-rec-dash" />
+          {[
+            ['☕ Coffee', '₹2,400'],
+            ['🛒 Groceries', '₹1,800'],
+            ['🚗 Transport', '₹1,200'],
+            ['🍔 Dining', '₹3,200'],
+          ].map(([cat, amt]) => (
+            <div key={cat} className="lpd-rec-row">
+              <span>{cat}</span><span>{amt}</span>
+            </div>
+          ))}
+          <div className="lpd-rec-solid" />
+          <div className="lpd-rec-total">
+            <span>Total</span><span>₹8,600</span>
+          </div>
+          <div className="lpd-rec-dash" />
+          <div className="lpd-rec-verdict">
+            <div className="lpd-rec-vl">This week's personality</div>
+            <div className="lpd-rec-vn">Comfortable Contradictionist</div>
+            <div className="lpd-rec-vs">Coffee costs more than groceries.</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Screen 4 — Streak */}
+      <div className="lpd-slide" id="lpd-s4">
+        <div className="lpd-topbar">
+          <div className="lpd-greeting">🔥 7 day streak, Kushal!</div>
+        </div>
+        <div className="lpd-streak">
+          <div style={{ fontSize: 20 }}>🔥</div>
+          <div style={{ flex: 1 }}>
+            <div className="lpd-streak-label">Logging streak</div>
+            <div className="lpd-streak-msg">7 days straight. One full week!</div>
+          </div>
+          <div className="lpd-streak-num">7</div>
+        </div>
+        <div className="lpd-personality">
+          <div style={{ flex: 1 }}>
+            <div className="lpd-streak-label">This week's personality</div>
+            <div className="lpd-streak-msg">Comfortable Contradictionist</div>
+            <div style={{ fontSize: 9, color: '#A8937A', marginTop: 2 }}>Coffee costs more than groceries.</div>
+          </div>
+          <div className="lpd-share-btn">⬆ Share</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {/* Dots */}
+  <div className="lpd-dots">
+    {[0,1,2,3].map((i) => (
+      <div key={i} className={`lpd-dot ${i === 0 ? 'lpd-dot-active' : ''}`} id={`lpd-d${i}`} />
+    ))}
+  </div>
+  <div className="lpd-label" id="lpd-label">Home screen</div>
+</div>
         </div>
       </section>
 
