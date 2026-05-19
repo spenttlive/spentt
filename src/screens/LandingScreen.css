@@ -726,3 +726,27 @@
 .lpd-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(28,20,9,0.15); transition: all 0.3s; cursor: pointer; }
 .lpd-dot-active { width: 20px; border-radius: 3px; background: #E8623A; }
 .lpd-label { font-size: 12px; color: var(--text3); margin-top: 8px; text-align: center; }
+
+@media (min-width: 768px) {
+  .landing-receipt-inner {
+    text-align: center;
+  }
+  .landing-receipt-inner .landing-section-eyebrow,
+  .landing-receipt-inner .landing-h2,
+  .landing-receipt-inner .landing-section-sub,
+  .landing-receipt-inner .landing-cta-btn {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .landing-final-inner {
+    text-align: center;
+  }
+  .landing-final-inner .landing-h2,
+  .landing-final-inner .landing-section-sub,
+  .landing-final-inner .landing-cta-btn {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
