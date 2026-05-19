@@ -62,22 +62,29 @@ export default function LandingScreen({ onGetStarted }) {
 
       {/* Hero */}
       <section className="landing-hero">
-        <div className="landing-hero-inner">
-          <div className="landing-eyebrow">The 5-second habit that changes how you spend.</div>
-          <h1 className="landing-h1">
-            Finally know<br />
-            where your<br />
-            <span className="landing-h1-accent">money goes.</span>
-          </h1>
-          <p className="landing-hero-sub">
-            Spentt builds the habit of conscious spending — log what you spend in 5 seconds, get a weekly receipt every Sunday, and finally know where your money actually goes.
-          </p>
-          <button className="landing-cta-btn" onClick={() => onGetStarted()}>
-            Build the habit — it's free →
-          </button>
-          <div className="landing-cta-note">
-            No credit card. No bank account. Takes 30 seconds to set up.
-          </div>
+  <div className="landing-hero-inner">
+
+    {/* Left — text */}
+    <div className="landing-hero-text">
+      <div className="landing-eyebrow">Free · No bank linking · Your data only</div>
+      <h1 className="landing-h1">
+        Finally know<br />
+        where your<br />
+        <span className="landing-h1-accent">money goes.</span>
+      </h1>
+      <p className="landing-hero-sub">
+        Spentt builds the habit of conscious spending — log what you spend in 5 seconds, get a weekly receipt every Sunday, and finally know where your money actually goes.
+      </p>
+      <button className="landing-cta-btn" onClick={() => onGetStarted()}>
+        Build the habit — it's free →
+      </button>
+      <div className="landing-cta-note">
+        No credit card. No bank account. Takes 30 seconds to set up.
+      </div>
+    </div>
+    
+          {/* Right — phone demo */}
+          <div className="landing-hero-phone">
           <div className="landing-phone-demo">
   <div className="lpd-phone">
     <div className="lpd-notch"></div>
@@ -216,6 +223,7 @@ export default function LandingScreen({ onGetStarted }) {
     ))}
   </div>
   <div className="lpd-label" id="lpd-label">Home screen</div>
+</div>
 </div>
         </div>
       </section>
