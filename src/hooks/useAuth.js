@@ -135,6 +135,7 @@ export function useAuth() {
     localStorage.removeItem('spentt-access-token')
     localStorage.removeItem('spentt-had-drive-access')
     localStorage.removeItem('spentt-token-expiry')
+    localStorage.removeItem('spentt-expenses-cache')
     setUser(null)
     setAccessToken(null)
     setDriveAccess(false)

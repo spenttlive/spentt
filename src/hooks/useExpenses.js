@@ -3,10 +3,19 @@ import { SAMPLE_EXPENSES } from '../data/sampleExpenses'
 import { readFromDrive, writeToDrive } from '../services/driveSync'
 
 export function useExpenses(accessToken, userEmail) {
-  const [expenses, setExpenses] = useState([])
   const [syncing, setSyncing] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const saveTimer = useRef(null)
+  const [expenses, setExpenses] = useState(() => {
+  try {
+    const cached = localStorage.getItem('spentt-expenses-cache')
+    if (cached) {
+      const parsed = JSON.parse(cached)
+      return parsed.map((e) => ({ ...e, ts: new Date(e.ts) }))
+    }
+  } catch (e) {}
+  return []
+  })
 
   // Load from Drive on mount
 useEffect(() => {
@@ -60,6 +69,9 @@ useEffect(() => {
           : parsed
 
         setExpenses(finalExpenses)
+        try {
+          localStorage.setItem('spentt-expenses-cache', JSON.stringify(finalExpenses))
+        } catch (e) {}
 
         if (newRecurring.length > 0) {
           writeToDrive(accessToken, finalExpenses).catch(console.error)
@@ -102,12 +114,14 @@ useEffect(() => {
   saveTimer.current = setTimeout(() => {
     writeToDrive(accessToken, newExpenses).catch((err) => {
     console.error('Drive write failed:', err)
-    // Clear expired token so user gets prompted to re-login
     if (err?.status === 401 || err?.message?.includes('401')) {
     localStorage.removeItem('spentt-access-token')
     localStorage.removeItem('spentt-had-drive-access')
     }
     })
+    try {
+    localStorage.setItem('spentt-expenses-cache', JSON.stringify(newExpenses))
+    } catch (e) {}
     // Track expense count
     if (userEmail) {
     fetch('/api/track-user', {

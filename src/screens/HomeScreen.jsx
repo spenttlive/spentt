@@ -10,6 +10,7 @@ import { dateKey, today } from '../utils/dateHelpers'
 import PersonalityTeaser from '../components/home/PersonalityTeaser'
 import StreakBanner from '../components/home/StreakBanner'
 import MonthlyRecap from '../components/home/MonthlyRecap'
+import SkeletonLoader from '../components/home/SkeletonLoader'
 import './HomeScreen.css'
 
 const PERIODS = [
@@ -18,7 +19,7 @@ const PERIODS = [
   { id: 'month',   label: 'This month'},
 ]
 
-export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa, onExpenseTap, onCardTap, currency }) {
+export default function HomeScreen({ user, expenses, addExpense, totalSpent, avgPerTx, cardData, goTo, showToast, pwa, onExpenseTap, onCardTap, currency, loaded }) {
   const [period, setPeriod] = useState('today')
 
   const now = new Date()
@@ -40,6 +41,14 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
 
   const periodTotal = filtered.reduce((s, e) => s + e.amount, 0)
   const topCat = cardData[0]?.cat || '—'
+
+  if (!loaded && expenses.length === 0) {
+  return (
+    <div className="screen home-screen">
+      <SkeletonLoader />
+    </div>
+  )
+  }
 
   return (
     <div className="screen">
