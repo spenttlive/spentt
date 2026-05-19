@@ -433,6 +433,9 @@ export default function LandingScreen({ onGetStarted }) {
           <a href="/terms.html" className="landing-footer-link">Terms</a>
           <span className="landing-footer-note">© 2026 Spentt</span>
         </div>
+        <a href="https://www.foundrlist.com/product/spentt?utm_source=badge&utm_medium=embed" target="_blank" rel="noopener">
+        <img src="https://www.foundrlist.com/api/badge/spentt" alt="Featured on FoundrList" width="150" height="48" />
+        </a>
       </footer>
     </div>
   )
