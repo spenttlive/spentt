@@ -43,3 +43,11 @@
 .sec-link  { font-size: 13px; color: var(--accent); font-weight: 500; cursor: pointer; }
 .recent-wrap { margin: 0 16px 24px; }
 .empty-state { text-align: center; padding: 24px; font-size: 14px; color: var(--text3); }
+
+.stack-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+  padding: 0 16px;
+  margin-bottom: 8px;
+}

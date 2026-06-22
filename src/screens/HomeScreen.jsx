@@ -41,6 +41,24 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
 
   const periodTotal = filtered.reduce((s, e) => s + e.amount, 0)
   const topCat = cardData[0]?.cat || '—'
+  const now = new Date()
+  const monthExpenses = expenses.filter((e) => {
+  const d = new Date(e.ts)
+  return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
+  })
+  const monthTotal = monthExpenses.reduce((s, e) => s + e.amount, 0)
+  const monthCatTotals = monthExpenses.reduce((acc, e) => {
+  acc[e.cat] = (acc[e.cat] || 0) + e.amount
+  return acc
+  }, {})
+  const monthCardData = Object.entries(monthCatTotals)
+  .sort((a, b) => b[1] - a[1])
+  .map(([cat, amt], i) => ({
+    cat, amt,
+    pct: Math.round((amt / monthTotal) * 100),
+    rank: i,
+    items: monthExpenses.filter((e) => e.cat === cat),
+  }))
 
   if (!loaded && expenses.length === 0) {
   return (
@@ -102,7 +120,8 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
         <div className="sec-link" onClick={() => goTo('history')}>See all</div>
       </div>
 
-      <CardStack cardData={cardData} showToast={showToast} onCardTap={onCardTap} currency={currency} />
+      <div className="stack-label">Your monthly category view</div>
+      <CardStack cardData={monthCardData} showToast={showToast} onCardTap={onCardTap} currency={currency} />
 
       <div className="recent-wrap">
         <div className="sec-hd" style={{ padding: '0 4px', marginBottom: 10 }}>
