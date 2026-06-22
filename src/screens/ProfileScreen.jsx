@@ -1,6 +1,18 @@
 import './ProfileScreen.css'
 
 export default function ProfileScreen({ user, expenses, totalSpent, goTo, showToast }) {
+  const now = new Date()
+  const day = now.getDay()
+  const startOfWeek = new Date(now)
+  startOfWeek.setDate(now.getDate() - day)
+  startOfWeek.setHours(0, 0, 0, 0)
+
+  const weekExpenses = expenses.filter((e) => new Date(e.ts) >= startOfWeek)
+  const weekTotal = weekExpenses.reduce((s, e) => s + e.amount, 0)
+
+  const daysActive = new Set(
+    expenses.map((e) => new Date(e.ts).toLocaleDateString('en-CA'))
+  ).size
   return (
     <div className="screen profile-screen">
       <div className="topbar">
@@ -30,16 +42,16 @@ export default function ProfileScreen({ user, expenses, totalSpent, goTo, showTo
 
       <div className="profile-stats">
         <div className="p-stat">
-          <div className="p-stat-val">₹{totalSpent.toLocaleString()}</div>
-          <div className="p-stat-label">This week</div>
+        <div className="p-stat-val">₹{Math.round(weekTotal).toLocaleString()}</div>
+        <div className="p-stat-label">This week</div>
         </div>
         <div className="p-stat">
-          <div className="p-stat-val">{expenses.length}</div>
-          <div className="p-stat-label">Expenses</div>
+        <div className="p-stat-val">{expenses.length}</div>
+        <div className="p-stat-label">Expenses</div>
         </div>
         <div className="p-stat">
-          <div className="p-stat-val">10</div>
-          <div className="p-stat-label">Days active</div>
+        <div className="p-stat-val">{daysActive}</div>
+        <div className="p-stat-label">Days active</div>
         </div>
       </div>
 
