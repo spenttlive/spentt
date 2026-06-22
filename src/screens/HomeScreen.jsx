@@ -41,6 +41,24 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
 
   const periodTotal = filtered.reduce((s, e) => s + e.amount, 0)
   const topCat = cardData[0]?.cat || '—'
+
+  // This week's data for receipt teaser
+  const weekStart = new Date(t)
+  weekStart.setDate(t.getDate() - dow)
+  const weekEnd = new Date(weekStart)
+  weekEnd.setDate(weekStart.getDate() + 6)
+  const weekExpenses = expenses.filter((e) => {
+  const d = new Date(e.ts)
+  d.setHours(0, 0, 0, 0)
+  return d >= weekStart && d <= weekEnd
+  })
+  const weekTotal = weekExpenses.reduce((s, e) => s + e.amount, 0)
+  const weekCatTotals = weekExpenses.reduce((acc, e) => {
+  acc[e.cat] = (acc[e.cat] || 0) + e.amount
+  return acc
+  }, {})
+  const weekTopCat = Object.entries(weekCatTotals).sort((a, b) => b[1] - a[1])[0]?.[0] || '—'
+
   const monthNow = new Date()
   const monthExpenses = expenses.filter((e) => {
   const d = new Date(e.ts)
@@ -120,7 +138,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
         <div className="sec-link" onClick={() => goTo('history')}>See all</div>
       </div>
 
-      <div className="stack-label">Your monthly category view</div>
+      <div className="stack-label">Categories with most expense this month</div>
       <CardStack cardData={monthCardData} showToast={showToast} onCardTap={onCardTap} currency={currency} />
 
       <div className="recent-wrap">
@@ -139,8 +157,8 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
       <PersonalityTeaser expenses={expenses} showToast={showToast} />
 
       <ReceiptTeaser
-        total={totalSpent}
-        topCat={topCat}
+        total={weekTotal}
+        topCat={weekTopCat}
         onOpen={() => goTo('receipt')}
         currency={currency}
       />
