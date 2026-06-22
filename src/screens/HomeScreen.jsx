@@ -41,10 +41,10 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
 
   const periodTotal = filtered.reduce((s, e) => s + e.amount, 0)
   const topCat = cardData[0]?.cat || '—'
-  const now = new Date()
+  const monthNow = new Date()
   const monthExpenses = expenses.filter((e) => {
   const d = new Date(e.ts)
-  return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
+  return d.getMonth() === monthNow.getMonth() && d.getFullYear() === monthNow.getFullYear()
   })
   const monthTotal = monthExpenses.reduce((s, e) => s + e.amount, 0)
   const monthCatTotals = monthExpenses.reduce((acc, e) => {
@@ -93,7 +93,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
       <StreakBanner expenses={expenses} />
       <MonthlyRecap expenses={expenses} showToast={showToast} currency={currency} />
 
-      <div className="period-pills-row"></div>
+      
       <div className="period-pills-row">
         {PERIODS.map((p) => (
           <div
