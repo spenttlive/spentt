@@ -47,7 +47,7 @@ export default function ProfileScreen({ user, expenses, totalSpent, goTo, showTo
         </div>
         <div className="p-stat">
         <div className="p-stat-val">{expenses.length}</div>
-        <div className="p-stat-label">Expenses</div>
+        <div className="p-stat-label">Total logged</div>
         </div>
         <div className="p-stat">
         <div className="p-stat-val">{daysActive}</div>
