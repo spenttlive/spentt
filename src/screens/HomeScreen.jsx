@@ -42,6 +42,51 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
   const periodTotal = filtered.reduce((s, e) => s + e.amount, 0)
   const topCat = cardData[0]?.cat || '—'
 
+  // Comparison to previous period
+  let comparisonPct = null
+  let comparisonLabel = ''
+
+  if (period === 'today') {
+  const yesterday = new Date(t)
+  yesterday.setDate(t.getDate() - 1)
+  const yesterdayTotal = expenses
+    .filter((e) => dateKey(new Date(e.ts)) === dateKey(yesterday))
+    .reduce((s, e) => s + e.amount, 0)
+  if (yesterdayTotal > 0) {
+    comparisonPct = Math.round(((periodTotal - yesterdayTotal) / yesterdayTotal) * 100)
+    comparisonLabel = 'vs yesterday'
+  }
+  } else if (period === 'week') {
+  const thisWeekStart = new Date(t)
+  thisWeekStart.setDate(t.getDate() - dow)
+  const lastWeekStart = new Date(thisWeekStart)
+  lastWeekStart.setDate(thisWeekStart.getDate() - 7)
+  const lastWeekEnd = new Date(thisWeekStart)
+  lastWeekEnd.setMilliseconds(-1)
+  const lastWeekTotal = expenses
+    .filter((e) => {
+      const d = new Date(e.ts)
+      return d >= lastWeekStart && d <= lastWeekEnd
+    })
+    .reduce((s, e) => s + e.amount, 0)
+  if (lastWeekTotal > 0) {
+    comparisonPct = Math.round(((periodTotal - lastWeekTotal) / lastWeekTotal) * 100)
+    comparisonLabel = 'vs last week'
+  }
+  } else if (period === 'month') {
+  const lastMonth = t.getMonth() === 0 ? 11 : t.getMonth() - 1
+  const lastMonthYear = t.getMonth() === 0 ? t.getFullYear() - 1 : t.getFullYear()
+  const lastMonthTotal = expenses
+    .filter((e) => {
+      const d = new Date(e.ts)
+      return d.getMonth() === lastMonth && d.getFullYear() === lastMonthYear
+    })
+    .reduce((s, e) => s + e.amount, 0)
+  if (lastMonthTotal > 0) {
+    comparisonPct = Math.round(((periodTotal - lastMonthTotal) / lastMonthTotal) * 100)
+    comparisonLabel = 'vs last month'
+  }
+  }
   // This week's data for receipt teaser
   const weekStart = new Date(t)
   weekStart.setDate(t.getDate() - dow)
@@ -129,7 +174,10 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
       total={periodTotal}
       txCount={filtered.length}
       avg={filtered.length ? Math.round(periodTotal / filtered.length) : 0}
-      currency={currency} />
+      currency={currency}
+      comparisonPct={comparisonPct}
+      comparisonLabel={comparisonLabel}
+      />
 
       <PWABanner show={pwa.showBanner} onInstall={pwa.install} onDismiss={pwa.dismiss} />
 

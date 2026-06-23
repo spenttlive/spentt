@@ -45,3 +45,27 @@
   gap: 5px;
 }
 .chipdot { width: 5px; height: 5px; border-radius: 50%; }
+.total-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.comparison-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 99px;
+}
+.comparison-badge.up {
+  background: rgba(239,68,68,0.12);
+  color: #F87171;
+}
+.comparison-badge.down {
+  background: rgba(16,185,129,0.12);
+  color: #34D399;
+}
+.comparison-badge.flat {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.5);
+}
