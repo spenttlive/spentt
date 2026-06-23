@@ -436,7 +436,7 @@ export default function LandingScreen({ onGetStarted }) {
         <a href="https://www.foundrlist.com/product/spentt?utm_source=badge&utm_medium=embed" target="_blank" rel="noopener">
         <img src="https://www.foundrlist.com/api/badge/spentt" alt="Featured on FoundrList" width="150" height="48" />
         </a>
-        <a href="https://tinylaunch.com" target="_blank" rel="noopener">
+        <a href="https://www.tinylaunch.com/launch/14692" target="_blank" rel="noopener">
         <img src="https://tinylaunch.com/tinylaunch_badge_featured_on.svg" alt="TinyLaunch Badge" style={{ width: 202, height: 'auto' }} />
         </a>
       </footer>
