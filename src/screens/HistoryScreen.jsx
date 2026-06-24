@@ -70,6 +70,8 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
   const [view, setView] = useState(categoryFilter ? 'category' : 'daily')
   const [selectedDay, setSelectedDay] = useState(today())
   const [calDate, setCalDate] = useState(new Date())
+  const [searchQuery, setSearchQuery] = useState('')
+  const [showSearch, setShowSearch] = useState(false)
 
   // Switch to category view when filter is set
   useEffect(() => {
@@ -112,6 +114,13 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
     label = fmtMonthYear(selectedDay)
   }
 
+  // Apply search query on top of date/category filtering
+  if (searchQuery.trim()) {
+  const q = searchQuery.trim().toLowerCase()
+  filtered = filtered.filter((e) =>
+    e.desc.toLowerCase().includes(q) || e.cat.toLowerCase().includes(q)
+  )
+  }
   const total = filtered.reduce((s, e) => s + e.amount, 0)
 
   // Group by date for non-category views
@@ -134,19 +143,43 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
   return (
     <div className="screen hist-screen">
       <div className="topbar" style={{ padding: '52px 24px 16px' }}>
-        <div>
-          <div style={{ fontSize: 12, color: 'var(--text3)' }}>Transactions</div>
-          <div style={{ fontFamily: 'var(--fh)', fontSize: 26, fontWeight: 700 }}>History</div>
-        </div>
-        {view === 'category' && (
-          <div
-            style={{ fontSize: 13, color: 'var(--accent)', fontWeight: 500, cursor: 'pointer' }}
-            onClick={() => { setCategoryFilter(null); setView('daily') }}
-          >
-            Clear ✕
-          </div>
-        )}
+  <div>
+    <div style={{ fontSize: 12, color: 'var(--text3)' }}>Transactions</div>
+    <div style={{ fontFamily: 'var(--fh)', fontSize: 26, fontWeight: 700 }}>History</div>
+  </div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+    <div
+      style={{ fontSize: 18, cursor: 'pointer' }}
+      onClick={() => setShowSearch(!showSearch)}
+    >
+      {showSearch ? '✕' : '🔍'}
+    </div>
+    {view === 'category' && (
+      <div
+        style={{ fontSize: 13, color: 'var(--accent)', fontWeight: 500, cursor: 'pointer' }}
+        onClick={() => { setCategoryFilter(null); setView('daily') }}
+      >
+        Clear ✕
       </div>
+    )}
+  </div>
+</div>
+
+{showSearch && (
+  <div className="hist-search-bar">
+    <input
+      type="text"
+      className="hist-search-input"
+      placeholder="Search by description or category..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      autoFocus
+    />
+    {searchQuery && (
+      <span className="hist-search-clear" onClick={() => setSearchQuery('')}>✕</span>
+    )}
+  </div>
+)}
 
       {/* View toggle — show all 3 date views + category if active */}
       <div className="view-toggle">
@@ -191,7 +224,9 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
       </div>
 
       {filtered.length === 0 ? (
-        <div className="hist-empty">No expenses found.</div>
+        <div className="hist-empty">
+        {searchQuery ? `No results for "${searchQuery}"` : 'No expenses found.'}
+        </div>
       ) : view === 'category' ? (
         // Category view — flat list
         <div className="hist-list-wrap">
