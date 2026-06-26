@@ -1,36 +1,59 @@
-.token-banner {
-  margin: 0 16px 16px;
-  background: #FFF3CD;
-  border: 1px solid #F5A623;
-  border-radius: 16px;
-  padding: 14px 16px;
+.token-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28,20,9,0.55);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  animation: slideUp 0.3s ease both;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+  animation: fadeIn 0.2s ease both;
 }
-.token-banner-title {
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.token-modal {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 32px 28px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+  animation: popIn 0.25s ease both;
+}
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.token-modal-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.token-modal-title {
   font-family: var(--fh);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.token-modal-sub {
   font-size: 14px;
-  font-weight: 600;
-  color: #1C1409;
-  margin-bottom: 2px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 24px;
 }
-.token-banner-sub {
-  font-size: 12px;
-  color: #6B5B45;
-}
-.token-banner-btn {
+.token-modal-btn {
+  width: 100%;
+  padding: 14px;
   background: var(--accent);
   border: none;
-  border-radius: 99px;
-  padding: 8px 16px;
+  border-radius: 14px;
   font-family: var(--fh);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: #fff;
-  white-space: nowrap;
-  flex-shrink: 0;
   cursor: pointer;
 }

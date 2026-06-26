@@ -170,6 +170,14 @@ if (!driveAccess && user && !tokenExpired) {
   )
 }
 
+  const safeAddExpense = (data) => {
+  if (tokenExpired) {
+    showToast('Reconnect first — session expired')
+    return
+  }
+  return expensesState.addExpense(data)
+  }
+
   const ctx = {
     goTo, showToast,
     user: { ...user, dailyAvg: 895 },
@@ -185,6 +193,7 @@ if (!driveAccess && user && !tokenExpired) {
     setCurrency,
     CURRENCIES,
     ...expensesState,
+    addExpense: safeAddExpense,
   }
 
   return (
