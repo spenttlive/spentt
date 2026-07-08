@@ -750,3 +750,9 @@
     margin-right: auto;
   }
 }
+
+@keyframes fysBadgeTextShimmer {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
