@@ -216,7 +216,7 @@ if (!driveAccess && user && !tokenExpired) {
         {screen === 'terms'    && <TermsScreen    onBack={() => goTo('settings')} />}
         {screen === 'admin' && <AdminScreen onBack={() => goTo('settings')} />}
         {screen === 'faq' && <FAQScreen onBack={() => goTo('settings')} />}  
-        {screen === 'insights' && <InsightsScreen expenses={expenses} goTo={goTo} currency={currency} />}
+        {screen === 'insights' && <InsightsScreen {...ctx} />}
 
         <BottomNav current={screen} goTo={goTo} onAddPress={handleAddPress} />
 
