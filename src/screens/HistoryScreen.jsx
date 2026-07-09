@@ -84,9 +84,14 @@ export default function HistoryScreen({ expenses, goTo, onExpenseTap, categoryFi
   let label = ''
 
   if (view === 'category' && categoryFilter) {
-    filtered = expenses.filter((e) => e.cat === categoryFilter)
-    filtered.sort((a, b) => new Date(b.ts) - new Date(a.ts))
-    label = categoryFilter
+  const now = new Date()
+  filtered = expenses.filter((e) => {
+    if (e.cat !== categoryFilter) return false
+    const d = new Date(e.ts)
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
+  })
+  filtered.sort((a, b) => new Date(b.ts) - new Date(a.ts))
+  label = `${categoryFilter} · ${now.toLocaleDateString('en-US', { month: 'long' })}`
   } else if (view === 'daily') {
     const key = dateKey(selectedDay)
     filtered = expenses.filter((e) => dateKey(e.ts) === key)
