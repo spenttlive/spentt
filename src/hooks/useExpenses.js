@@ -36,33 +36,37 @@ useEffect(() => {
         const now = new Date()
         const currentMonth = now.getMonth()
         const currentYear = now.getFullYear()
-        const recurringExpenses = parsed.filter((e) => e.recurring)
+        // Only original recurring expenses (not auto-generated copies)
+        const recurringExpenses = parsed.filter((e) => e.recurring && !e.recurringSourceId)
         const newRecurring = []
 
         recurringExpenses.forEach((e) => {
-          const expDay = new Date(e.ts).getDate()
-          const alreadyExists = parsed.some((p) => {
-            const pDate = new Date(p.ts)
-            return (
-              p.desc === e.desc &&
-              p.cat === e.cat &&
-              p.amount === e.amount &&
-              pDate.getMonth() === currentMonth &&
-              pDate.getFullYear() === currentYear
-            )
-          })
-          if (!alreadyExists) {
-            const newDate = new Date(currentYear, currentMonth, expDay)
-            if (newDate <= now) {
-              newRecurring.push({
-                ...e,
-                id: Date.now() + Math.random(),
-                ts: newDate,
-                recurring: true,
-              })
-            }
-          }
-        })
+  const sourceId = e.recurringId || e.id
+  const expDay = new Date(e.ts).getDate()
+
+  // Check if a copy for this source already exists this month
+  const alreadyExists = parsed.some((p) => {
+    const pDate = new Date(p.ts)
+    return (
+      p.recurringSourceId === sourceId &&
+      pDate.getMonth() === currentMonth &&
+      pDate.getFullYear() === currentYear
+    )
+  })
+
+  if (!alreadyExists) {
+    const newDate = new Date(currentYear, currentMonth, expDay)
+    if (newDate <= now) {
+      newRecurring.push({
+        ...e,
+        id: Date.now() + Math.random(),
+        ts: newDate,
+        recurring: true,
+        recurringSourceId: sourceId,
+      })
+    }
+  }
+})
 
         const finalExpenses = newRecurring.length > 0
           ? [...newRecurring, ...parsed]
@@ -138,19 +142,21 @@ useEffect(() => {
   }, [accessToken, userEmail])
 
   const addExpense = useCallback((data) => {
-    const newExp = {
+  const newExp = {
     id: Date.now(),
     ...data,
     ts: data.ts || new Date(),
     recurring: data.recurring || false,
-    }
-    setExpenses((prev) => {
-      const updated = [newExp, ...prev]
-      saveToCloud(updated)
-      return updated
-    })
-    return newExp
-  }, [saveToCloud])
+    // If recurring, assign a stable recurringId for future reference
+    ...(data.recurring ? { recurringId: Date.now() } : {}),
+  }
+  setExpenses((prev) => {
+    const updated = [newExp, ...prev]
+    saveToCloud(updated)
+    return updated
+  })
+  return newExp
+}, [saveToCloud])
 
   const editExpense = useCallback((id, updates) => {
     setExpenses((prev) => {
