@@ -21,6 +21,7 @@ import AdminScreen from './screens/AdminScreen'
 import FAQScreen from './screens/FAQScreen'
 import TokenExpiredBanner from './components/TokenExpiredBanner'
 import React, { useState } from 'react'
+import InsightsScreen from './screens/InsightsScreen'
 import './App.css'
 
 class ErrorBoundary extends React.Component {
@@ -215,6 +216,7 @@ if (!driveAccess && user && !tokenExpired) {
         {screen === 'terms'    && <TermsScreen    onBack={() => goTo('settings')} />}
         {screen === 'admin' && <AdminScreen onBack={() => goTo('settings')} />}
         {screen === 'faq' && <FAQScreen onBack={() => goTo('settings')} />}  
+        {screen === 'insights' && <InsightsScreen expenses={expenses} goTo={goTo} currency={currency} />}
 
         <BottomNav current={screen} goTo={goTo} onAddPress={handleAddPress} />
 
