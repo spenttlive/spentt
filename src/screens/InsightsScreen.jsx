@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getCat } from '../data/categories'
+import ExpenseItem from '../components/home/ExpenseItem'
 import './InsightsScreen.css'
 
 function getMonthExpenses(expenses, monthOffset = 0) {
@@ -24,9 +25,10 @@ function buildCategoryData(expenses) {
   return { total, catMap }
 }
 
-export default function InsightsScreen({ expenses, goTo, currency }) {
+export default function InsightsScreen({ expenses, goTo, currency, onExpenseTap }) {
   const sym = currency?.symbol || '₹'
-  const [tab, setTab] = useState(0) // 0 = this month, 1 = last month, 2 = 2 months ago
+  const [tab, setTab] = useState(0)
+  const [selectedCat, setSelectedCat] = useState(null)
 
   const thisMonth = getMonthExpenses(expenses, 0)
   const lastMonth = getMonthExpenses(expenses, 1)
@@ -38,16 +40,25 @@ export default function InsightsScreen({ expenses, goTo, currency }) {
   const { total: currentTotal, catMap: currentCats } = buildCategoryData(current)
   const { catMap: compareCats } = buildCategoryData(compare)
 
-  const sortedCats = Object.entries(currentCats)
-    .sort((a, b) => b[1] - a[1])
+  const sortedCats = Object.entries(currentCats).sort((a, b) => b[1] - a[1])
 
   const compareTotal = compare.reduce((s, e) => s + e.amount, 0)
   const totalChangePct = compareTotal > 0
     ? Math.round(((currentTotal - compareTotal) / compareTotal) * 100)
     : null
 
-  const compareMonthName = tab === 0 ? getMonthName(1) : tab === 1 ? getMonthName(2) : getMonthName(3)
+  const compareMonthName = getMonthName(tab + 1)
   const currentMonthName = getMonthName(tab)
+
+  // Category detail data
+  const catExpenses = selectedCat
+    ? current.filter((e) => e.cat === selectedCat).sort((a, b) => new Date(b.ts) - new Date(a.ts))
+    : []
+  const catTotal = catExpenses.reduce((s, e) => s + e.amount, 0)
+  const catPrevTotal = selectedCat ? (compareCats[selectedCat] || 0) : 0
+  const catChangePct = catPrevTotal > 0
+    ? Math.round(((catTotal - catPrevTotal) / catPrevTotal) * 100)
+    : null
 
   return (
     <div className="screen insights-screen">
@@ -64,7 +75,7 @@ export default function InsightsScreen({ expenses, goTo, currency }) {
           <div
             key={i}
             className={`insights-tab ${tab === i ? 'active' : ''}`}
-            onClick={() => setTab(i)}
+            onClick={() => { setTab(i); setSelectedCat(null) }}
           >
             {m.split(' ')[0]}
           </div>
@@ -86,7 +97,7 @@ export default function InsightsScreen({ expenses, goTo, currency }) {
         )}
       </div>
 
-      {/* Category breakdown */}
+      {/* Category list */}
       {sortedCats.length === 0 ? (
         <div className="insights-empty">No expenses logged for {currentMonthName}.</div>
       ) : (
@@ -101,13 +112,20 @@ export default function InsightsScreen({ expenses, goTo, currency }) {
             const isNew = prevAmt === 0
 
             return (
-              <div key={cat} className="insights-cat-card">
+              <div
+                key={cat}
+                className="insights-cat-card"
+                onClick={() => setSelectedCat(cat)}
+              >
                 <div className="insights-cat-top">
                   <div className="insights-cat-left">
                     <div className="insights-cat-icon" style={{ background: c.bg }}>
                       {c.emoji}
                     </div>
-                    <div className="insights-cat-name">{cat}</div>
+                    <div>
+                      <div className="insights-cat-name">{cat}</div>
+                      <div className="insights-cat-count">{catExpenses.length === 0 ? current.filter(e => e.cat === cat).length : ''} {current.filter(e => e.cat === cat).length} transactions</div>
+                    </div>
                   </div>
                   <div className="insights-cat-right">
                     <div className="insights-cat-amt">{sym}{Math.round(amt).toLocaleString()}</div>
@@ -118,13 +136,11 @@ export default function InsightsScreen({ expenses, goTo, currency }) {
                         {changePct > 0 ? '↑' : '↓'} {Math.abs(changePct)}%
                       </div>
                     ) : null}
+                    <div className="insights-cat-arrow">›</div>
                   </div>
                 </div>
                 <div className="insights-bar-wrap">
-                  <div
-                    className="insights-bar"
-                    style={{ width: `${pct}%`, background: c.color }}
-                  />
+                  <div className="insights-bar" style={{ width: `${pct}%`, background: c.color }} />
                 </div>
                 <div className="insights-bar-meta">
                   <span>{pct}% of total</span>
@@ -140,7 +156,7 @@ export default function InsightsScreen({ expenses, goTo, currency }) {
 
       {/* Bottom actions */}
       <div className="insights-actions">
-        <div className="insights-action-label">View your receipts</div>
+        <div className="insights-action-label">Your receipts</div>
         <button className="insights-action-btn" onClick={() => goTo('receipt')}>
           🧾 Weekly receipt →
         </button>
@@ -149,6 +165,49 @@ export default function InsightsScreen({ expenses, goTo, currency }) {
         </button>
       </div>
 
+      {/* Category detail sheet */}
+      {selectedCat && (
+        <>
+          <div className="insights-overlay" onClick={() => setSelectedCat(null)} />
+          <div className="insights-sheet">
+            <div className="insights-sheet-handle" />
+            <div className="insights-sheet-header">
+              <div className="insights-sheet-title-row">
+                <div className="insights-sheet-icon" style={{ background: getCat(selectedCat).bg }}>
+                  {getCat(selectedCat).emoji}
+                </div>
+                <div>
+                  <div className="insights-sheet-cat">{selectedCat}</div>
+                  <div className="insights-sheet-month">{currentMonthName}</div>
+                </div>
+                <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
+                  <div className="insights-sheet-total">{sym}{Math.round(catTotal).toLocaleString()}</div>
+                  {catChangePct !== null && (
+                    <div className={`insights-cat-change ${catChangePct > 0 ? 'up' : 'down'}`}>
+                      {catChangePct > 0 ? '↑' : '↓'} {Math.abs(catChangePct)}% vs {compareMonthName.split(' ')[0]}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="insights-sheet-body">
+              {catExpenses.length === 0 ? (
+                <div className="insights-empty">No expenses in this category.</div>
+              ) : (
+                catExpenses.map((e) => (
+                  <ExpenseItem
+                    key={e.id}
+                    expense={e}
+                    showDate
+                    onTap={(exp) => { setSelectedCat(null); onExpenseTap(exp) }}
+                    currency={currency}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
