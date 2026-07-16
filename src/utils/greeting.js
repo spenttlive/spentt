@@ -22,11 +22,12 @@ export function buildGreeting(name, expenses, dailyAvg = 895) {
   const lastWeekTotal = lastWeekExp.reduce((s, e) => s + e.amount, 0)
 
   let streak = 0
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(todayDate); d.setDate(d.getDate() - i)
-    const k = d.toISOString().slice(0, 10)
-    if (expenses.some((e) => new Date(e.ts).toISOString().slice(0, 10) === k)) streak++
-    else break
+  for (let i = 0; i < 366; i++) {
+  const d = new Date(todayDate)
+  d.setDate(d.getDate() - i)
+  const k = d.toLocaleDateString('en-CA')
+  if (expenses.some((e) => new Date(e.ts).toLocaleDateString('en-CA') === k)) streak++
+  else break
   }
 
   // Priority rules

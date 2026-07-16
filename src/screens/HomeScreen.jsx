@@ -153,7 +153,7 @@ export default function HomeScreen({ user, expenses, addExpense, totalSpent, avg
       </div>
 
       {/* Period pills */}
-      <StreakBanner expenses={expenses} />
+      <StreakBanner expenses={expenses} currency={currency} />
       <MonthlyRecap expenses={expenses} showToast={showToast} currency={currency} />
 
       
