@@ -1,71 +1,57 @@
 import { useState, useEffect } from 'react'
-import { calculateStreak } from '../../utils/streak'
 import './StreakBanner.css'
 
 export default function StreakBanner({ expenses, currency }) {
   const sym = currency?.symbol || '₹'
   const [index, setIndex] = useState(0)
 
-  // Build ticker facts
   const now = new Date()
-  const dow = now.getDay()
 
-  const weekStart = new Date(now)
-  weekStart.setDate(now.getDate() - dow)
-  weekStart.setHours(0, 0, 0, 0)
-
-  const weekExp = expenses.filter((e) => new Date(e.ts) >= weekStart)
-  const weekTotal = weekExp.reduce((s, e) => s + e.amount, 0)
-
+  // Month expenses
   const monthExp = expenses.filter((e) => {
     const d = new Date(e.ts)
     return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
   })
-  const monthTotal = monthExp.reduce((s, e) => s + e.amount, 0)
+
+  // Most expensive single expense this month
+  const mostExpensive = monthExp.sort((a, b) => b.amount - a.amount)[0]
+
+  // Most recurring spend (most frequent description)
+  const descMap = {}
+  expenses.forEach((e) => { descMap[e.desc] = (descMap[e.desc] || 0) + 1 })
+  const topRecurring = Object.entries(descMap).sort((a, b) => b[1] - a[1])[0]
 
   // Top category this month
   const catMap = {}
   monthExp.forEach((e) => { catMap[e.cat] = (catMap[e.cat] || 0) + e.amount })
   const topCat = Object.entries(catMap).sort((a, b) => b[1] - a[1])[0]
 
-  // Most active day
+  // Most spending day of week (all time)
   const dayMap = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }
   expenses.forEach((e) => { dayMap[new Date(e.ts).getDay()]++ })
-  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const topDay = Object.entries(dayMap).sort((a, b) => b[1] - a[1])[0]
 
-  const streak = calculateStreak(expenses)
-
   const facts = [
-    weekTotal > 0 && {
-      emoji: '📅',
-      label: 'This week',
-      value: `${sym}${Math.round(weekTotal).toLocaleString()}`,
+    mostExpensive && {
+      emoji: '💸',
+      text: `Biggest this month — ${sym}${Math.round(mostExpensive.amount).toLocaleString()} on ${mostExpensive.desc}`,
     },
-    monthTotal > 0 && {
-      emoji: '🗓',
-      label: 'This month',
-      value: `${sym}${Math.round(monthTotal).toLocaleString()}`,
+    topRecurring && topRecurring[1] > 1 && {
+      emoji: '🔁',
+      text: `Most repeated — ${topRecurring[0]} (${topRecurring[1]}x)`,
     },
     topCat && {
       emoji: '🏆',
-      label: 'Top category',
-      value: topCat[0],
+      text: `Top category this month — ${topCat[0]}`,
     },
     expenses.length > 0 && {
       emoji: '📝',
-      label: 'Total logged',
-      value: `${expenses.length} expenses`,
+      text: `${expenses.length} expenses logged in total`,
     },
     topDay && {
       emoji: '📆',
-      label: 'Most active day',
-      value: dayNames[topDay[0]],
-    },
-    streak > 0 && {
-      emoji: streak >= 30 ? '🔥🔥🔥' : streak >= 7 ? '🔥🔥' : '🔥',
-      label: 'Logging streak',
-      value: `${streak} days`,
+      text: `Most active day — ${dayNames[topDay[0]]}s`,
     },
   ].filter(Boolean)
 
@@ -73,26 +59,23 @@ export default function StreakBanner({ expenses, currency }) {
     if (facts.length <= 1) return
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % facts.length)
-    }, 3000)
+    }, 3500)
     return () => clearInterval(timer)
   }, [facts.length])
 
   if (facts.length === 0) return null
 
-  const fact = facts[index]
+  const fact = facts[index % facts.length]
 
   return (
     <div className="streak-banner">
-      <div className="streak-emoji">{fact.emoji}</div>
-      <div className="streak-text">
-        <div className="streak-label">{fact.label}</div>
-        <div className="streak-message">{fact.value}</div>
-      </div>
+      <span className="streak-fact-emoji">{fact.emoji}</span>
+      <span className="streak-fact-text">{fact.text}</span>
       <div className="streak-dots">
         {facts.map((_, i) => (
           <div
             key={i}
-            className={`streak-dot ${i === index ? 'active' : ''}`}
+            className={`streak-dot ${i === index % facts.length ? 'active' : ''}`}
             onClick={() => setIndex(i)}
           />
         ))}

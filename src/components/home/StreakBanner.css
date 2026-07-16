@@ -2,46 +2,28 @@
   margin: 0 16px 16px;
   background: var(--card);
   border: 1.5px solid var(--border);
-  border-radius: 16px;
-  padding: 14px 16px;
+  border-radius: 12px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  animation: slideUp 0.3s ease both;
+  gap: 8px;
 }
-.streak-emoji {
-  font-size: 24px;
-  flex-shrink: 0;
-}
-.streak-text {
-  flex: 1;
-  min-width: 0;
-}
-.streak-label {
-  font-size: 10px;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 2px;
-}
-.streak-message {
-  font-family: var(--fh);
+.streak-fact-emoji {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-}
-.streak-count {
-  font-family: var(--fh);
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--accent);
   flex-shrink: 0;
-  line-height: 1;
 }
-
+.streak-fact-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text2);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .streak-dots {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 4px;
   flex-shrink: 0;
 }
