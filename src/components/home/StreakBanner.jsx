@@ -16,9 +16,9 @@ export default function StreakBanner({ expenses, currency }) {
   // Most expensive single expense this month
   const mostExpensive = monthExp.sort((a, b) => b.amount - a.amount)[0]
 
-  // Most recurring spend (most frequent description)
+  // Most recurring spend this month (most frequent description)
   const descMap = {}
-  expenses.forEach((e) => { descMap[e.desc] = (descMap[e.desc] || 0) + 1 })
+  monthExp.forEach((e) => { descMap[e.desc] = (descMap[e.desc] || 0) + 1 })
   const topRecurring = Object.entries(descMap).sort((a, b) => b[1] - a[1])[0]
 
   // Top category this month
