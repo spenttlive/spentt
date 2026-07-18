@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mint Shut Down — A Free Expense Tracker Alternative That Respects Your Privacy</title>
+<meta name="description" content="Mint is gone. Here's a free expense tracker alternative that doesn't store your data on servers, doesn't require bank linking, and actually builds a lasting habit."/>
+<link rel="canonical" href="https://www.spentt.live/blog/mint-alternative-free-expense-tracker.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Mint Shut Down — A Free Expense Tracker Alternative That Respects Your Privacy",
+  "description": "Mint is gone. Here's a free expense tracker alternative that doesn't store your data on servers, doesn't require bank linking, and actually builds a lasting habit.",
+  "url": "https://www.spentt.live/blog/mint-alternative-free-expense-tracker.html",
+  "author": { "@type": "Organization", "name": "Spentt" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" },
+  "datePublished": "2026-07-01",
+  "keywords": "mint alternative, mint shut down alternative, free mint alternative, best mint replacement, expense tracker like mint, mint app alternative free, personal finance app mint replacement, free expense tracker no bank linking"
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;border:none;cursor:pointer;}
+.content{max-width:680px;margin:0 auto;padding:48px 40px 80px;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:38px;font-weight:700;line-height:1.15;margin-bottom:16px;letter-spacing:-0.02em;}
+.meta{font-size:13px;color:var(--text3);margin-bottom:32px;display:flex;align-items:center;gap:12px;}
+.meta-dot{width:4px;height:4px;border-radius:50%;background:var(--text3);display:inline-block;}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:20px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+h3{font-family:'Gabarito',sans-serif;font-size:19px;font-weight:600;margin:28px 0 8px;color:var(--text);}
+ul,ol{margin:8px 0 20px 20px;}
+ul li,ol li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:8px;}
+strong{color:var(--text);font-weight:600;}
+.highlight{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:20px 24px;margin:28px 0;}
+.highlight p{margin:0;font-size:15px;}
+.mint-vs{background:var(--text);border-radius:20px;overflow:hidden;margin:32px 0;}
+.mint-vs-header{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,0.05);padding:14px 20px;}
+.mint-vs-head{font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;}
+.mint-vs-head.mint{color:rgba(255,255,255,0.35);text-decoration:line-through;}
+.mint-vs-head.spentt{color:var(--accent);}
+.mint-vs-row{display:grid;grid-template-columns:1fr 1fr;padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);}
+.mint-vs-cell{font-size:13px;line-height:1.5;}
+.mint-vs-cell.bad{color:rgba(255,255,255,0.3);}
+.mint-vs-cell.good{color:rgba(255,255,255,0.85);font-weight:500;}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;}
+.feature-num{font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;color:var(--accent);background:rgba(232,98,58,0.1);padding:4px 10px;border-radius:99px;flex-shrink:0;margin-top:2px;}
+.feature-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.feature-desc{font-size:14px;color:var(--text2);line-height:1.6;}
+.receipt-demo{background:var(--text);border-radius:20px;padding:24px;margin:28px 0;}
+.rd-brand{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:3px;margin-bottom:2px;}
+.rd-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block;}
+.rd-tag{font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+.rd-dash{border:none;border-top:1px dashed rgba(255,255,255,0.1);margin:12px 0;}
+.rd-row{display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px;}
+.rd-row span:last-child{font-weight:600;color:#fff;}
+.rd-solid{border:none;border-top:1px solid rgba(255,255,255,0.06);margin:12px 0;}
+.rd-total{display:flex;justify-content:space-between;align-items:center;}
+.rd-total-l{font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.08em;}
+.rd-total-r{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:800;color:#fff;}
+.rd-verdict{text-align:center;margin-top:12px;}
+.rd-vl{font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
+.rd-vn{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
+.rd-vs{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.5;}
+.steps{display:flex;flex-direction:column;gap:10px;margin:24px 0;}
+.step{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-title{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.step-desc{font-size:13px;color:var(--text3);line-height:1.5;}
+.privacy-box{background:var(--text);border-radius:20px;padding:28px;margin:32px 0;}
+.privacy-box-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:16px;}
+.privacy-item{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
+.privacy-check{color:var(--accent);font-size:16px;flex-shrink:0;}
+.privacy-text{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.5;}
+.cta-box{background:var(--accent);border-radius:24px;padding:36px;text-align:center;margin:48px 0;}
+.cta-box h3{font-family:'Gabarito',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;margin-top:0;}
+.cta-box p{color:rgba(255,255,255,0.75);font-size:15px;margin-bottom:24px;}
+.cta-box a{background:#fff;color:var(--accent);padding:14px 32px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;display:inline-block;}
+.cta-note{font-size:12px;color:rgba(255,255,255,0.6);margin-top:12px;margin-bottom:0;}
+.related{margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;transition:border-color 0.2s;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+@media(max-width:600px){
+  nav,footer{padding:16px 20px;}
+  .content{padding:32px 20px 60px;}
+  h1{font-size:28px;}
+  h2{font-size:22px;}
+  .mint-vs-header,.mint-vs-row{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try free →</a>
+</nav>
+
+<div class="content">
+  <div class="eyebrow">Mint Alternative · Free · Private</div>
+  <h1>Mint Shut Down — A Free Expense Tracker Alternative That Actually Respects Your Privacy</h1>
+  <div class="meta">
+    <span>By Spentt</span>
+    <span class="meta-dot"></span>
+    <span>July 2026</span>
+    <span class="meta-dot"></span>
+    <span>7 min read</span>
+  </div>
+
+  <p>In January 2024, Intuit shut down Mint — one of the most popular personal finance apps in the world, with over 3.6 million active users. The shutdown was abrupt. Users were given weeks to export their data before years of financial history disappeared.</p>
+
+  <p>If you were a Mint user, you learned something important that day: when your financial data lives on someone else's servers, you're at their mercy. The moment they decide the product isn't profitable, your data goes with it.</p>
+
+  <p>This piece makes the case for a different kind of expense tracker — one built on a simple principle: your financial data should live somewhere you own, not somewhere a company decides to keep it.</p>
+
+  <div class="highlight">
+    <p><strong>The alternative:</strong> Spentt is a free expense tracker that stores all your data in your own Google Drive. No server storage, no bank linking, no subscription — and if Spentt ever shuts down, your data is still yours.</p>
+  </div>
+
+  <h2>What made Mint popular — and what made it problematic</h2>
+
+  <p>Mint's appeal was its convenience. Connect your bank accounts once, and every transaction imported automatically. Budgets were set, categories were assigned, and you had a complete picture of your finances with zero manual effort.</p>
+
+  <p>But that convenience came with significant trade-offs that most users never fully understood:</p>
+
+  <ul>
+    <li><strong>Your banking credentials were stored on Intuit's servers.</strong> Mint used a service called Plaid to connect to your bank — which required sharing your username and password with a third party.</li>
+    <li><strong>Your complete transaction history was stored on their servers.</strong> Every purchase, every amount, every merchant — a detailed map of your financial life, living on a company's database.</li>
+    <li><strong>Your data was used for advertising.</strong> Intuit monetised user data to serve targeted financial product ads. Your spending patterns were the product.</li>
+    <li><strong>When they shut down, your history went with them.</strong> Years of financial data — gone, unless you exported it in time.</li>
+  </ul>
+
+  <p>Mint was convenient. It was also a significant privacy risk that most users accepted without thinking about it.</p>
+
+  <h2>What a better alternative looks like</h2>
+
+  <p>The fundamental question after Mint shut down isn't "which app is most like Mint?" It's "what went wrong with Mint's approach, and how do we avoid the same problems?"</p>
+
+  <p>The answer points to three requirements for a trustworthy expense tracker:</p>
+
+  <ul>
+    <li><strong>Your data shouldn't live on someone else's server</strong> — so you're never one shutdown away from losing it</li>
+    <li><strong>No bank linking required</strong> — so you're never sharing credentials you shouldn't share</li>
+    <li><strong>Genuinely free</strong> — not "free with ads" or "free with a paid tier that has the features you actually want"</li>
+  </ul>
+
+  <p>Spentt is built around all three.</p>
+
+  <h2>How Spentt is different from Mint</h2>
+
+  <div class="mint-vs">
+    <div class="mint-vs-header">
+      <div class="mint-vs-head mint">Mint (shut down)</div>
+      <div class="mint-vs-head spentt">Spentt</div>
+    </div>
+    <div class="mint-vs-row">
+      <div class="mint-vs-cell bad">Data on Intuit's servers</div>
+      <div class="mint-vs-cell good">Data in your Google Drive</div>
+    </div>
+    <div class="mint-vs-row">
+      <div class="mint-vs-cell bad">Required bank account linking</div>
+      <div class="mint-vs-cell good">No bank linking ever</div>
+    </div>
+    <div class="mint-vs-row">
+      <div class="mint-vs-cell bad">Used your data for ads</div>
+      <div class="mint-vs-cell good">No advertising, no data selling</div>
+    </div>
+    <div class="mint-vs-row">
+      <div class="mint-vs-cell bad">Data lost when it shut down</div>
+      <div class="mint-vs-cell good">Your data stays in your Drive forever</div>
+    </div>
+    <div class="mint-vs-row">
+      <div class="mint-vs-cell bad">Complex dashboard, steep learning curve</div>
+      <div class="mint-vs-cell good">Log an expense in 5 seconds</div>
+    </div>
+    <div class="mint-vs-row">
+      <div class="mint-vs-cell bad">Monthly reviews, passive tracking</div>
+      <div class="mint-vs-cell good">Weekly receipt every Sunday</div>
+    </div>
+    <div class="mint-vs-row">
+      <div class="mint-vs-cell bad">Free with heavy advertising</div>
+      <div class="mint-vs-cell good">Free with no ads, ever</div>
+    </div>
+    <div class="mint-vs-row">
+      <div class="mint-vs-cell bad">Required App Store download</div>
+      <div class="mint-vs-cell good">Installs from browser, any device</div>
+    </div>
+  </div>
+
+  <h2>Why your data living in Google Drive matters</h2>
+
+  <p>When you sign in to Spentt with your Google account, it creates a single file — <code>spentt-expenses.json</code> — in a private app folder in your Google Drive. Every expense you log goes directly into that file, from your browser to your Drive. Spentt's servers are never involved.</p>
+
+  <p>This has three important implications:</p>
+
+  <p><strong>We cannot see your data.</strong> Even if we wanted to, Spentt has no access to the contents of your expense file. It lives in your Drive, under your account, governed by Google's security.</p>
+
+  <p><strong>You can export or delete it anytime.</strong> Your expenses are stored as a simple JSON file. You can open it, download it, convert it — it's your file in your storage. No need to request an export from a company before they shut down.</p>
+
+  <p><strong>If Spentt ever shuts down, nothing changes for your data.</strong> The file stays in your Drive. The only thing you'd lose is the app — not the years of financial history you've built up.</p>
+
+  <div class="privacy-box">
+    <div class="privacy-box-title">What Spentt never does</div>
+    <div class="privacy-item">
+      <span class="privacy-check">✓</span>
+      <span class="privacy-text">Never asks for your bank account credentials or login</span>
+    </div>
+    <div class="privacy-item">
+      <span class="privacy-check">✓</span>
+      <span class="privacy-text">Never stores your expense data on our servers</span>
+    </div>
+    <div class="privacy-item">
+      <span class="privacy-check">✓</span>
+      <span class="privacy-text">Never sells your spending patterns to advertisers</span>
+    </div>
+    <div class="privacy-item">
+      <span class="privacy-check">✓</span>
+      <span class="privacy-text">Never shows you ads inside the app</span>
+    </div>
+    <div class="privacy-item">
+      <span class="privacy-check">✓</span>
+      <span class="privacy-text">Never locks your data behind a subscription paywall</span>
+    </div>
+  </div>
+
+  <h2>What Spentt does instead of automatic bank syncing</h2>
+
+  <p>Mint's killer feature was automatic transaction import. You connected your bank once and never had to log anything manually. Spentt takes the opposite approach — and there's a good reason for it.</p>
+
+  <p>Manual logging, done immediately after spending, creates something automatic syncing never can: <strong>conscious awareness</strong>. When you tap to log a ₹340 Zomato order the moment you place it, you engage with that spending decision in a way that passive bank syncing never requires. Research consistently shows that people who log expenses manually spend 15-20% less than those who rely on automatic imports — not because of restriction, but because of awareness.</p>
+
+  <p>The trade-off is real — you have to log expenses yourself. Spentt is designed to make that as frictionless as possible: description, amount, category, date. Four fields. Five seconds. No friction means no excuses.</p>
+
+  <h2>The 5 things Spentt does that Mint never did</h2>
+
+  <div class="feature-card">
+    <span class="feature-num">01</span>
+    <div>
+      <div class="feature-title">Weekly receipt with a spending personality</div>
+      <div class="feature-desc">Every Sunday, Spentt generates a receipt-style summary of your week — broken down by category, with a total, and a spending personality verdict based on your actual patterns. "Comfortable Contradictionist — coffee costs more than groceries. Your kitchen runs on vibes." It's the kind of honest, memorable feedback that actually changes how you spend.</div>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <span class="feature-num">02</span>
+    <div>
+      <div class="feature-title">28 spending personalities</div>
+      <div class="feature-desc">Based on your weekly spending patterns, Spentt assigns one of 28 personalities — from "The Wealth Architect" (40%+ to investments) to "The Delivery Devotee" (food delivery dominates) to "The Minimalist" (three transactions all week). Each verdict is specific, honest, and shareable. Mint gave you pie charts. Spentt gives you a mirror.</div>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <span class="feature-num">03</span>
+    <div>
+      <div class="feature-title">Monthly category insights with comparison</div>
+      <div class="feature-desc">The Insights tab shows you every spending category for the current month, compared to last month — with percentage changes, transaction counts, and bar charts. "Medical: ₹18,400 this month, ↑ 44% vs June." Simple, actionable, no dashboard complexity.</div>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <span class="feature-num">04</span>
+    <div>
+      <div class="feature-title">Spending streak</div>
+      <div class="feature-desc">Spentt tracks how many consecutive days you've logged at least one expense. A rotating insights banner shows your biggest spend this month, most repeated expense, top category, and most active spending day. Habit tracking built into the app, not bolted on.</div>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <span class="feature-num">05</span>
+    <div>
+      <div class="feature-title">Installs on any phone without an App Store</div>
+      <div class="feature-desc">Open spentt.live in Safari (iPhone) or Chrome (Android), tap Add to Home Screen. Spentt installs as a native-feeling app with its own icon, splash screen, and offline capability — no App Store, no approval process, no account required to install.</div>
+    </div>
+  </div>
+
+  <h2>How to get started in 30 seconds</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Open spentt.live</div>
+        <div class="step-desc">Works on any browser — Chrome, Safari, Firefox. No download required.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Sign in with Google</div>
+        <div class="step-desc">One tap. Spentt requests access to a private app folder in your Google Drive — nothing else.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Add to your home screen</div>
+        <div class="step-desc">Tap Share → Add to Home Screen in Safari, or the install prompt in Chrome. It lives on your home screen like any other app.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">Log your first expense</div>
+        <div class="step-desc">Tap the + button. Description, amount, category. Five seconds. Your data is saved directly to your Google Drive.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">Check your receipt on Sunday</div>
+        <div class="step-desc">Every Sunday, open the Receipt tab. Your week in one page, with a personality verdict at the bottom.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>What your first Sunday receipt looks like</h2>
+
+  <div class="receipt-demo">
+    <div class="rd-brand">spentt<span class="rd-dot"></span></div>
+    <div class="rd-tag">know where it went</div>
+    <div class="rd-dash"></div>
+    <div class="rd-row"><span>☕ Coffee</span><span>₹2,400</span></div>
+    <div class="rd-row"><span>🛒 Groceries</span><span>₹1,800</span></div>
+    <div class="rd-row"><span>🚗 Transport</span><span>₹1,200</span></div>
+    <div class="rd-row"><span>🍔 Food & Dining</span><span>₹3,200</span></div>
+    <div class="rd-row"><span>🛍 Shopping</span><span>₹4,100</span></div>
+    <div class="rd-solid"></div>
+    <div class="rd-total">
+      <span class="rd-total-l">Total</span>
+      <span class="rd-total-r">₹12,700</span>
+    </div>
+    <div class="rd-dash"></div>
+    <div class="rd-verdict">
+      <div class="rd-vl">This week's personality</div>
+      <div class="rd-vn">Comfortable Contradictionist</div>
+      <div class="rd-vs">Coffee costs more than groceries.<br>Your kitchen runs on vibes.</div>
+    </div>
+  </div>
+
+  <h2>The honest trade-off</h2>
+
+  <p>Spentt is not Mint. It doesn't automatically import your bank transactions. It doesn't show your net worth across all accounts. It doesn't have investment tracking or credit score monitoring.</p>
+
+  <p>It does one thing: help you understand where your money goes, through a simple daily logging habit and a weekly review moment. That's it.</p>
+
+  <p>For most people — especially those who found Mint overwhelming, or who are rightfully concerned about sharing banking credentials with apps — that's actually the right scope. A tool you use every day beats a comprehensive tool you open once a month.</p>
+
+  <p>If you want automatic bank syncing and don't mind the privacy trade-offs, there are other options. But if you want a free, private, habit-first approach to expense tracking that will never hold your data hostage — Spentt is built for exactly that.</p>
+
+  <div class="cta-box">
+    <h3>Try Spentt free — takes 30 seconds</h3>
+    <p>No bank linking. No server storage. Your data lives in your Google Drive — forever yours, regardless of what happens to us.</p>
+    <a href="/">Start tracking free →</a>
+    <p class="cta-note">Free forever · No credit card · Works on iPhone, Android, and desktop</p>
+  </div>
+
+  <div class="related">
+    <div class="related-title">More from Spentt</div>
+    <div class="related-links">
+      <a href="/blog/expense-tracker-no-bank-linking.html" class="related-link">Why You Should Track Expenses Without Linking Your Bank Account →</a>
+      <a href="/blog/free-expense-tracker-google-drive.html" class="related-link">The Only Free Expense Tracker That Stores Data in Google Drive →</a>
+      <a href="/blog/better-way-to-track-expenses.html" class="related-link">Need a Better Way to Track Expenses? Here's What Actually Works →</a>
+      <a href="/blog/7-reasons-to-track-expenses.html" class="related-link">7 Reasons Why You Should Start Tracking Your Expenses →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/blog/">Blog</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+</body>
+</html>
