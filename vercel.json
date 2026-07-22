@@ -7,19 +7,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.(?:jpg|jpeg|gif|png|svg|ico|webp|woff|woff2|ttf|otf)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(.*)\\.(?:js|css)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/blog/(.*)\\.html",
+      "source": "/blog/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
       ]
@@ -33,7 +21,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!sitemap\\.xml|robots\\.txt|blog/|tools/|privacy\\.html|terms\\.html|og-image\\.png|manifest\\.json|icon|googlea|favicon).*)",
+      "source": "/((?!sitemap.xml|robots.txt|blog/|tools/|privacy.html|terms.html|og-image.png|manifest.json|icon|googlea|favicon).*)",
       "destination": "/index.html"
     }
   ]
