@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>50/30/20 Budget Calculator — Free Budget Rule Calculator | Spentt</title>
+<meta name="description" content="Use the free 50/30/20 budget calculator to split your income into needs, wants, and savings. Enter your monthly income and get an instant budget breakdown."/>
+<link rel="canonical" href="https://www.spentt.live/tools/50-30-20-budget-calculator.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "50/30/20 Budget Calculator",
+  "description": "Free 50/30/20 budget rule calculator. Enter your monthly income and instantly see how to split it into needs, wants, and savings.",
+  "url": "https://www.spentt.live/tools/50-30-20-budget-calculator.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the 50/30/20 budget rule?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The 50/30/20 rule is a simple budgeting method where you allocate 50% of your after-tax income to needs, 30% to wants, and 20% to savings and debt repayment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who created the 50/30/20 rule?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The 50/30/20 rule was popularized by US Senator Elizabeth Warren and her daughter Amelia Warren Tyagi in their book All Your Worth: The Ultimate Lifetime Money Plan, published in 2005."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What counts as needs in the 50/30/20 rule?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Needs are essential expenses you cannot avoid: rent or mortgage, utilities, groceries, transportation to work, minimum loan payments, insurance, and other basic living expenses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What counts as wants in the 50/30/20 rule?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wants are non-essential expenses that improve your quality of life: dining out, streaming subscriptions, gym memberships, entertainment, shopping, holidays, and hobbies."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much should I save according to the 50/30/20 rule?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The 50/30/20 rule recommends saving 20% of your after-tax income. This includes building an emergency fund, contributing to retirement accounts, investing, and paying off debt beyond minimum payments."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;
+  --accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;
+  --needs:#3AAE8A;--wants:#9B6EE8;--savings:#E8623A;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.hero{padding:48px 40px 0;max-width:860px;margin:0 auto;text-align:center;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:700;line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.hero-sub{font-size:16px;color:var(--text2);max-width:520px;margin:0 auto 40px;}
+
+/* Calculator */
+.calc-wrap{max-width:860px;margin:0 auto;padding:0 40px 60px;}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px;margin-bottom:24px;}
+.calc-label{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.calc-sub{font-size:13px;color:var(--text3);margin-bottom:16px;}
+.input-wrap{position:relative;}
+.currency-symbol{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text2);}
+.calc-input{width:100%;padding:16px 16px 16px 44px;font-family:'Gabarito',sans-serif;font-size:28px;font-weight:700;color:var(--text);background:var(--bg);border:2px solid var(--border);border-radius:16px;outline:none;transition:border-color 0.2s;}
+.calc-input:focus{border-color:var(--accent);}
+.calc-input::placeholder{color:var(--border);}
+
+/* Currency selector */
+.currency-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.curr-btn{padding:6px 14px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.curr-btn.active{background:var(--text);color:#fff;border-color:var(--text);}
+
+/* Slider */
+.slider-section{margin-top:20px;}
+.slider-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.slider-label{font-size:14px;font-weight:500;color:var(--text2);}
+.slider-val{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;}
+.slider-val.needs{color:var(--needs);}
+.slider-val.wants{color:var(--wants);}
+.slider-val.savings{color:var(--savings);}
+input[type=range]{width:100%;margin-bottom:16px;accent-color:var(--accent);}
+
+/* Results */
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.result-card{border-radius:20px;padding:20px;text-align:center;}
+.result-card.needs{background:rgba(58,174,138,0.08);border:1.5px solid rgba(58,174,138,0.2);}
+.result-card.wants{background:rgba(155,110,232,0.08);border:1.5px solid rgba(155,110,232,0.2);}
+.result-card.savings{background:rgba(232,98,58,0.08);border:1.5px solid rgba(232,98,58,0.2);}
+.result-pct{font-family:'Gabarito',sans-serif;font-size:28px;font-weight:800;margin-bottom:2px;}
+.result-pct.needs{color:var(--needs);}
+.result-pct.wants{color:var(--wants);}
+.result-pct.savings{color:var(--savings);}
+.result-category{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:8px;}
+.result-amount{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.result-daily{font-size:12px;color:var(--text3);}
+
+/* Bar chart */
+.bar-wrap{background:var(--border);border-radius:99px;height:12px;overflow:hidden;display:flex;margin-bottom:8px;}
+.bar-seg{height:100%;transition:width 0.4s ease;}
+.bar-legend{display:flex;gap:16px;justify-content:center;margin-bottom:24px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);}
+.legend-dot{width:8px;height:8px;border-radius:50%;}
+
+/* Breakdown table */
+.breakdown-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text);}
+.breakdown-section{margin-bottom:20px;}
+.breakdown-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.breakdown-section-label.needs{color:var(--needs);}
+.breakdown-section-label.wants{color:var(--wants);}
+.breakdown-section-label.savings{color:var(--savings);}
+.breakdown-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg);border-radius:10px;margin-bottom:6px;}
+.breakdown-item-left{display:flex;align-items:center;gap:10px;}
+.breakdown-item-emoji{font-size:16px;}
+.breakdown-item-name{font-size:14px;color:var(--text2);}
+.breakdown-item-amt{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:var(--text);}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 24px;}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.empty-sub{font-size:14px;color:var(--text3);}
+
+/* CTA */
+.tool-cta{background:var(--text);border-radius:20px;padding:28px;text-align:center;margin-bottom:48px;}
+.tool-cta-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.tool-cta-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px;line-height:1.6;}
+.tool-cta-btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;}
+.tool-cta-note{font-size:12px;color:rgba(255,255,255,0.3);margin-top:10px;}
+
+/* Content */
+.content-section{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+h3{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:600;margin:24px 0 8px;color:var(--text);}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+strong{color:var(--text);font-weight:600;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+.related{padding-top:32px;border-top:1px solid var(--border);margin-top:40px;}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+
+@media(max-width:600px){
+  nav,footer{padding:16px 20px;}
+  .hero{padding:32px 20px 0;}
+  .calc-wrap{padding:0 16px 48px;}
+  .content-section{padding:0 20px 48px;}
+  h1{font-size:28px;}
+  .results-grid{grid-template-columns:1fr;gap:10px;}
+  .result-card{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:16px;}
+  .result-pct{font-size:22px;}
+  .result-amount{font-size:18px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Free Budget Calculator</div>
+  <h1>50/30/20 Budget Calculator</h1>
+  <p class="hero-sub">Enter your monthly take-home income and instantly see how to split it across needs, wants, and savings using the 50/30/20 rule.</p>
+</div>
+
+<div class="calc-wrap">
+
+  <!-- Input card -->
+  <div class="calc-card">
+    <div class="calc-label">Your monthly take-home income</div>
+    <div class="calc-sub">Enter your income after tax and deductions</div>
+
+    <div class="currency-row" id="currencyRow">
+      <button class="curr-btn active" data-symbol="₹" data-code="INR">₹ INR</button>
+      <button class="curr-btn" data-symbol="$" data-code="USD">$ USD</button>
+      <button class="curr-btn" data-symbol="€" data-code="EUR">€ EUR</button>
+      <button class="curr-btn" data-symbol="£" data-code="GBP">£ GBP</button>
+      <button class="curr-btn" data-symbol="A$" data-code="AUD">A$ AUD</button>
+      <button class="curr-btn" data-symbol="S$" data-code="SGD">S$ SGD</button>
+    </div>
+
+    <div class="input-wrap">
+      <span class="currency-symbol" id="currSymbol">₹</span>
+      <input
+        type="number"
+        class="calc-input"
+        id="incomeInput"
+        placeholder="0"
+        min="0"
+        oninput="calculate()"
+      />
+    </div>
+
+    <div class="slider-section">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;margin-top:20px;">
+        <div class="calc-label" style="margin:0;">Customise the split</div>
+        <button onclick="resetSplit()" style="font-size:12px;color:var(--accent);background:none;border:none;cursor:pointer;font-weight:600;">Reset to 50/30/20</button>
+      </div>
+
+      <div class="slider-row">
+        <span class="slider-label">🏠 Needs</span>
+        <span class="slider-val needs" id="needsPctLabel">50%</span>
+      </div>
+      <input type="range" id="needsSlider" min="10" max="80" value="50" oninput="onSliderChange('needs')"/>
+
+      <div class="slider-row">
+        <span class="slider-label">🎉 Wants</span>
+        <span class="slider-val wants" id="wantsPctLabel">30%</span>
+      </div>
+      <input type="range" id="wantsSlider" min="5" max="60" value="30" oninput="onSliderChange('wants')"/>
+
+      <div class="slider-row">
+        <span class="slider-label">💰 Savings</span>
+        <span class="slider-val savings" id="savingsPctLabel">20%</span>
+      </div>
+      <input type="range" id="savingsSlider" min="5" max="60" value="20" oninput="onSliderChange('savings')" disabled style="opacity:0.5;"/>
+      <div style="font-size:12px;color:var(--text3);margin-top:-10px;margin-bottom:8px;">Savings = 100% − Needs − Wants</div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div id="resultsWrap">
+    <div class="empty-state">
+      <div class="empty-icon">💰</div>
+      <div class="empty-title">Enter your income above</div>
+      <div class="empty-sub">Your budget breakdown will appear here instantly</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="tool-cta">
+    <div class="tool-cta-title">Now track what you actually spend</div>
+    <div class="tool-cta-sub">A budget tells you where money should go. Spentt shows you where it actually goes — in 5 seconds per expense, with a weekly receipt every Sunday.</div>
+    <a href="/" class="tool-cta-btn">Start tracking free →</a>
+    <div class="tool-cta-note">Free forever · No bank linking · Your data in Google Drive</div>
+  </div>
+
+</div>
+
+<!-- Educational content -->
+<div class="content-section">
+
+  <h2>What is the 50/30/20 rule?</h2>
+  <p>The 50/30/20 rule is a straightforward budgeting framework that divides your after-tax income into three categories: <strong>50% for needs, 30% for wants, and 20% for savings and debt repayment.</strong></p>
+  <p>It was popularized by US Senator Elizabeth Warren and her daughter Amelia Warren Tyagi in their 2005 book <em>All Your Worth: The Ultimate Lifetime Money Plan</em>. The rule has since become one of the most widely recommended personal finance frameworks because of its simplicity — you don't need a spreadsheet, a finance degree, or hours of planning to apply it.</p>
+
+  <h2>Breaking down each category</h2>
+
+  <h3 style="color:var(--needs);">🏠 50% — Needs</h3>
+  <p>Needs are expenses you genuinely cannot avoid. They keep you housed, fed, insured, and able to work. If you stopped paying for these, serious consequences would follow.</p>
+  <ul>
+    <li>Rent or mortgage payments</li>
+    <li>Utility bills — electricity, water, gas, internet</li>
+    <li>Groceries and essential food</li>
+    <li>Transportation to work — fuel, public transport, vehicle EMI</li>
+    <li>Health insurance and essential medical expenses</li>
+    <li>Minimum loan repayments</li>
+    <li>Childcare if required for work</li>
+  </ul>
+  <p>If your needs consistently exceed 50%, you may need to look at reducing fixed costs — a smaller home, a cheaper phone plan, or refinancing debt — before the other categories can work.</p>
+
+  <h3 style="color:var(--wants);">🎉 30% — Wants</h3>
+  <p>Wants are expenses that improve your quality of life but aren't strictly necessary. You'd survive without them — but life would be less enjoyable.</p>
+  <ul>
+    <li>Dining out, cafes, and food delivery</li>
+    <li>Streaming services — Netflix, Spotify, Hotstar</li>
+    <li>Gym membership and fitness classes</li>
+    <li>Shopping for clothes beyond basics</li>
+    <li>Entertainment — movies, concerts, events</li>
+    <li>Holidays and travel</li>
+    <li>Hobbies and subscriptions</li>
+    <li>Upgraded phone or gadgets</li>
+  </ul>
+  <p>The wants category is where most overspending happens — and where the biggest opportunity for improvement lies. It's also where awareness matters most. Many people discover they're spending 50-60% on wants without realising it.</p>
+
+  <h3 style="color:var(--savings);">💰 20% — Savings & Debt</h3>
+  <p>This category builds your financial future. It includes both saving for goals and aggressively paying down debt beyond minimum payments.</p>
+  <ul>
+    <li>Emergency fund — 3 to 6 months of expenses</li>
+    <li>Retirement savings — EPF, NPS, PPF</li>
+    <li>Investments — mutual funds, index funds, stocks</li>
+    <li>Extra debt repayments beyond minimums</li>
+    <li>Savings goals — home deposit, car, education</li>
+  </ul>
+  <p>If you have high-interest debt, prioritise paying it off over investing. The interest you save is equivalent to a guaranteed return at that interest rate.</p>
+
+  <h2>Does the 50/30/20 rule work for everyone?</h2>
+  <p>The 50/30/20 rule is a starting framework, not a rigid law. It works well as a baseline for most middle-income earners, but there are situations where you'd adjust it:</p>
+  <ul>
+    <li><strong>High cost of living city:</strong> Your needs may genuinely require 60-70% of income. Adjust accordingly and try to compensate by reducing wants.</li>
+    <li><strong>Aggressive debt paydown:</strong> You might temporarily flip to 50/20/30 — putting 30% toward debt until it's cleared.</li>
+    <li><strong>Early career:</strong> If your income is low, even 10% savings is a great start. Build the habit first, increase the percentage as income grows.</li>
+    <li><strong>High income:</strong> You may not need 30% on wants. Consider shifting more to savings and investments.</li>
+  </ul>
+  <p>Use this calculator's custom slider to find the split that actually works for your situation — not just the textbook version.</p>
+
+  <h2>How to use this calculator</h2>
+  <ol style="margin:8px 0 16px 20px;">
+    <li style="font-size:15px;color:var(--text2);margin-bottom:8px;line-height:1.8;">Enter your monthly <strong>take-home income</strong> — the amount after tax and any automatic deductions</li>
+    <li style="font-size:15px;color:var(--text2);margin-bottom:8px;line-height:1.8;">Choose your currency from the options above the input</li>
+    <li style="font-size:15px;color:var(--text2);margin-bottom:8px;line-height:1.8;">See the instant breakdown for needs, wants, and savings</li>
+    <li style="font-size:15px;color:var(--text2);margin-bottom:8px;line-height:1.8;">Use the sliders to customise the percentages if 50/30/20 doesn't fit your situation</li>
+    <li style="font-size:15px;color:var(--text2);margin-bottom:8px;line-height:1.8;">Use the detailed breakdown to see how specific expenses fit into each category</li>
+  </ol>
+
+  <h2>Frequently asked questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Should I use gross income or net income for the 50/30/20 rule?</div>
+    <div class="faq-a">Always use your net (take-home) income — the amount that actually lands in your bank account after income tax, provident fund contributions, and other deductions. Using gross income will make your budget look larger than it actually is.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What if my needs exceed 50% of my income?</div>
+    <div class="faq-a">This is common, especially in high cost-of-living cities or during early career stages. If your needs genuinely exceed 50%, focus on reducing where possible — negotiating rent, refinancing loans, cutting phone plans. If reduction isn't possible, adjust the split: try 60/20/20 and work toward lowering fixed costs over time.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Is food delivery a need or a want?</div>
+    <div class="faq-a">Food delivery is generally a want, not a need. Groceries are a need — they're the most cost-effective way to feed yourself. Ordering food for convenience or variety is a want, even though food itself is essential. This distinction helps many people see where their "food" budget is actually going.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How is the 50/30/20 rule different from a traditional budget?</div>
+    <div class="faq-a">A traditional budget assigns specific amounts to dozens of subcategories — groceries: ₹8,000, dining: ₹3,000, transport: ₹4,000, etc. The 50/30/20 rule uses just three buckets. This makes it dramatically simpler to follow and maintain, especially for people who've never budgeted before. The trade-off is less granularity — but for most people, starting simple beats starting perfect.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How do I know if my spending matches my budget?</div>
+    <div class="faq-a">The only way to know is to track what you actually spend. A budget tells you where money should go — tracking tells you where it actually goes. Most people discover their real spending looks very different from their intended budget. Tracking for 30 days with a tool like Spentt gives you the data to see whether you're actually following the 50/30/20 rule or just planning to.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I use the 50/30/20 rule with an irregular income?</div>
+    <div class="faq-a">Yes — use your average monthly income over the last 3-6 months as your base figure. In high-income months, put the extra directly into savings. In low-income months, draw from that savings buffer to maintain your needs. The percentages stay consistent even when the absolute amounts vary.</div>
+  </div>
+
+  <div class="related">
+    <div class="related-title">More from Spentt</div>
+    <div class="related-links">
+      <a href="/blog/personal-finance-for-beginners.html" class="related-link">Personal Finance for Beginners — The Only Habit You Need to Start With →</a>
+      <a href="/blog/better-way-to-track-expenses.html" class="related-link">Need a Better Way to Track Expenses? Here's What Actually Works →</a>
+      <a href="/blog/7-reasons-to-track-expenses.html" class="related-link">7 Reasons Why You Should Start Tracking Your Expenses →</a>
+      <a href="/blog/why-people-struggle-to-track-spending.html" class="related-link">Why People Struggle to Track Where Their Money Goes Each Month →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/blog/">Blog</a>
+    <a href="/tools/50-30-20-budget-calculator.html">Calculator</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+<script>
+let sym = '₹'
+let needsPct = 50
+let wantsPct = 30
+let savingsPct = 20
+
+// Currency selector
+document.getElementById('currencyRow').addEventListener('click', function(e) {
+  const btn = e.target.closest('.curr-btn')
+  if (!btn) return
+  document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  sym = btn.dataset.symbol
+  document.getElementById('currSymbol').textContent = sym
+  calculate()
+})
+
+// Slider logic — savings is always remainder
+function onSliderChange(changed) {
+  needsPct = parseInt(document.getElementById('needsSlider').value)
+  wantsPct = parseInt(document.getElementById('wantsSlider').value)
+
+  if (needsPct + wantsPct > 95) {
+    if (changed === 'needs') needsPct = 95 - wantsPct
+    else wantsPct = 95 - needsPct
+    document.getElementById('needsSlider').value = needsPct
+    document.getElementById('wantsSlider').value = wantsPct
+  }
+
+  savingsPct = 100 - needsPct - wantsPct
+  if (savingsPct < 5) {
+    savingsPct = 5
+    if (changed === 'needs') needsPct = 95 - wantsPct - 5
+    else wantsPct = 95 - needsPct - 5
+    document.getElementById('needsSlider').value = needsPct
+    document.getElementById('wantsSlider').value = wantsPct
+    savingsPct = 100 - needsPct - wantsPct
+  }
+
+  document.getElementById('needsPctLabel').textContent = needsPct + '%'
+  document.getElementById('wantsPctLabel').textContent = wantsPct + '%'
+  document.getElementById('savingsPctLabel').textContent = savingsPct + '%'
+  calculate()
+}
+
+function resetSplit() {
+  needsPct = 50; wantsPct = 30; savingsPct = 20
+  document.getElementById('needsSlider').value = 50
+  document.getElementById('wantsSlider').value = 30
+  document.getElementById('needsPctLabel').textContent = '50%'
+  document.getElementById('wantsPctLabel').textContent = '30%'
+  document.getElementById('savingsPctLabel').textContent = '20%'
+  calculate()
+}
+
+function fmt(n) {
+  return sym + Math.round(n).toLocaleString('en-IN')
+}
+
+function fmtDaily(n) {
+  return sym + Math.round(n / 30).toLocaleString('en-IN') + '/day'
+}
+
+function calculate() {
+  const raw = parseFloat(document.getElementById('incomeInput').value)
+  const wrap = document.getElementById('resultsWrap')
+
+  if (!raw || raw <= 0) {
+    wrap.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">💰</div>
+        <div class="empty-title">Enter your income above</div>
+        <div class="empty-sub">Your budget breakdown will appear here instantly</div>
+      </div>`
+    return
+  }
+
+  const income = raw
+  const needs = income * needsPct / 100
+  const wants = income * wantsPct / 100
+  const savings = income * savingsPct / 100
+
+  // Needs examples
+  const needsItems = [
+    { emoji: '🏠', name: 'Rent / Mortgage', pct: 0.35 },
+    { emoji: '🛒', name: 'Groceries', pct: 0.20 },
+    { emoji: '💡', name: 'Utilities & Bills', pct: 0.12 },
+    { emoji: '🚗', name: 'Transport', pct: 0.15 },
+    { emoji: '🏥', name: 'Insurance & Health', pct: 0.10 },
+    { emoji: '💳', name: 'Loan repayments', pct: 0.08 },
+  ]
+
+  const wantsItems = [
+    { emoji: '🍔', name: 'Dining & Food Delivery', pct: 0.30 },
+    { emoji: '📱', name: 'Subscriptions', pct: 0.12 },
+    { emoji: '👕', name: 'Shopping & Clothing', pct: 0.20 },
+    { emoji: '🎬', name: 'Entertainment', pct: 0.15 },
+    { emoji: '✈️', name: 'Travel & Holidays', pct: 0.13 },
+    { emoji: '💪', name: 'Gym & Hobbies', pct: 0.10 },
+  ]
+
+  const savingsItems = [
+    { emoji: '🏦', name: 'Emergency Fund', pct: 0.35 },
+    { emoji: '📈', name: 'Investments / Mutual Funds', pct: 0.30 },
+    { emoji: '🎯', name: 'Retirement (EPF / NPS)', pct: 0.20 },
+    { emoji: '🏡', name: 'Savings Goals', pct: 0.15 },
+  ]
+
+  const buildItems = (items, total) => items.map(item => `
+    <div class="breakdown-item">
+      <div class="breakdown-item-left">
+        <span class="breakdown-item-emoji">${item.emoji}</span>
+        <span class="breakdown-item-name">${item.name}</span>
+      </div>
+      <span class="breakdown-item-amt">${fmt(total * item.pct)}</span>
+    </div>
+  `).join('')
+
+  wrap.innerHTML = `
+    <!-- Result cards -->
+    <div class="results-grid">
+      <div class="result-card needs">
+        <div class="result-pct needs">${needsPct}%</div>
+        <div class="result-category">Needs</div>
+        <div class="result-amount">${fmt(needs)}</div>
+        <div class="result-daily">${fmtDaily(needs)} avg</div>
+      </div>
+      <div class="result-card wants">
+        <div class="result-pct wants">${wantsPct}%</div>
+        <div class="result-category">Wants</div>
+        <div class="result-amount">${fmt(wants)}</div>
+        <div class="result-daily">${fmtDaily(wants)} avg</div>
+      </div>
+      <div class="result-card savings">
+        <div class="result-pct savings">${savingsPct}%</div>
+        <div class="result-category">Savings</div>
+        <div class="result-amount">${fmt(savings)}</div>
+        <div class="result-daily">${fmtDaily(savings)} avg</div>
+      </div>
+    </div>
+
+    <!-- Visual bar -->
+    <div class="bar-wrap">
+      <div class="bar-seg" style="width:${needsPct}%;background:var(--needs);"></div>
+      <div class="bar-seg" style="width:${wantsPct}%;background:var(--wants);"></div>
+      <div class="bar-seg" style="width:${savingsPct}%;background:var(--savings);"></div>
+    </div>
+    <div class="bar-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--needs)"></div>Needs ${needsPct}%</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--wants)"></div>Wants ${wantsPct}%</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--savings)"></div>Savings ${savingsPct}%</div>
+    </div>
+
+    <!-- Detailed breakdown -->
+    <div class="calc-card">
+      <div class="breakdown-title">Suggested breakdown</div>
+
+      <div class="breakdown-section">
+        <div class="breakdown-section-label needs">🏠 Needs — ${fmt(needs)}</div>
+        ${buildItems(needsItems, needs)}
+      </div>
+
+      <div class="breakdown-section">
+        <div class="breakdown-section-label wants">🎉 Wants — ${fmt(wants)}</div>
+        ${buildItems(wantsItems, wants)}
+      </div>
+
+      <div class="breakdown-section">
+        <div class="breakdown-section-label savings">💰 Savings — ${fmt(savings)}</div>
+        ${buildItems(savingsItems, savings)}
+      </div>
+
+      <div style="background:rgba(232,98,58,0.06);border-radius:12px;padding:14px 16px;margin-top:8px;font-size:13px;color:var(--text2);line-height:1.6;">
+        💡 <strong style="color:var(--text)">Note:</strong> The individual amounts above are illustrative suggestions. Your actual allocation within each category will vary based on your personal situation and lifestyle.
+      </div>
+    </div>
+  `
+}
+</script>
+
+</body>
+</html>
