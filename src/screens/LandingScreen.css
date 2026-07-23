@@ -756,3 +756,20 @@
   50% { opacity: 1; }
   100% { opacity: 0.7; }
 }
+
+.landing-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.landing-nav-link {
+  font-size: 14px;
+  color: var(--text2);
+  text-decoration: none;
+  font-weight: 500;
+}
+.landing-nav-link:hover { color: var(--text); }
+
+@media (max-width: 480px) {
+  .landing-nav-links { display: none; }
+}

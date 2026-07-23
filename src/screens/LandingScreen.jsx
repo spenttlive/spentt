@@ -52,13 +52,17 @@ export default function LandingScreen({ onGetStarted }) {
 
       {/* Nav */}
       <nav className="landing-nav">
-        <div className="landing-logo">
-          spentt<span className="landing-logo-dot" />
-        </div>
-        <button className="landing-nav-cta" onClick={() => onGetStarted()}>
-          Start free →
-        </button>
-      </nav>
+  <div className="landing-logo">
+    spentt<span className="landing-logo-dot" />
+  </div>
+  <div className="landing-nav-links">
+    <a href="/tools/" className="landing-nav-link">Tools</a>
+    <a href="/blog/" className="landing-nav-link">Blog</a>
+  </div>
+  <button className="landing-nav-cta" onClick={() => onGetStarted()}>
+    Start free →
+  </button>
+</nav>
 
       {/* Hero */}
       <section className="landing-hero">
