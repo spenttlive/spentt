@@ -91,5 +91,29 @@
   <lastmod>2026-07-01</lastmod>
   </url>
 
+  <url>
+  <loc>https://www.spentt.live/tools/savings-goal-calculator.html</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+  <lastmod>2026-07-01</lastmod>
+  </url>
+  <url>
+  <loc>https://www.spentt.live/tools/subscription-cost-calculator.html</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+  <lastmod>2026-07-01</lastmod>
+  </url>
+  <url>
+  <loc>https://www.spentt.live/tools/sip-calculator.html</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+  <lastmod>2026-07-01</lastmod>
+  </url>
+  <url>
+  <loc>https://www.spentt.live/tools/daily-spending-limit-calculator.html</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+  <lastmod>2026-07-01</lastmod>
+  </url>
 
 </urlset>

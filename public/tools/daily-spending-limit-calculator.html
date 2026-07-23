@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Daily Spending Limit Calculator — How Much Can I Spend Per Day? | Spentt</title>
+<meta name="description" content="Free daily spending limit calculator. Enter your monthly income and fixed expenses to find your safe daily spending budget. Know exactly how much you can spend each day."/>
+<link rel="canonical" href="https://www.spentt.live/tools/daily-spending-limit-calculator.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;--good:#3AAE8A;--warn:#F5A623;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.hero{padding:48px 40px 0;max-width:860px;margin:0 auto;text-align:center;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:700;line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.hero-sub{font-size:16px;color:var(--text2);max-width:520px;margin:0 auto 40px;}
+.calc-wrap{max-width:860px;margin:0 auto;padding:0 40px 60px;}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px;margin-bottom:16px;}
+.calc-card-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:20px;}
+.currency-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.curr-btn{padding:5px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;}
+.curr-btn.active{background:var(--text);color:#fff;border-color:var(--text);}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field-label{font-size:13px;font-weight:600;color:var(--text2);}
+.field-hint{font-size:11px;color:var(--text3);}
+.field-input-wrap{position:relative;}
+.field-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:600;color:var(--text3);}
+.field-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text3);}
+.field-input{width:100%;padding:12px 14px 12px 36px;font-family:'Gabarito',sans-serif;font-size:16px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:12px;outline:none;}
+.field-input.no-prefix{padding-left:14px;}
+.field-input.has-suffix{padding-right:40px;}
+.field-input:focus{border-color:var(--accent);}
+.expenses-section{margin-top:8px;}
+.expenses-label{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:10px;}
+.expense-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+.expense-name{flex:1;padding:10px 12px;font-size:14px;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:10px;outline:none;}
+.expense-name:focus{border-color:var(--accent);}
+.expense-amt-wrap{position:relative;width:140px;flex-shrink:0;}
+.expense-prefix{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:600;color:var(--text3);}
+.expense-amt{width:100%;padding:10px 10px 10px 26px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:10px;outline:none;}
+.expense-amt:focus{border-color:var(--accent);}
+.expense-del{width:30px;height:30px;border-radius:50%;border:none;background:rgba(239,68,68,0.08);color:#EF4444;font-size:16px;cursor:pointer;flex-shrink:0;}
+.add-expense-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;background:none;border:1.5px dashed var(--border);border-radius:10px;font-size:13px;color:var(--text3);cursor:pointer;margin-top:4px;}
+.add-expense-btn:hover{border-color:var(--accent);color:var(--accent);}
+.savings-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding:12px 16px;background:rgba(58,174,138,0.06);border:1.5px solid rgba(58,174,138,0.15);border-radius:12px;}
+.savings-label{font-size:13px;color:var(--text2);flex:1;}
+.savings-pct{width:80px;padding:8px 10px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:var(--text);background:#fff;border:1.5px solid rgba(58,174,138,0.3);border-radius:8px;outline:none;text-align:center;}
+.daily-display{background:var(--text);border-radius:20px;padding:32px;text-align:center;margin-bottom:16px;}
+.daily-label{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
+.daily-amount{font-family:'Gabarito',sans-serif;font-size:56px;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1;}
+.daily-currency{font-size:28px;opacity:0.6;}
+.daily-sub{font-size:14px;color:rgba(255,255,255,0.4);margin-top:8px;}
+.breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.breakdown-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;}
+.breakdown-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:4px;}
+.breakdown-val{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;color:var(--text);}
+.breakdown-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.bar-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:16px;}
+.bar-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.bar-row-label{font-size:13px;color:var(--text2);}
+.bar-row-amt{font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;color:var(--text);}
+.mini-bar-wrap{background:var(--border);border-radius:99px;height:6px;margin-bottom:10px;}
+.mini-bar{height:6px;border-radius:99px;}
+.what-you-can-card{background:rgba(58,174,138,0.06);border:1.5px solid rgba(58,174,138,0.15);border-radius:16px;padding:18px;margin-bottom:16px;}
+.what-title{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:var(--good);margin-bottom:10px;}
+.what-item{display:flex;justify-content:space-between;font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid rgba(58,174,138,0.1);}
+.what-item:last-child{border-bottom:none;}
+.what-days{font-family:'Gabarito',sans-serif;font-weight:600;color:var(--good);}
+.tool-cta{background:var(--text);border-radius:20px;padding:28px;text-align:center;margin-bottom:48px;}
+.tool-cta-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.tool-cta-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px;}
+.tool-cta-btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;}
+.content-section{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+.related{padding-top:32px;border-top:1px solid var(--border);margin-top:40px;}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+@media(max-width:600px){nav,footer{padding:16px 20px;}.hero{padding:32px 20px 0;}.calc-wrap,.content-section{padding:0 16px 48px;}h1{font-size:28px;}.field-grid{grid-template-columns:1fr;}.breakdown-grid{grid-template-columns:1fr 1fr;}.daily-amount{font-size:40px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+<div class="hero">
+  <div class="eyebrow">Free Daily Budget Calculator</div>
+  <h1>Daily Spending Limit Calculator</h1>
+  <p class="hero-sub">Enter your monthly income and fixed expenses to find exactly how much you can safely spend each day — without touching your savings.</p>
+</div>
+<div class="calc-wrap">
+  <div class="calc-card">
+    <div class="calc-card-title">💰 Your monthly finances</div>
+    <div class="currency-row" id="currencyRow">
+      <button class="curr-btn active" data-symbol="₹">₹ INR</button>
+      <button class="curr-btn" data-symbol="$">$ USD</button>
+      <button class="curr-btn" data-symbol="€">€ EUR</button>
+      <button class="curr-btn" data-symbol="£">£ GBP</button>
+      <button class="curr-btn" data-symbol="A$">A$ AUD</button>
+    </div>
+    <div class="field-grid">
+      <div class="field">
+        <div class="field-label">Monthly take-home income</div>
+        <div class="field-hint">After tax and deductions</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="incSym">₹</span>
+          <input type="number" class="field-input" id="income" placeholder="50000" min="0" oninput="calculate()"/>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Days in this month</div>
+        <div class="field-hint">Default is 30</div>
+        <div class="field-input-wrap">
+          <input type="number" class="field-input no-prefix has-suffix" id="daysInMonth" value="30" min="28" max="31" oninput="calculate()"/>
+          <span class="field-suffix">days</span>
+        </div>
+      </div>
+    </div>
+    <div class="expenses-section">
+      <div class="expenses-label">Fixed monthly expenses</div>
+      <div id="expensesList"></div>
+      <button class="add-expense-btn" onclick="addExpenseRow()">+ Add expense</button>
+    </div>
+    <div class="savings-row">
+      <div class="savings-label">
+        <div style="font-weight:600;color:var(--good);">Monthly savings target</div>
+        <div style="font-size:11px;color:var(--text3);">% of income to save before spending</div>
+      </div>
+      <input type="number" class="savings-pct" id="savingsPct" value="20" min="0" max="80" oninput="calculate()"/>
+      <span style="font-size:14px;color:var(--good);font-weight:600;">%</span>
+    </div>
+  </div>
+  <div id="resultsWrap">
+    <div style="text-align:center;padding:48px 24px;">
+      <div style="font-size:48px;margin-bottom:12px;">☀️</div>
+      <div style="font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;">Enter your income above</div>
+      <div style="font-size:14px;color:var(--text3);">Your daily spending limit will appear here</div>
+    </div>
+  </div>
+  <div class="tool-cta">
+    <div class="tool-cta-title">See if you're staying within your limit</div>
+    <div class="tool-cta-sub">Now that you know your daily limit, track your actual spending with Spentt. Log in 5 seconds — see your weekly breakdown every Sunday.</div>
+    <a href="/" class="tool-cta-btn">Start tracking free →</a>
+  </div>
+</div>
+<div class="content-section">
+  <h2>How your daily spending limit is calculated</h2>
+  <p>Your daily spending limit is the amount left over after covering fixed expenses and setting aside your savings target — divided by the number of days in the month.</p>
+  <p><strong>Formula:</strong> Daily limit = (Income − Fixed expenses − Savings) ÷ Days in month</p>
+  <p>This is your discretionary daily budget — what you can spend on food, transport, entertainment, and anything else without affecting your fixed obligations or savings goals.</p>
+  <h2>Why knowing your daily limit helps</h2>
+  <p>Monthly budgets are hard to follow in real time. "I have ₹15,000 for discretionary spending this month" is an abstract number that's hard to apply when you're deciding whether to order food at 7pm on a Tuesday.</p>
+  <p>"I have ₹500 to spend today" is concrete. It fits naturally into daily decision-making. Knowing your daily limit makes budgeting something you can apply in the moment — not just review at the end of the month.</p>
+  <div class="related">
+    <div class="related-title">More free tools</div>
+    <div class="related-links">
+      <a href="/tools/50-30-20-budget-calculator.html" class="related-link">50/30/20 Budget Calculator →</a>
+      <a href="/tools/savings-goal-calculator.html" class="related-link">Savings Goal Calculator →</a>
+      <a href="/tools/" class="related-link">All free tools →</a>
+    </div>
+  </div>
+</div>
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/tools/">Tools</a>
+    <a href="/blog/">Blog</a>
+    <a href="/privacy.html">Privacy</a>
+  </div>
+</footer>
+<script>
+let sym = '₹'
+let expCounter = 0
+
+const defaultExpenses = [
+  {name:'Rent / EMI', amt:'15000'},
+  {name:'Utilities & Bills', amt:'2000'},
+  {name:'Groceries', amt:'5000'},
+]
+
+document.getElementById('currencyRow').addEventListener('click', function(e) {
+  const btn = e.target.closest('.curr-btn')
+  if (!btn) return
+  document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  sym = btn.dataset.symbol
+  document.getElementById('incSym').textContent = sym
+  document.querySelectorAll('.expense-prefix').forEach(el => el.textContent = sym)
+  calculate()
+})
+
+function addExpenseRow(name='', amt='') {
+  const id = ++expCounter
+  const div = document.createElement('div')
+  div.className = 'expense-row'
+  div.id = 'exp-' + id
+  div.innerHTML = `
+    <input type="text" class="expense-name" placeholder="Expense name" value="${name}" oninput="calculate()"/>
+    <div class="expense-amt-wrap">
+      <span class="expense-prefix">${sym}</span>
+      <input type="number" class="expense-amt" placeholder="0" value="${amt}" min="0" oninput="calculate()"/>
+    </div>
+    <button class="expense-del" onclick="document.getElementById('exp-${id}').remove();calculate()">×</button>
+  `
+  document.getElementById('expensesList').appendChild(div)
+  calculate()
+}
+
+function fmt(n) { return sym + Math.round(n).toLocaleString('en-IN') }
+
+function calculate() {
+  const income = parseFloat(document.getElementById('income').value) || 0
+  const days = parseInt(document.getElementById('daysInMonth').value) || 30
+  const savingsPct = parseFloat(document.getElementById('savingsPct').value) || 0
+  const wrap = document.getElementById('resultsWrap')
+
+  if (!income || income <= 0) {
+    wrap.innerHTML = `<div style="text-align:center;padding:48px 24px;"><div style="font-size:48px;margin-bottom:12px;">☀️</div><div style="font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;">Enter your income above</div><div style="font-size:14px;color:var(--text3);">Your daily spending limit will appear here</div></div>`
+    return
+  }
+
+  let totalFixed = 0
+  document.querySelectorAll('.expense-row').forEach(row => {
+    const amt = parseFloat(row.querySelector('.expense-amt').value) || 0
+    totalFixed += amt
+  })
+
+  const savings = income * savingsPct / 100
+  const discretionary = income - totalFixed - savings
+  const dailyLimit = discretionary / days
+
+  if (dailyLimit <= 0) {
+    wrap.innerHTML = `<div style="text-align:center;padding:32px;background:rgba(239,68,68,0.06);border:1.5px solid rgba(239,68,68,0.15);border-radius:16px;margin-bottom:16px;"><div style="font-size:32px;margin-bottom:8px;">⚠️</div><div style="font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;color:#EF4444;margin-bottom:6px;">Expenses exceed income</div><div style="font-size:14px;color:var(--text2);">Your fixed expenses and savings target (${fmt(totalFixed + savings)}) exceed your income (${fmt(income)}). Reduce expenses or adjust your savings target.</div></div>`
+    return
+  }
+
+  const fixedPct = Math.round((totalFixed / income) * 100)
+  const savingsPctActual = Math.round((savings / income) * 100)
+  const discretionaryPct = Math.round((discretionary / income) * 100)
+
+  const examples = [
+    { label: 'Coffee & snacks', cost: 150 },
+    { label: 'Lunch out', cost: 250 },
+    { label: 'Dinner out', cost: 400 },
+    { label: 'Groceries (daily share)', cost: Math.round(totalFixed * 0.15 / 30) || 200 },
+    { label: 'Streaming subscription', cost: Math.round(649 / 30) },
+    { label: 'Cab / auto', cost: 120 },
+  ]
+
+  wrap.innerHTML = `
+    <div class="daily-display">
+      <div class="daily-label">Your safe daily spending limit</div>
+      <div class="daily-amount"><span class="daily-currency">${sym}</span>${Math.round(dailyLimit).toLocaleString('en-IN')}</div>
+      <div class="daily-sub">per day · ${fmt(discretionary)} per month discretionary</div>
+    </div>
+    <div class="breakdown-grid">
+      <div class="breakdown-box">
+        <div class="breakdown-label">Fixed expenses</div>
+        <div class="breakdown-val">${fmt(totalFixed)}</div>
+        <div class="breakdown-sub">${fixedPct}% of income</div>
+      </div>
+      <div class="breakdown-box">
+        <div class="breakdown-label">Savings</div>
+        <div class="breakdown-val" style="color:var(--good)">${fmt(savings)}</div>
+        <div class="breakdown-sub">${savingsPctActual}% of income</div>
+      </div>
+      <div class="breakdown-box">
+        <div class="breakdown-label">To spend</div>
+        <div class="breakdown-val" style="color:var(--accent)">${fmt(discretionary)}</div>
+        <div class="breakdown-sub">${discretionaryPct}% of income</div>
+      </div>
+    </div>
+    <div class="bar-section">
+      <div style="font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;">Where your income goes</div>
+      <div class="bar-row"><span class="bar-row-label">Fixed expenses</span><span class="bar-row-amt">${fmt(totalFixed)}</span></div>
+      <div class="mini-bar-wrap"><div class="mini-bar" style="width:${fixedPct}%;background:#9B6EE8;"></div></div>
+      <div class="bar-row"><span class="bar-row-label">Savings</span><span class="bar-row-amt">${fmt(savings)}</span></div>
+      <div class="mini-bar-wrap"><div class="mini-bar" style="width:${savingsPctActual}%;background:var(--good);"></div></div>
+      <div class="bar-row"><span class="bar-row-label">Daily spending</span><span class="bar-row-amt">${fmt(discretionary)}</span></div>
+      <div class="mini-bar-wrap"><div class="mini-bar" style="width:${discretionaryPct}%;background:var(--accent);"></div></div>
+    </div>
+    <div class="what-you-can-card">
+      <div class="what-title">With ${fmt(dailyLimit)}/day you can afford</div>
+      ${examples.map(e => `
+        <div class="what-item">
+          <span>${e.label}</span>
+          <span class="what-days">${Math.floor(dailyLimit / e.cost)} days/month</span>
+        </div>
+      `).join('')}
+    </div>
+  `
+}
+
+// Add default expenses
+defaultExpenses.forEach(e => addExpenseRow(e.name, e.amt))
+</script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SIP Calculator — Systematic Investment Plan Returns Calculator | Spentt</title>
+<meta name="description" content="Free SIP calculator. Calculate returns on your monthly SIP investment. See how much your money grows with compounding over time."/>
+<link rel="canonical" href="https://www.spentt.live/tools/sip-calculator.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "SIP Calculator",
+  "description": "Free SIP (Systematic Investment Plan) calculator. Calculate returns on monthly investments with compounding.",
+  "url": "https://www.spentt.live/tools/sip-calculator.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" }
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;--good:#3AAE8A;--invest:#9B6EE8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.hero{padding:48px 40px 0;max-width:860px;margin:0 auto;text-align:center;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:700;line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.hero-sub{font-size:16px;color:var(--text2);max-width:520px;margin:0 auto 40px;}
+.calc-wrap{max-width:860px;margin:0 auto;padding:0 40px 60px;}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px;margin-bottom:16px;}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field-label{font-size:13px;font-weight:600;color:var(--text2);}
+.field-input-wrap{position:relative;}
+.field-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:600;color:var(--text3);}
+.field-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text3);}
+.field-input{width:100%;padding:12px 14px 12px 36px;font-family:'Gabarito',sans-serif;font-size:16px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:12px;outline:none;transition:border-color 0.2s;}
+.field-input.no-prefix{padding-left:14px;}
+.field-input.has-suffix{padding-right:40px;}
+.field-input:focus{border-color:var(--accent);}
+.preset-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.preset-btn{padding:5px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.preset-btn.active{background:var(--invest);color:#fff;border-color:var(--invest);}
+.results-hero{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.result-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;text-align:center;}
+.result-box.highlight{background:var(--invest);}
+.result-box-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:6px;}
+.result-box.highlight .result-box-label{color:rgba(255,255,255,0.4);}
+.result-box-val{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:800;color:var(--text);}
+.result-box.highlight .result-box-val{color:#fff;}
+.result-box-sub{font-size:12px;color:var(--text3);margin-top:3px;}
+.result-box.highlight .result-box-sub{color:rgba(255,255,255,0.3);}
+.bar-wrap{background:var(--border);border-radius:99px;height:12px;overflow:hidden;display:flex;margin-bottom:8px;}
+.bar-invested{height:100%;background:var(--invest);transition:width 0.5s ease;}
+.bar-returns{height:100%;background:var(--good);transition:width 0.5s ease;}
+.bar-legend{display:flex;gap:16px;justify-content:center;margin-bottom:20px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);}
+.legend-dot{width:8px;height:8px;border-radius:50%;}
+.yearly-table{width:100%;border-collapse:collapse;font-size:13px;}
+.yearly-table th{text-align:left;padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);border-bottom:1px solid var(--border);}
+.yearly-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2);}
+.yearly-table tr:last-child td{border-bottom:none;}
+.yearly-table td:nth-child(2){font-family:'Gabarito',sans-serif;font-weight:600;color:var(--invest);}
+.yearly-table td:nth-child(3){font-family:'Gabarito',sans-serif;font-weight:600;color:var(--good);}
+.yearly-table td:nth-child(4){font-family:'Gabarito',sans-serif;font-weight:700;color:var(--text);}
+.wealth-gained{background:rgba(58,174,138,0.08);border:1.5px solid rgba(58,174,138,0.2);border-radius:16px;padding:16px 20px;margin-bottom:16px;text-align:center;}
+.wealth-gained-label{font-size:13px;color:var(--text2);margin-bottom:4px;}
+.wealth-gained-val{font-family:'Gabarito',sans-serif;font-size:28px;font-weight:800;color:var(--good);}
+.wealth-gained-sub{font-size:12px;color:var(--text3);margin-top:4px;}
+.tool-cta{background:var(--text);border-radius:20px;padding:28px;text-align:center;margin-bottom:48px;}
+.tool-cta-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.tool-cta-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px;}
+.tool-cta-btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;}
+.content-section{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+strong{color:var(--text);font-weight:600;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+.related{padding-top:32px;border-top:1px solid var(--border);margin-top:40px;}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+@media(max-width:600px){nav,footer{padding:16px 20px;}.hero{padding:32px 20px 0;}.calc-wrap,.content-section{padding:0 16px 48px;}h1{font-size:28px;}.field-grid{grid-template-columns:1fr;}.results-hero{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+<div class="hero">
+  <div class="eyebrow">Free SIP Calculator</div>
+  <h1>SIP Returns Calculator</h1>
+  <p class="hero-sub">Calculate how much your monthly SIP investment will grow over time. See the power of compounding work for you.</p>
+</div>
+<div class="calc-wrap">
+  <div class="calc-card">
+    <div style="font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;">📈 Your SIP details</div>
+    <div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:8px;">Expected annual return</div>
+    <div class="preset-row" id="presetRow">
+      <button class="preset-btn" data-rate="8">Conservative 8%</button>
+      <button class="preset-btn active" data-rate="12">Moderate 12%</button>
+      <button class="preset-btn" data-rate="15">Aggressive 15%</button>
+      <button class="preset-btn" data-rate="18">Equity 18%</button>
+    </div>
+    <div class="field-grid">
+      <div class="field">
+        <div class="field-label">Monthly SIP amount</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">₹</span>
+          <input type="number" class="field-input" id="sipAmount" placeholder="5000" min="100" oninput="calculate()"/>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Annual return rate</div>
+        <div class="field-input-wrap">
+          <input type="number" class="field-input no-prefix has-suffix" id="returnRate" value="12" min="1" max="50" step="0.5" oninput="syncPresets();calculate()"/>
+          <span class="field-suffix">% p.a.</span>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Investment period</div>
+        <div class="field-input-wrap">
+          <input type="number" class="field-input no-prefix has-suffix" id="years" placeholder="10" min="1" max="40" oninput="calculate()"/>
+          <span class="field-suffix">years</span>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Lumpsum (optional)</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">₹</span>
+          <input type="number" class="field-input" id="lumpsum" placeholder="0" min="0" oninput="calculate()"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="resultsWrap">
+    <div style="text-align:center;padding:48px 24px;">
+      <div style="font-size:48px;margin-bottom:12px;">📈</div>
+      <div style="font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;">Enter your SIP details above</div>
+      <div style="font-size:14px;color:var(--text3);">Your investment growth will appear here</div>
+    </div>
+  </div>
+  <div class="tool-cta">
+    <div class="tool-cta-title">Track spending to invest more</div>
+    <div class="tool-cta-sub">Every rupee you save on unnecessary spending can go toward your SIP. Spentt shows you exactly where your money goes every week.</div>
+    <a href="/" class="tool-cta-btn">Start tracking free →</a>
+  </div>
+</div>
+<div class="content-section">
+  <h2>What is a SIP?</h2>
+  <p>A Systematic Investment Plan (SIP) is a method of investing a fixed amount in a mutual fund at regular intervals — typically monthly. Instead of investing a large lump sum at once, you invest small amounts consistently, which reduces the impact of market volatility through rupee cost averaging.</p>
+  <h2>How does SIP compounding work?</h2>
+  <p>Compounding means your returns earn further returns. In a SIP, each month's investment grows independently. After 10 years of ₹5,000/month at 12% returns, you'd have invested ₹6,00,000 but your portfolio would be worth significantly more — because each rupee invested earlier has had more time to compound.</p>
+  <p>The longer your investment period, the more dramatic the compounding effect. The last few years of a long SIP contribute far more to wealth creation than the early years.</p>
+  <h2>Frequently asked questions</h2>
+  <div class="faq-item">
+    <div class="faq-q">What return rate should I use for equity mutual funds?</div>
+    <div class="faq-a">Indian equity mutual funds have historically returned 12-15% over long periods (10+ years). For conservative planning, use 10-12%. For mid/small cap funds, historical returns have been higher but with more volatility. Past returns don't guarantee future performance.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How much should I invest in SIP each month?</div>
+    <div class="faq-a">A common guideline is to invest 20% of your take-home income. But start with whatever you can sustain consistently — even ₹500/month is better than nothing. Increase your SIP amount by 10% each year as your income grows (step-up SIP).</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Is SIP better than lumpsum investment?</div>
+    <div class="faq-a">SIP is generally better for most investors because it removes the need to time the market, creates a savings discipline, and averages out the cost of investment over time. Lumpsum investing can outperform SIP in a consistently rising market, but requires market timing skill and a large initial corpus.</div>
+  </div>
+  <div class="related">
+    <div class="related-title">More free tools</div>
+    <div class="related-links">
+      <a href="/tools/savings-goal-calculator.html" class="related-link">Savings Goal Calculator →</a>
+      <a href="/tools/50-30-20-budget-calculator.html" class="related-link">50/30/20 Budget Calculator →</a>
+      <a href="/tools/" class="related-link">All free tools →</a>
+    </div>
+  </div>
+</div>
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/tools/">Tools</a>
+    <a href="/blog/">Blog</a>
+    <a href="/privacy.html">Privacy</a>
+  </div>
+</footer>
+<script>
+document.getElementById('presetRow').addEventListener('click', function(e) {
+  const btn = e.target.closest('.preset-btn')
+  if (!btn) return
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  document.getElementById('returnRate').value = btn.dataset.rate
+  calculate()
+})
+
+function syncPresets() {
+  const rate = document.getElementById('returnRate').value
+  document.querySelectorAll('.preset-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.rate === rate)
+  })
+}
+
+function fmt(n) { return '₹' + Math.round(n).toLocaleString('en-IN') }
+
+function calculate() {
+  const sip = parseFloat(document.getElementById('sipAmount').value)
+  const rate = parseFloat(document.getElementById('returnRate').value)
+  const years = parseInt(document.getElementById('years').value)
+  const lumpsum = parseFloat(document.getElementById('lumpsum').value) || 0
+  const wrap = document.getElementById('resultsWrap')
+
+  if (!sip || !rate || !years || sip <= 0 || rate <= 0 || years <= 0) {
+    wrap.innerHTML = `<div style="text-align:center;padding:48px 24px;"><div style="font-size:48px;margin-bottom:12px;">📈</div><div style="font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;">Enter your SIP details above</div><div style="font-size:14px;color:var(--text3);">Your investment growth will appear here</div></div>`
+    return
+  }
+
+  const monthlyRate = rate / 100 / 12
+  const months = years * 12
+  const totalInvested = sip * months
+  const sipMaturity = sip * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate)
+  const lumpsumMaturity = lumpsum * Math.pow(1 + rate/100, years)
+  const totalMaturity = sipMaturity + lumpsumMaturity
+  const wealthGained = totalMaturity - totalInvested - lumpsum
+  const investedPct = Math.round(((totalInvested + lumpsum) / totalMaturity) * 100)
+  const returnsPct = 100 - investedPct
+
+  // Yearly breakdown
+  const yearlyData = []
+  for (let y = 1; y <= Math.min(years, 30); y++) {
+    const m = y * 12
+    const val = sip * ((Math.pow(1 + monthlyRate, m) - 1) / monthlyRate) * (1 + monthlyRate) + lumpsum * Math.pow(1 + rate/100, y)
+    const invested = sip * m + lumpsum
+    yearlyData.push({ year: y, invested, value: val, returns: val - invested })
+  }
+
+  wrap.innerHTML = `
+    <div class="wealth-gained">
+      <div class="wealth-gained-label">Wealth gained through compounding</div>
+      <div class="wealth-gained-val">${fmt(wealthGained)}</div>
+      <div class="wealth-gained-sub">Your money works for you — not just you working for money</div>
+    </div>
+    <div class="results-hero">
+      <div class="result-box highlight">
+        <div class="result-box-label">Maturity value</div>
+        <div class="result-box-val">${fmt(totalMaturity)}</div>
+        <div class="result-box-sub">after ${years} years</div>
+      </div>
+      <div class="result-box">
+        <div class="result-box-label">Total invested</div>
+        <div class="result-box-val" style="color:var(--invest)">${fmt(totalInvested + lumpsum)}</div>
+        <div class="result-box-sub">${fmt(sip)}/month</div>
+      </div>
+      <div class="result-box">
+        <div class="result-box-label">Returns earned</div>
+        <div class="result-box-val" style="color:var(--good)">${fmt(wealthGained)}</div>
+        <div class="result-box-sub">${returnsPct}% of total</div>
+      </div>
+    </div>
+    <div class="calc-card">
+      <div style="font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;">Investment vs Returns</div>
+      <div class="bar-wrap">
+        <div class="bar-invested" style="width:${investedPct}%"></div>
+        <div class="bar-returns" style="width:${returnsPct}%"></div>
+      </div>
+      <div class="bar-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--invest)"></div>Invested ${fmt(totalInvested + lumpsum)} (${investedPct}%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--good)"></div>Returns ${fmt(wealthGained)} (${returnsPct}%)</div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:8px;overflow-x:auto;">
+        <div style="font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px;">Year-by-year growth</div>
+        <table class="yearly-table">
+          <thead><tr><th>Year</th><th>Invested</th><th>Returns</th><th>Value</th></tr></thead>
+          <tbody>
+            ${yearlyData.map(d => `<tr><td>${d.year}</td><td>${fmt(d.invested)}</td><td>${fmt(d.returns)}</td><td>${fmt(d.value)}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `
+}
+</script>
+</body>
+</html>
