@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Debt Payoff Calculator — Free Debt Payoff Planner | Spentt</title>
+<meta name="description" content="Free debt payoff calculator. Enter your debt, interest rate and monthly payment to see exactly when you'll be debt free and how much interest you'll save."/>
+<link rel="canonical" href="https://www.spentt.live/tools/debt-payoff-calculator.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Debt Payoff Calculator",
+  "description": "Free debt payoff calculator. See exactly when you'll be debt free and how much interest you'll save by paying extra each month.",
+  "url": "https://www.spentt.live/tools/debt-payoff-calculator.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the debt avalanche method?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The debt avalanche method means paying minimum payments on all debts, then putting any extra money toward the debt with the highest interest rate first. This saves the most money in interest over time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the debt snowball method?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The debt snowball method means paying minimum payments on all debts, then putting any extra money toward the debt with the smallest balance first. This builds momentum and motivation by eliminating debts faster."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much faster can I pay off debt by paying extra each month?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Even small extra payments make a significant difference. Paying just 10-20% more than the minimum payment each month can cut years off your repayment timeline and save thousands in interest."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;
+  --accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;
+  --good:#3AAE8A;--bad:#EF4444;--neutral:#9B6EE8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.hero{padding:48px 40px 0;max-width:860px;margin:0 auto;text-align:center;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:700;line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.hero-sub{font-size:16px;color:var(--text2);max-width:520px;margin:0 auto 40px;}
+.calc-wrap{max-width:860px;margin:0 auto;padding:0 40px 60px;}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px;margin-bottom:16px;}
+.calc-card-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field-label{font-size:13px;font-weight:600;color:var(--text2);}
+.field-input-wrap{position:relative;}
+.field-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:600;color:var(--text3);}
+.field-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text3);}
+.field-input{width:100%;padding:12px 14px 12px 36px;font-family:'Gabarito',sans-serif;font-size:16px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:12px;outline:none;transition:border-color 0.2s;}
+.field-input.no-prefix{padding-left:14px;}
+.field-input.has-suffix{padding-right:40px;}
+.field-input:focus{border-color:var(--accent);}
+.currency-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.curr-btn{padding:5px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.curr-btn.active{background:var(--text);color:#fff;border-color:var(--text);}
+.extra-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding:14px 16px;background:rgba(58,174,138,0.06);border:1.5px solid rgba(58,174,138,0.15);border-radius:14px;}
+.extra-label{font-size:14px;color:var(--text2);flex:1;}
+.extra-input{width:140px;padding:8px 14px;font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);background:#fff;border:1.5px solid rgba(58,174,138,0.3);border-radius:10px;outline:none;text-align:right;}
+.extra-input:focus{border-color:var(--good);}
+.calc-btn{width:100%;padding:16px;background:var(--accent);border:none;border-radius:16px;font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:#fff;cursor:pointer;margin-top:16px;transition:transform 0.2s;}
+.calc-btn:active{transform:scale(0.98);}
+.empty-state{text-align:center;padding:48px 24px;}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.empty-sub{font-size:14px;color:var(--text3);}
+.results-hero{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.result-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;text-align:center;}
+.result-box.highlight{background:var(--text);border-color:var(--text);}
+.result-box-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:6px;}
+.result-box.highlight .result-box-label{color:rgba(255,255,255,0.4);}
+.result-box-val{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:800;color:var(--text);}
+.result-box.highlight .result-box-val{color:#fff;}
+.result-box-sub{font-size:12px;color:var(--text3);margin-top:3px;}
+.result-box.highlight .result-box-sub{color:rgba(255,255,255,0.35);}
+.savings-banner{background:rgba(58,174,138,0.08);border:1.5px solid rgba(58,174,138,0.2);border-radius:16px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.savings-icon{font-size:24px;flex-shrink:0;}
+.savings-title{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;color:var(--good);margin-bottom:2px;}
+.savings-sub{font-size:13px;color:var(--text2);}
+.comparison-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;margin-bottom:16px;}
+.comparison-title{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.comparison-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+.comparison-row:last-child{border-bottom:none;}
+.comp-label{font-size:13px;color:var(--text2);}
+.comp-before{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:var(--bad);}
+.comp-after{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:var(--good);}
+.schedule-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:12px;}
+.schedule-toggle-label{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+.schedule-toggle-icon{font-size:14px;color:var(--text3);}
+.schedule-table{width:100%;border-collapse:collapse;font-size:13px;}
+.schedule-table th{text-align:left;padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);border-bottom:1px solid var(--border);}
+.schedule-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2);}
+.schedule-table tr:last-child td{border-bottom:none;}
+.schedule-table td:nth-child(2),.schedule-table td:nth-child(3),.schedule-table td:nth-child(4){font-family:'Gabarito',sans-serif;font-weight:600;}
+.schedule-table td.interest-cell{color:var(--bad);}
+.schedule-table td.principal-cell{color:var(--good);}
+.schedule-table td.balance-cell{color:var(--text);}
+.bar-wrap{background:var(--border);border-radius:99px;height:10px;overflow:hidden;display:flex;margin:12px 0 6px;}
+.bar-principal{height:100%;background:var(--good);transition:width 0.5s ease;}
+.bar-interest{height:100%;background:var(--bad);transition:width 0.5s ease;}
+.bar-legend{display:flex;gap:16px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);}
+.legend-dot{width:8px;height:8px;border-radius:50%;}
+.tool-cta{background:var(--text);border-radius:20px;padding:28px;text-align:center;margin-bottom:48px;}
+.tool-cta-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.tool-cta-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px;line-height:1.6;}
+.tool-cta-btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;}
+.tool-cta-note{font-size:12px;color:rgba(255,255,255,0.3);margin-top:10px;}
+.content-section{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+h3{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:600;margin:24px 0 8px;color:var(--text);}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+strong{color:var(--text);font-weight:600;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+.related{padding-top:32px;border-top:1px solid var(--border);margin-top:40px;}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+@media(max-width:600px){
+  nav,footer{padding:16px 20px;}
+  .hero{padding:32px 20px 0;}
+  .calc-wrap,.content-section{padding:0 16px 48px;}
+  h1{font-size:28px;}
+  .field-grid{grid-template-columns:1fr;}
+  .results-hero{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Free Debt Calculator</div>
+  <h1>Debt Payoff Calculator</h1>
+  <p class="hero-sub">See exactly when you'll be debt free, how much interest you'll pay, and how much you save by paying a little extra each month.</p>
+</div>
+
+<div class="calc-wrap">
+
+  <div class="calc-card">
+    <div class="calc-card-title">💳 Your debt details</div>
+
+    <div class="currency-row" id="currencyRow">
+      <button class="curr-btn active" data-symbol="₹">₹ INR</button>
+      <button class="curr-btn" data-symbol="$">$ USD</button>
+      <button class="curr-btn" data-symbol="€">€ EUR</button>
+      <button class="curr-btn" data-symbol="£">£ GBP</button>
+      <button class="curr-btn" data-symbol="A$">A$ AUD</button>
+    </div>
+
+    <div class="field-grid">
+      <div class="field">
+        <div class="field-label">Total debt amount</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sym1">₹</span>
+          <input type="number" class="field-input" id="debtAmount" placeholder="100000" min="0" oninput="calculate()"/>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Annual interest rate</div>
+        <div class="field-input-wrap">
+          <input type="number" class="field-input no-prefix has-suffix" id="interestRate" placeholder="18" min="0" max="100" step="0.1" oninput="calculate()"/>
+          <span class="field-suffix">% p.a.</span>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Monthly payment</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sym2">₹</span>
+          <input type="number" class="field-input" id="monthlyPayment" placeholder="5000" min="0" oninput="calculate()"/>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Debt type</div>
+        <div class="field-input-wrap">
+          <select class="field-input no-prefix" id="debtType" onchange="calculate()" style="cursor:pointer;">
+            <option value="credit_card">Credit Card</option>
+            <option value="personal_loan">Personal Loan</option>
+            <option value="home_loan">Home Loan</option>
+            <option value="car_loan">Car Loan</option>
+            <option value="student_loan">Student Loan</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="extra-row">
+      <div class="extra-label">
+        <div style="font-weight:600;color:var(--good);margin-bottom:2px;">+ Extra monthly payment</div>
+        <div style="font-size:12px;color:var(--text3);">See how much faster you'll be debt free</div>
+      </div>
+      <input type="number" class="extra-input" id="extraPayment" placeholder="0" min="0" oninput="calculate()"/>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">Calculate payoff →</button>
+  </div>
+
+  <div id="resultsWrap">
+    <div class="empty-state">
+      <div class="empty-icon">📊</div>
+      <div class="empty-title">Enter your debt details above</div>
+      <div class="empty-sub">Your payoff plan will appear here instantly</div>
+    </div>
+  </div>
+
+  <div class="tool-cta">
+    <div class="tool-cta-title">Track your spending while paying off debt</div>
+    <div class="tool-cta-sub">Knowing where your money goes helps you find extra to put toward debt. Spentt logs expenses in 5 seconds and shows you your weekly breakdown every Sunday.</div>
+    <a href="/" class="tool-cta-btn">Start tracking free →</a>
+    <div class="tool-cta-note">Free forever · No bank linking · Your data in Google Drive</div>
+  </div>
+
+</div>
+
+<div class="content-section">
+
+  <h2>How to use this debt payoff calculator</h2>
+  <p>Enter your total debt balance, the annual interest rate, and how much you pay each month. The calculator will show you exactly when you'll be debt free and how much total interest you'll pay.</p>
+  <p>The most powerful feature is the <strong>extra payment field</strong>. Even adding a small amount — ₹500 or ₹1,000 — to your monthly payment can shave months or years off your debt and save a significant amount in interest.</p>
+
+  <h2>Two strategies to pay off debt faster</h2>
+
+  <h3>The Debt Avalanche — saves the most money</h3>
+  <p>If you have multiple debts, pay the minimum on all of them, then put every extra rupee toward the debt with the <strong>highest interest rate</strong>. Once that's paid off, roll that payment to the next highest rate debt.</p>
+  <p>This method minimises the total interest you pay over time. It's mathematically optimal — but requires patience because you might not see debts disappearing quickly early on.</p>
+
+  <h3>The Debt Snowball — builds momentum</h3>
+  <p>Pay the minimum on all debts, then put extra toward the debt with the <strong>smallest balance</strong> first. Once that's gone, roll the payment to the next smallest.</p>
+  <p>This method isn't mathematically optimal but it builds psychological momentum — eliminating a debt completely feels like a win and keeps you motivated. Research shows people actually stick to the snowball method more consistently, which often results in paying off more debt overall despite higher interest costs.</p>
+
+  <h2>How much does an extra payment actually save?</h2>
+  <p>Most people underestimate the impact of small extra payments. Here's why they're so powerful: in the early months of a loan, the majority of your payment goes toward interest, not reducing the principal. Extra payments go directly toward the principal — which reduces the base on which future interest is calculated.</p>
+  <p>The compounding effect works against you with debt — but extra payments work with you to break that cycle faster than you'd expect.</p>
+
+  <h2>Common types of debt and typical interest rates</h2>
+  <ul>
+    <li><strong>Credit cards:</strong> 24-42% per annum — the most expensive debt, pay off first</li>
+    <li><strong>Personal loans:</strong> 10-24% per annum — high cost, prioritise early payoff</li>
+    <li><strong>Car loans:</strong> 8-15% per annum — moderate cost</li>
+    <li><strong>Education loans:</strong> 8-15% per annum — often tax deductible</li>
+    <li><strong>Home loans:</strong> 8-12% per annum — lowest rate, lowest priority for extra payments</li>
+  </ul>
+
+  <h2>Frequently asked questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">What is the minimum payment I should make?</div>
+    <div class="faq-a">Your minimum payment should at least cover the monthly interest charge — otherwise your balance will grow even as you make payments. To actually reduce your debt, your payment must exceed the monthly interest. The calculator will warn you if your payment is too low to ever pay off the debt.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Should I invest or pay off debt first?</div>
+    <div class="faq-a">Compare the interest rate on your debt with the expected return on your investment. If your debt charges 18% and your investment returns 12%, paying off the debt first is the better financial decision — it's a guaranteed 18% return. If your debt is a low-interest home loan at 9% and you can invest in assets returning 12%+, investing may make more sense. High-interest debt (credit cards, personal loans) should almost always be paid off before investing.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Does making bi-weekly payments help?</div>
+    <div class="faq-a">Yes — making half your monthly payment every two weeks results in 26 half-payments per year, which equals 13 full monthly payments instead of 12. That extra payment per year adds up significantly over a long loan term, especially for home loans.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What happens if I miss a payment?</div>
+    <div class="faq-a">Missing a payment typically incurs a late fee and may trigger a penalty interest rate on credit cards. More importantly, interest continues to compound on the full outstanding balance. The calculator assumes regular monthly payments — missing even one payment can extend your payoff date meaningfully.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How is monthly interest calculated?</div>
+    <div class="faq-a">Monthly interest = Outstanding balance × (Annual interest rate ÷ 12). For example, a ₹1,00,000 debt at 18% annual interest charges ₹1,500 in interest the first month (1,00,000 × 18% ÷ 12). As you pay down the principal, the monthly interest charge decreases — which is why the early months feel like slow progress.</div>
+  </div>
+
+  <div class="related">
+    <div class="related-title">More free tools from Spentt</div>
+    <div class="related-links">
+      <a href="/tools/50-30-20-budget-calculator.html" class="related-link">50/30/20 Budget Calculator — Split your income into needs, wants and savings →</a>
+      <a href="/blog/personal-finance-for-beginners.html" class="related-link">Personal Finance for Beginners — The Only Habit You Need to Start With →</a>
+      <a href="/blog/better-way-to-track-expenses.html" class="related-link">Need a Better Way to Track Expenses? Here's What Actually Works →</a>
+      <a href="/blog/7-reasons-to-track-expenses.html" class="related-link">7 Reasons Why You Should Start Tracking Your Expenses →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/blog/">Blog</a>
+    <a href="/tools/50-30-20-budget-calculator.html">Budget Calculator</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+<script>
+let sym = '₹'
+let showSchedule = false
+
+document.getElementById('currencyRow').addEventListener('click', function(e) {
+  const btn = e.target.closest('.curr-btn')
+  if (!btn) return
+  document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  sym = btn.dataset.symbol
+  document.getElementById('sym1').textContent = sym
+  document.getElementById('sym2').textContent = sym
+  calculate()
+})
+
+function fmt(n) {
+  return sym + Math.round(n).toLocaleString('en-IN')
+}
+
+function monthsToText(months) {
+  if (months < 12) return months + ' month' + (months !== 1 ? 's' : '')
+  const y = Math.floor(months / 12)
+  const m = months % 12
+  let str = y + ' year' + (y !== 1 ? 's' : '')
+  if (m > 0) str += ' ' + m + ' month' + (m !== 1 ? 's' : '')
+  return str
+}
+
+function calcPayoff(principal, annualRate, monthly) {
+  const monthlyRate = annualRate / 100 / 12
+  if (monthlyRate === 0) {
+    const months = Math.ceil(principal / monthly)
+    return { months, totalPaid: monthly * months, totalInterest: 0, schedule: [] }
+  }
+  const minPayment = principal * monthlyRate
+  if (monthly <= minPayment) return null
+
+  let balance = principal
+  let totalInterest = 0
+  let months = 0
+  const schedule = []
+
+  while (balance > 0.01 && months < 600) {
+    months++
+    const interest = balance * monthlyRate
+    const payment = Math.min(monthly, balance + interest)
+    const principalPaid = payment - interest
+    balance = balance - principalPaid
+    totalInterest += interest
+    if (schedule.length < 24) {
+      schedule.push({
+        month: months,
+        payment: Math.round(payment),
+        principal: Math.round(principalPaid),
+        interest: Math.round(interest),
+        balance: Math.max(0, Math.round(balance))
+      })
+    }
+  }
+
+  return { months, totalPaid: principal + totalInterest, totalInterest, schedule }
+}
+
+function calculate() {
+  const debt = parseFloat(document.getElementById('debtAmount').value)
+  const rate = parseFloat(document.getElementById('interestRate').value)
+  const payment = parseFloat(document.getElementById('monthlyPayment').value)
+  const extra = parseFloat(document.getElementById('extraPayment').value) || 0
+  const wrap = document.getElementById('resultsWrap')
+
+  if (!debt || !rate || !payment || debt <= 0 || rate <= 0 || payment <= 0) {
+    wrap.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <div class="empty-title">Enter your debt details above</div>
+        <div class="empty-sub">Your payoff plan will appear here instantly</div>
+      </div>`
+    return
+  }
+
+  const base = calcPayoff(debt, rate, payment)
+  if (!base) {
+    wrap.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠️</div>
+        <div class="empty-title">Payment too low</div>
+        <div class="empty-sub">Your monthly payment doesn't cover the interest. Increase your payment to start reducing the balance.</div>
+      </div>`
+    return
+  }
+
+  const withExtra = extra > 0 ? calcPayoff(debt, rate, payment + extra) : null
+  const monthsSaved = withExtra ? base.months - withExtra.months : 0
+  const interestSaved = withExtra ? base.totalInterest - withExtra.totalInterest : 0
+
+  const principalPct = Math.round((debt / base.totalPaid) * 100)
+  const interestPct = 100 - principalPct
+
+  const activeResult = withExtra || base
+
+  wrap.innerHTML = `
+    <div class="results-hero">
+      <div class="result-box highlight">
+        <div class="result-box-label">Debt free in</div>
+        <div class="result-box-val">${monthsToText(activeResult.months)}</div>
+        <div class="result-box-sub">${activeResult.months} payments</div>
+      </div>
+      <div class="result-box">
+        <div class="result-box-label">Total interest paid</div>
+        <div class="result-box-val" style="color:var(--bad)">${fmt(activeResult.totalInterest)}</div>
+        <div class="result-box-sub">at ${rate}% p.a.</div>
+      </div>
+      <div class="result-box">
+        <div class="result-box-label">Total amount paid</div>
+        <div class="result-box-val">${fmt(activeResult.totalPaid)}</div>
+        <div class="result-box-sub">principal + interest</div>
+      </div>
+    </div>
+
+    ${withExtra && monthsSaved > 0 ? `
+    <div class="savings-banner">
+      <div class="savings-icon">🎉</div>
+      <div>
+        <div class="savings-title">By paying ${fmt(extra)} extra per month you save ${fmt(interestSaved)} in interest and become debt free ${monthsToText(monthsSaved)} sooner!</div>
+        <div class="savings-sub">That's ${fmt(extra)} extra per month turning into ${fmt(interestSaved)} in savings.</div>
+      </div>
+    </div>` : ''}
+
+    ${withExtra ? `
+    <div class="comparison-card">
+      <div class="comparison-title">With vs without extra payment</div>
+      <div class="comparison-row">
+        <span class="comp-label">Payoff time</span>
+        <span class="comp-before">${monthsToText(base.months)}</span>
+        <span style="color:var(--text3);font-size:12px;">→</span>
+        <span class="comp-after">${monthsToText(activeResult.months)}</span>
+      </div>
+      <div class="comparison-row">
+        <span class="comp-label">Total interest</span>
+        <span class="comp-before">${fmt(base.totalInterest)}</span>
+        <span style="color:var(--text3);font-size:12px;">→</span>
+        <span class="comp-after">${fmt(activeResult.totalInterest)}</span>
+      </div>
+      <div class="comparison-row">
+        <span class="comp-label">Total paid</span>
+        <span class="comp-before">${fmt(base.totalPaid)}</span>
+        <span style="color:var(--text3);font-size:12px;">→</span>
+        <span class="comp-after">${fmt(activeResult.totalPaid)}</span>
+      </div>
+      <div class="comparison-row">
+        <span class="comp-label">Money saved</span>
+        <span style="font-family:Gabarito,sans-serif;font-size:16px;font-weight:800;color:var(--good);">${fmt(interestSaved)}</span>
+      </div>
+    </div>` : ''}
+
+    <div class="calc-card">
+      <div style="margin-bottom:10px;">
+        <div style="font-family:Gabarito,sans-serif;font-size:15px;font-weight:700;margin-bottom:8px;">Where your money goes</div>
+        <div class="bar-wrap">
+          <div class="bar-principal" style="width:${principalPct}%"></div>
+          <div class="bar-interest" style="width:${interestPct}%"></div>
+        </div>
+        <div class="bar-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--good)"></div>Principal ${fmt(debt)} (${principalPct}%)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--bad)"></div>Interest ${fmt(activeResult.totalInterest)} (${interestPct}%)</div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:16px;">
+        <div class="schedule-toggle" onclick="toggleSchedule()">
+          <div class="schedule-toggle-label">📅 Payment schedule (first 24 months)</div>
+          <div class="schedule-toggle-icon" id="scheduleIcon">▼ Show</div>
+        </div>
+        <div id="scheduleTable" style="display:none;overflow-x:auto;">
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Payment</th>
+                <th>Principal</th>
+                <th>Interest</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${activeResult.schedule.map(row => `
+                <tr>
+                  <td>${row.month}</td>
+                  <td>${fmt(row.payment)}</td>
+                  <td class="principal-cell">${fmt(row.principal)}</td>
+                  <td class="interest-cell">${fmt(row.interest)}</td>
+                  <td class="balance-cell">${fmt(row.balance)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function toggleSchedule() {
+  showSchedule = !showSchedule
+  document.getElementById('scheduleTable').style.display = showSchedule ? 'block' : 'none'
+  document.getElementById('scheduleIcon').textContent = showSchedule ? '▲ Hide' : '▼ Show'
+}
+</script>
+</body>
+</html>
