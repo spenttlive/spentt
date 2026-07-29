@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Net Worth Calculator — Calculate Your Net Worth Free | Spentt</title>
+<meta name="description" content="Free net worth calculator. Add your assets and liabilities to instantly calculate your net worth. See what's building your wealth and what's dragging it down."/>
+<link rel="canonical" href="https://www.spentt.live/tools/net-worth-calculator.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FG695T579C"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-FG695T579C");</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Net Worth Calculator",
+  "description": "Free net worth calculator. Add your assets and liabilities to instantly calculate your net worth.",
+  "url": "https://www.spentt.live/tools/net-worth-calculator.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" }
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;--good:#3AAE8A;--bad:#EF4444;--invest:#9B6EE8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.nav-links{display:flex;gap:20px;align-items:center;}
+.nav-link{font-size:14px;color:var(--text2);text-decoration:none;font-weight:500;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.hero{padding:48px 40px 0;max-width:960px;margin:0 auto;text-align:center;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:700;line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.hero-sub{font-size:16px;color:var(--text2);max-width:520px;margin:0 auto 40px;}
+.main-wrap{max-width:960px;margin:0 auto;padding:0 40px 60px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;}
+.calc-card-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.calc-card-title.assets{color:var(--good);}
+.calc-card-title.liabilities{color:var(--bad);}
+.item-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+.item-icon{font-size:18px;width:32px;flex-shrink:0;text-align:center;}
+.item-name{flex:1;padding:9px 12px;font-size:13px;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:10px;outline:none;min-width:0;}
+.item-name:focus{border-color:var(--accent);}
+.item-amt-wrap{position:relative;width:140px;flex-shrink:0;}
+.item-prefix{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:600;color:var(--text3);}
+.item-amt{width:100%;padding:9px 8px 9px 24px;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:10px;outline:none;}
+.item-amt:focus{border-color:var(--accent);}
+.item-del{width:28px;height:28px;border-radius:50%;border:none;background:rgba(239,68,68,0.08);color:var(--bad);font-size:14px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.add-row-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;background:none;border:1.5px dashed var(--border);border-radius:10px;font-size:13px;color:var(--text3);cursor:pointer;width:100%;margin-top:4px;transition:all 0.2s;}
+.add-row-btn:hover{border-color:var(--accent);color:var(--accent);}
+.section-total{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:10px;margin-top:12px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;}
+.section-total.assets{background:rgba(58,174,138,0.08);color:var(--good);}
+.section-total.liabilities{background:rgba(239,68,68,0.08);color:var(--bad);}
+.currency-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.curr-btn{padding:4px 10px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;}
+.curr-btn.active{background:var(--text);color:#fff;border-color:var(--text);}
+.result-section{margin-bottom:20px;}
+.net-worth-display{background:var(--text);border-radius:20px;padding:32px;text-align:center;margin-bottom:16px;}
+.nw-label{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
+.nw-amount{font-family:'Gabarito',sans-serif;font-size:52px;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1;}
+.nw-amount.negative{color:#F87171;}
+.nw-rating{display:inline-block;margin-top:12px;padding:6px 16px;border-radius:99px;font-size:13px;font-weight:600;}
+.nw-rating.great{background:rgba(58,174,138,0.2);color:#3AAE8A;}
+.nw-rating.good{background:rgba(155,110,232,0.2);color:#9B6EE8;}
+.nw-rating.building{background:rgba(245,166,35,0.2);color:#F5A623;}
+.nw-rating.negative{background:rgba(239,68,68,0.2);color:#F87171;}
+.nw-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-top:8px;}
+.breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.breakdown-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;}
+.breakdown-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:4px;}
+.breakdown-val{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;}
+.breakdown-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.bar-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:16px;}
+.bar-card-title{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;}
+.bar-wrap{background:var(--border);border-radius:99px;height:14px;overflow:hidden;display:flex;margin-bottom:8px;}
+.bar-assets{height:100%;background:var(--good);transition:width 0.5s ease;}
+.bar-liabilities{height:100%;background:var(--bad);transition:width 0.5s ease;}
+.bar-legend{display:flex;gap:16px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);}
+.legend-dot{width:8px;height:8px;border-radius:50%;}
+.insights-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:16px;}
+.insights-title{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;}
+.insight-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);}
+.insight-item:last-child{border-bottom:none;}
+.insight-icon{font-size:18px;flex-shrink:0;}
+.insight-text{font-size:13px;color:var(--text2);line-height:1.5;}
+.insight-text strong{color:var(--text);}
+.top-items-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.top-item-card{border-radius:14px;padding:14px;}
+.top-item-card.asset{background:rgba(58,174,138,0.06);border:1.5px solid rgba(58,174,138,0.15);}
+.top-item-card.liability{background:rgba(239,68,68,0.06);border:1.5px solid rgba(239,68,68,0.15);}
+.top-item-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.top-item-card.asset .top-item-label{color:var(--good);}
+.top-item-card.liability .top-item-label{color:var(--bad);}
+.top-item-name{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.top-item-amt{font-size:13px;font-weight:600;}
+.top-item-card.asset .top-item-amt{color:var(--good);}
+.top-item-card.liability .top-item-amt{color:var(--bad);}
+.tool-cta{background:var(--text);border-radius:20px;padding:28px;text-align:center;margin-bottom:48px;}
+.tool-cta-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.tool-cta-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px;line-height:1.6;}
+.tool-cta-btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;}
+.tool-cta-note{font-size:12px;color:rgba(255,255,255,0.3);margin-top:10px;}
+.content-section{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+h3{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:600;margin:24px 0 8px;color:var(--text);}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+strong{color:var(--text);font-weight:600;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+.related{padding-top:32px;border-top:1px solid var(--border);margin-top:40px;}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+.empty-result{text-align:center;padding:48px 24px;background:var(--card);border:1px solid var(--border);border-radius:20px;margin-bottom:20px;}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.empty-sub{font-size:14px;color:var(--text3);}
+@media(max-width:680px){
+  nav,footer{padding:16px 20px;}
+  .nav-links{display:none;}
+  .hero{padding:32px 20px 0;}
+  .main-wrap,.content-section{padding:0 16px 48px;}
+  h1{font-size:28px;}
+  .two-col{grid-template-columns:1fr;}
+  .breakdown-grid{grid-template-columns:1fr 1fr;}
+  .top-items-grid{grid-template-columns:1fr;}
+  .nw-amount{font-size:36px;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="nav-links">
+    <a href="/tools/" class="nav-link">Tools</a>
+    <a href="/blog/" class="nav-link">Blog</a>
+  </div>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Free Net Worth Calculator</div>
+  <h1>Net Worth Calculator</h1>
+  <p class="hero-sub">Add your assets and liabilities to instantly see your net worth — what you own minus what you owe. Track your financial health in one number.</p>
+</div>
+
+<div class="main-wrap">
+
+  <div style="margin-bottom:16px;">
+    <div class="currency-row" id="currencyRow">
+      <button class="curr-btn active" data-symbol="₹">₹ INR</button>
+      <button class="curr-btn" data-symbol="$">$ USD</button>
+      <button class="curr-btn" data-symbol="€">€ EUR</button>
+      <button class="curr-btn" data-symbol="£">£ GBP</button>
+      <button class="curr-btn" data-symbol="A$">A$ AUD</button>
+    </div>
+  </div>
+
+  <div class="two-col">
+
+    <!-- Assets -->
+    <div class="calc-card">
+      <div class="calc-card-title assets">📈 Assets — What you own</div>
+      <div id="assetsList"></div>
+      <button class="add-row-btn" onclick="addRow('assets')">+ Add asset</button>
+      <div class="section-total assets">
+        <span>Total assets</span>
+        <span id="assetsTotal">₹0</span>
+      </div>
+    </div>
+
+    <!-- Liabilities -->
+    <div class="calc-card">
+      <div class="calc-card-title liabilities">💳 Liabilities — What you owe</div>
+      <div id="liabilitiesList"></div>
+      <button class="add-row-btn" onclick="addRow('liabilities')">+ Add liability</button>
+      <div class="section-total liabilities">
+        <span>Total liabilities</span>
+        <span id="liabilitiesTotal">₹0</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Results -->
+  <div id="resultsWrap">
+    <div class="empty-result">
+      <div class="empty-icon">💰</div>
+      <div class="empty-title">Add your assets and liabilities above</div>
+      <div class="empty-sub">Your net worth will calculate automatically as you type</div>
+    </div>
+  </div>
+
+  <div class="tool-cta">
+    <div class="tool-cta-title">Every rupee saved grows your net worth</div>
+    <div class="tool-cta-sub">Knowing your net worth is step one. Step two is controlling where your money goes daily. Spentt logs expenses in 5 seconds and shows you your weekly breakdown every Sunday.</div>
+    <a href="/" class="tool-cta-btn">Start tracking free →</a>
+    <div class="tool-cta-note">Free forever · No bank linking · Your data in Google Drive</div>
+  </div>
+
+</div>
+
+<div class="content-section">
+
+  <h2>What is net worth?</h2>
+  <p>Net worth is the difference between what you own (assets) and what you owe (liabilities). It's the single most important number in personal finance — a snapshot of your financial health at any point in time.</p>
+  <p><strong>Net Worth = Total Assets − Total Liabilities</strong></p>
+  <p>A positive net worth means your assets exceed your debts. A negative net worth means you owe more than you own — which is common early in a career, especially with student loans or a new home loan.</p>
+
+  <h2>What counts as an asset?</h2>
+  <ul>
+    <li><strong>Cash and savings</strong> — savings account, fixed deposits, cash at home</li>
+    <li><strong>Investments</strong> — mutual funds, stocks, bonds, PPF, NPS, EPF balance</li>
+    <li><strong>Real estate</strong> — current market value of property you own</li>
+    <li><strong>Vehicles</strong> — current resale value of your car, bike, or other vehicles</li>
+    <li><strong>Gold and jewellery</strong> — current market value</li>
+    <li><strong>Business interests</strong> — your stake in any business</li>
+    <li><strong>Other valuables</strong> — anything else with significant resale value</li>
+  </ul>
+
+  <h2>What counts as a liability?</h2>
+  <ul>
+    <li><strong>Home loan</strong> — outstanding principal remaining</li>
+    <li><strong>Car loan</strong> — outstanding balance</li>
+    <li><strong>Personal loan</strong> — outstanding balance</li>
+    <li><strong>Credit card debt</strong> — total unpaid balance across all cards</li>
+    <li><strong>Education loan</strong> — outstanding balance</li>
+    <li><strong>Family borrowings</strong> — money owed to family or friends</li>
+  </ul>
+
+  <h2>What's a good net worth?</h2>
+  <p>Net worth varies enormously by age, income, and location. A rough rule of thumb: <strong>your net worth should be roughly your age multiplied by your annual income divided by 10</strong>. So a 30-year-old earning ₹10,00,000/year should aim for a net worth of approximately ₹30,00,000.</p>
+  <p>But don't be discouraged by a low or negative number. Net worth is a starting point, not a judgment. What matters more than the current number is the direction — is it growing month over month?</p>
+
+  <h2>How to increase your net worth</h2>
+  <p>There are only two levers: <strong>grow assets</strong> or <strong>reduce liabilities</strong>. In practice, the fastest way to do both is to control your daily spending — because every rupee not spent can either go toward investments (growing assets) or debt repayment (reducing liabilities).</p>
+
+  <h2>Frequently asked questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Should I include my home as an asset?</div>
+    <div class="faq-a">Yes — include the current market value of your home as an asset, and the outstanding home loan as a liability. The difference is your home equity. If your home is worth ₹80 lakhs and your loan outstanding is ₹50 lakhs, your home equity contribution to net worth is ₹30 lakhs.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Should I include my car?</div>
+    <div class="faq-a">Yes, but use the current resale value — not what you paid for it. Vehicles depreciate quickly. A car bought for ₹12 lakhs 3 years ago might have a current resale value of ₹7-8 lakhs. Use that lower number for an accurate picture.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How often should I calculate my net worth?</div>
+    <div class="faq-a">Once a month or once a quarter is enough. More frequent than that and you'll be tracking market fluctuations rather than real financial progress. The goal is to see a consistent upward trend over 6-12 month periods.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Is a negative net worth bad?</div>
+    <div class="faq-a">Not necessarily — especially early in life. Taking a home loan creates a large liability, but also builds an asset. Having student loans after education is common. What matters is whether your net worth is trending upward. If it's negative and shrinking, that's a warning sign. If it's negative but improving every month, you're on the right track.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Should I include jewellery and gold?</div>
+    <div class="faq-a">Yes — gold is a genuine asset with real market value. Use the current market value based on today's gold price multiplied by the weight of your gold. For jewellery, use the gold value (not the making charges, which you won't recover on resale).</div>
+  </div>
+
+  <div class="related">
+    <div class="related-title">More free tools from Spentt</div>
+    <div class="related-links">
+      <a href="/tools/savings-goal-calculator.html" class="related-link">Savings Goal Calculator — See how long to reach your target →</a>
+      <a href="/tools/debt-payoff-calculator.html" class="related-link">Debt Payoff Calculator — See when you'll be debt free →</a>
+      <a href="/tools/50-30-20-budget-calculator.html" class="related-link">50/30/20 Budget Calculator — Split your income the right way →</a>
+      <a href="/tools/" class="related-link">All free tools →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/tools/">Tools</a>
+    <a href="/blog/">Blog</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+<script>
+let sym = '₹'
+let assetCounter = 0
+let liabCounter = 0
+
+const defaultAssets = [
+  {icon:'💰', name:'Savings account', amt:''},
+  {icon:'📈', name:'Mutual funds / Stocks', amt:''},
+  {icon:'🏠', name:'Property value', amt:''},
+  {icon:'🚗', name:'Vehicle (resale value)', amt:''},
+  {icon:'🪙', name:'Gold / Jewellery', amt:''},
+]
+
+const defaultLiabilities = [
+  {icon:'🏠', name:'Home loan outstanding', amt:''},
+  {icon:'🚗', name:'Car loan outstanding', amt:''},
+  {icon:'💳', name:'Credit card debt', amt:''},
+  {icon:'📚', name:'Personal / Education loan', amt:''},
+]
+
+document.getElementById('currencyRow').addEventListener('click', function(e) {
+  const btn = e.target.closest('.curr-btn')
+  if (!btn) return
+  document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  sym = btn.dataset.symbol
+  document.querySelectorAll('.item-prefix').forEach(el => el.textContent = sym)
+  calculate()
+})
+
+function addRow(type, icon='', name='', amt='') {
+  const id = type === 'assets' ? ++assetCounter : ++liabCounter
+  const rowId = type + '-' + id
+  const div = document.createElement('div')
+  div.className = 'item-row'
+  div.id = rowId
+  div.innerHTML = `
+    <div class="item-icon">${icon || (type === 'assets' ? '💼' : '📋')}</div>
+    <input type="text" class="item-name" placeholder="${type === 'assets' ? 'Asset name' : 'Liability name'}" value="${name}" oninput="calculate()"/>
+    <div class="item-amt-wrap">
+      <span class="item-prefix">${sym}</span>
+      <input type="number" class="item-amt" placeholder="0" value="${amt}" min="0" oninput="calculate()"/>
+    </div>
+    <button class="item-del" onclick="document.getElementById('${rowId}').remove();calculate()">×</button>
+  `
+  document.getElementById(type + 'List').appendChild(div)
+  calculate()
+}
+
+function getTotal(type) {
+  let total = 0
+  const items = []
+  document.querySelectorAll(`#${type}List .item-row`).forEach(row => {
+    const name = row.querySelector('.item-name').value.trim() || (type === 'assets' ? 'Asset' : 'Liability')
+    const amt = parseFloat(row.querySelector('.item-amt').value) || 0
+    if (amt > 0) items.push({ name, amt })
+    total += amt
+  })
+  return { total, items }
+}
+
+function fmt(n) {
+  const abs = Math.abs(Math.round(n))
+  return sym + abs.toLocaleString('en-IN')
+}
+
+function getRating(netWorth, assets) {
+  if (netWorth < 0) return { label: '⚠️ Negative net worth', cls: 'negative', msg: 'Focus on debt payoff — every rupee you clear improves this number.' }
+  if (netWorth === 0) return { label: '🌱 Starting out', cls: 'building', msg: 'You\'re at zero — any positive step from here builds wealth.' }
+  const ratio = assets > 0 ? netWorth / assets : 0
+  if (ratio >= 0.8) return { label: '🏆 Excellent', cls: 'great', msg: 'Very low debt relative to assets. Strong financial position.' }
+  if (ratio >= 0.5) return { label: '✅ Solid foundation', cls: 'good', msg: 'Good balance of assets and manageable debt.' }
+  if (ratio >= 0.2) return { label: '📈 Building phase', cls: 'building', msg: 'Growing in the right direction. Keep reducing debt and investing.' }
+  return { label: '🔨 Early stage', cls: 'building', msg: 'Heavy liabilities vs assets — common with home loans. Focus on growing investments.' }
+}
+
+function calculate() {
+  const { total: totalAssets, items: assetItems } = getTotal('assets')
+  const { total: totalLiabilities, items: liabilityItems } = getTotal('liabilities')
+  const netWorth = totalAssets - totalLiabilities
+
+  document.getElementById('assetsTotal').textContent = fmt(totalAssets)
+  document.getElementById('liabilitiesTotal').textContent = fmt(totalLiabilities)
+
+  const wrap = document.getElementById('resultsWrap')
+
+  if (totalAssets === 0 && totalLiabilities === 0) {
+    wrap.innerHTML = `<div class="empty-result"><div class="empty-icon">💰</div><div class="empty-title">Add your assets and liabilities above</div><div class="empty-sub">Your net worth will calculate automatically as you type</div></div>`
+    return
+  }
+
+  const rating = getRating(netWorth, totalAssets)
+  const isNegative = netWorth < 0
+  const totalCombined = totalAssets + totalLiabilities
+  const assetsPct = totalCombined > 0 ? Math.round((totalAssets / totalCombined) * 100) : 50
+  const liabPct = 100 - assetsPct
+
+  const topAsset = assetItems.sort((a,b) => b.amt - a.amt)[0]
+  const topLiability = liabilityItems.sort((a,b) => b.amt - a.amt)[0]
+
+  const debtRatio = totalAssets > 0 ? Math.round((totalLiabilities / totalAssets) * 100) : 100
+
+  wrap.innerHTML = `
+    <div class="net-worth-display">
+      <div class="nw-label">Your net worth</div>
+      <div class="nw-amount ${isNegative ? 'negative' : ''}">${isNegative ? '−' : ''}${fmt(netWorth)}</div>
+      <div><span class="nw-rating ${rating.cls}">${rating.label}</span></div>
+      <div class="nw-sub">${rating.msg}</div>
+    </div>
+
+    <div class="breakdown-grid">
+      <div class="breakdown-box">
+        <div class="breakdown-label">Total assets</div>
+        <div class="breakdown-val" style="color:var(--good)">${fmt(totalAssets)}</div>
+        <div class="breakdown-sub">${assetItems.length} item${assetItems.length !== 1 ? 's' : ''}</div>
+      </div>
+      <div class="breakdown-box">
+        <div class="breakdown-label">Total liabilities</div>
+        <div class="breakdown-val" style="color:var(--bad)">${fmt(totalLiabilities)}</div>
+        <div class="breakdown-sub">${liabilityItems.length} item${liabilityItems.length !== 1 ? 's' : ''}</div>
+      </div>
+      <div class="breakdown-box">
+        <div class="breakdown-label">Debt ratio</div>
+        <div class="breakdown-val" style="color:${debtRatio > 50 ? 'var(--bad)' : 'var(--good)'}">${debtRatio}%</div>
+        <div class="breakdown-sub">liabilities / assets</div>
+      </div>
+    </div>
+
+    <div class="bar-card">
+      <div class="bar-card-title">Assets vs Liabilities</div>
+      <div class="bar-wrap">
+        <div class="bar-assets" style="width:${assetsPct}%"></div>
+        <div class="bar-liabilities" style="width:${liabPct}%"></div>
+      </div>
+      <div class="bar-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--good)"></div>Assets ${fmt(totalAssets)} (${assetsPct}%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--bad)"></div>Liabilities ${fmt(totalLiabilities)} (${liabPct}%)</div>
+      </div>
+    </div>
+
+    ${(topAsset || topLiability) ? `
+    <div class="top-items-grid">
+      ${topAsset ? `
+      <div class="top-item-card asset">
+        <div class="top-item-label">💪 Biggest asset</div>
+        <div class="top-item-name">${topAsset.name}</div>
+        <div class="top-item-amt">${fmt(topAsset.amt)}</div>
+      </div>` : ''}
+      ${topLiability ? `
+      <div class="top-item-card liability">
+        <div class="top-item-label">⚠️ Biggest liability</div>
+        <div class="top-item-name">${topLiability.name}</div>
+        <div class="top-item-amt">${fmt(topLiability.amt)}</div>
+      </div>` : ''}
+    </div>` : ''}
+
+    <div class="insights-card">
+      <div class="insights-title">💡 What this means</div>
+      ${debtRatio > 80 ? `<div class="insight-item"><div class="insight-icon">🎯</div><div class="insight-text">Your debt is <strong>${debtRatio}% of your assets</strong> — prioritise paying down liabilities to improve your net worth faster.</div></div>` : ''}
+      ${debtRatio <= 30 ? `<div class="insight-item"><div class="insight-icon">🏆</div><div class="insight-text">Low debt ratio of <strong>${debtRatio}%</strong> — your assets significantly outweigh your liabilities. Strong position.</div></div>` : ''}
+      ${topAsset ? `<div class="insight-item"><div class="insight-icon">📈</div><div class="insight-text"><strong>${topAsset.name}</strong> is your biggest asset at ${fmt(topAsset.amt)} — ${Math.round((topAsset.amt/totalAssets)*100)}% of total assets.</div></div>` : ''}
+      ${topLiability ? `<div class="insight-item"><div class="insight-icon">💳</div><div class="insight-text"><strong>${topLiability.name}</strong> is your biggest liability at ${fmt(topLiability.amt)}. Paying this down will have the biggest impact on your net worth.</div></div>` : ''}
+      <div class="insight-item"><div class="insight-icon">💰</div><div class="insight-text">Every <strong>${sym}1,000</strong> you save and invest adds directly to your net worth. Every <strong>${sym}1,000</strong> of debt you pay off does the same.</div></div>
+    </div>
+  `
+}
+
+// Init default rows
+defaultAssets.forEach(a => addRow('assets', a.icon, a.name, a.amt))
+defaultLiabilities.forEach(l => addRow('liabilities', l.icon, l.name, l.amt))
+</script>
+</body>
+</html>
