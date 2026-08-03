@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Split Bill Calculator — Split Bills Equally or Custom | Spentt</title>
+<meta name="description" content="Free split bill calculator. Split restaurant bills equally, by percentage or custom amounts. Share results instantly on WhatsApp. Works for any group size."/>
+<link rel="canonical" href="https://www.spentt.live/tools/split-bill-calculator.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FG695T579C"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-FG695T579C");</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Split Bill Calculator",
+  "description": "Free split bill calculator. Split restaurant bills equally, by percentage or custom amounts. Share on WhatsApp instantly.",
+  "url": "https://www.spentt.live/tools/split-bill-calculator.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" }
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;--good:#3AAE8A;--bad:#EF4444;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.nav-links{display:flex;gap:20px;align-items:center;}
+.nav-link{font-size:14px;color:var(--text2);text-decoration:none;font-weight:500;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.hero{padding:48px 40px 0;max-width:860px;margin:0 auto;text-align:center;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:700;line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.hero-sub{font-size:16px;color:var(--text2);max-width:520px;margin:0 auto 40px;}
+.calc-wrap{max-width:860px;margin:0 auto;padding:0 40px 60px;}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:16px;}
+.calc-card-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;}
+
+/* Currency */
+.currency-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.curr-btn{padding:4px 10px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;}
+.curr-btn.active{background:var(--text);color:#fff;border-color:var(--text);}
+
+/* Fields */
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field-label{font-size:12px;font-weight:600;color:var(--text2);}
+.field-input-wrap{position:relative;}
+.field-prefix{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;color:var(--text3);}
+.field-suffix{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text3);}
+.field-input{width:100%;padding:10px 12px 10px 30px;font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:10px;outline:none;transition:border-color 0.2s;}
+.field-input.no-prefix{padding-left:12px;}
+.field-input.has-suffix{padding-right:36px;}
+.field-input:focus{border-color:var(--accent);}
+.field-input-full{width:100%;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:10px;outline:none;}
+.field-input-full:focus{border-color:var(--accent);}
+
+/* Tip row */
+.tip-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.tip-btn{padding:6px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.tip-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.grand-total{background:var(--text);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.grand-total-label{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.08em;}
+.grand-total-val{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:800;color:#fff;}
+.grand-breakdown{display:flex;gap:16px;padding:6px 4px;font-size:12px;color:var(--text3);margin-bottom:16px;}
+
+/* People */
+.people-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.person-row{display:flex;gap:8px;align-items:center;}
+.person-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.person-name-input{flex:1;padding:8px 12px;font-size:14px;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:10px;outline:none;}
+.person-name-input:focus{border-color:var(--accent);}
+.person-del{width:28px;height:28px;border-radius:50%;border:none;background:rgba(239,68,68,0.08);color:var(--bad);font-size:14px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.add-person-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;background:none;border:1.5px dashed var(--border);border-radius:10px;font-size:13px;color:var(--text3);cursor:pointer;width:100%;transition:all 0.2s;}
+.add-person-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Split mode tabs */
+.split-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.split-tab{flex:1;padding:9px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;text-align:center;transition:all 0.15s;}
+.split-tab.active{background:var(--text);color:#fff;border-color:var(--text);}
+
+/* Payer */
+.payer-row{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(58,174,138,0.06);border:1px solid rgba(58,174,138,0.15);border-radius:12px;margin-bottom:16px;}
+.payer-label{font-size:13px;color:var(--text2);flex:1;}
+.payer-select{padding:6px 10px;font-size:13px;font-weight:600;color:var(--text);background:#fff;border:1.5px solid rgba(58,174,138,0.3);border-radius:8px;outline:none;cursor:pointer;}
+
+/* Split inputs — equal */
+.equal-result{background:var(--card);border:1.5px solid rgba(58,174,138,0.2);border-radius:14px;padding:20px;text-align:center;margin-bottom:16px;}
+.equal-per-label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.equal-per-val{font-family:'Gabarito',sans-serif;font-size:36px;font-weight:800;color:var(--good);}
+.equal-per-sub{font-size:13px;color:var(--text3);margin-top:4px;}
+
+/* Percentage split */
+.pct-person-row{display:flex;gap:10px;align-items:center;margin-bottom:10px;}
+.pct-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Gabarito',sans-serif;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
+.pct-name{font-size:13px;font-weight:600;color:var(--text);min-width:80px;flex:1;}
+.pct-slider{flex:2;}
+.pct-val{font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;color:var(--text);min-width:36px;text-align:right;}
+.pct-amt{font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;min-width:80px;text-align:right;}
+.pct-total-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--border);margin-top:8px;}
+.pct-total-label{font-size:13px;font-weight:600;color:var(--text2);}
+.pct-total-val{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;}
+
+/* Custom split */
+.custom-person-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+.custom-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Gabarito',sans-serif;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
+.custom-name{font-size:13px;font-weight:600;color:var(--text);flex:1;}
+.custom-amt-wrap{position:relative;width:130px;flex-shrink:0;}
+.custom-prefix{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text3);font-weight:600;}
+.custom-amt{width:100%;padding:8px 8px 8px 24px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:10px;outline:none;}
+.custom-amt:focus{border-color:var(--accent);}
+.custom-remaining{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:10px;margin-top:8px;font-size:13px;}
+.custom-remaining.ok{background:rgba(58,174,138,0.08);color:var(--good);}
+.custom-remaining.warn{background:rgba(239,68,68,0.08);color:var(--bad);}
+
+/* Results */
+.results-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:16px;}
+.results-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;}
+.result-person-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.result-person-row:last-child{border-bottom:none;}
+.result-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;}
+.result-name{font-size:14px;font-weight:600;color:var(--text);flex:1;}
+.result-amt{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:800;color:var(--text);}
+.result-total-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0 0;margin-top:4px;border-top:1.5px solid var(--text);}
+.result-total-label{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:var(--text);}
+.result-total-val{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:800;color:var(--text);}
+.result-total-check{font-size:14px;}
+
+/* Owes section */
+.owes-card{background:rgba(58,174,138,0.06);border:1px solid rgba(58,174,138,0.15);border-radius:16px;padding:16px;margin-bottom:16px;}
+.owes-title{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:var(--good);margin-bottom:10px;}
+.owes-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid rgba(58,174,138,0.1);}
+.owes-row:last-child{border-bottom:none;}
+.owes-text{color:var(--text2);}
+.owes-amt{font-family:'Gabarito',sans-serif;font-weight:700;color:var(--good);}
+
+/* Share buttons */
+.share-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.share-btn-whatsapp{padding:13px;background:#25D366;border:none;border-radius:14px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.share-btn-copy{padding:13px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+
+/* CTA */
+.tool-cta{background:var(--text);border-radius:20px;padding:28px;text-align:center;margin-bottom:48px;}
+.tool-cta-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.tool-cta-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px;line-height:1.6;}
+.tool-cta-btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;}
+.tool-cta-note{font-size:12px;color:rgba(255,255,255,0.3);margin-top:10px;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:12px 24px;border-radius:99px;font-size:14px;font-weight:600;z-index:100;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+.toast.show{opacity:1;}
+
+/* Content */
+.content-section{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+strong{color:var(--text);font-weight:600;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+.related{padding-top:32px;border-top:1px solid var(--border);margin-top:40px;}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+@media(max-width:600px){nav,footer{padding:16px 20px;}.nav-links{display:none;}.hero{padding:32px 20px 0;}.calc-wrap,.content-section{padding:0 16px 48px;}h1{font-size:28px;}.field-grid{grid-template-columns:1fr;}.share-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="nav-links">
+    <a href="/tools/" class="nav-link">Tools</a>
+    <a href="/blog/" class="nav-link">Blog</a>
+  </div>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+<div class="hero">
+  <div class="eyebrow">Free Bill Split Calculator</div>
+  <h1>Split Bill Calculator</h1>
+  <p class="hero-sub">Split any bill equally, by percentage, or custom amounts. Share results instantly on WhatsApp — no app needed.</p>
+</div>
+<div class="calc-wrap">
+
+  <!-- Step 1: Bill details -->
+  <div class="calc-card">
+    <div class="calc-card-title">🧾 Bill details</div>
+    <div class="currency-row" id="currencyRow">
+      <button class="curr-btn active" data-symbol="₹">₹ INR</button>
+      <button class="curr-btn" data-symbol="$">$ USD</button>
+      <button class="curr-btn" data-symbol="€">€ EUR</button>
+      <button class="curr-btn" data-symbol="£">£ GBP</button>
+      <button class="curr-btn" data-symbol="A$">A$ AUD</button>
+    </div>
+    <div style="margin-bottom:12px;">
+      <div class="field-label" style="margin-bottom:5px;">Bill title (optional)</div>
+      <input type="text" class="field-input-full" id="billTitle" placeholder="e.g. Dinner at Punjab Grill" oninput="calculate()"/>
+    </div>
+    <div class="field-grid">
+      <div class="field">
+        <div class="field-label">Total bill amount</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="billSym">₹</span>
+          <input type="number" class="field-input" id="billAmount" placeholder="2000" min="0" oninput="calculate()"/>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Tax / service charge</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="taxSym">₹</span>
+          <input type="number" class="field-input" id="taxAmount" placeholder="0" min="0" oninput="calculate()"/>
+        </div>
+      </div>
+    </div>
+    <div class="field-label" style="margin-bottom:6px;">Tip</div>
+    <div class="tip-row" id="tipRow">
+      <button class="tip-btn active" data-tip="0">No tip</button>
+      <button class="tip-btn" data-tip="5">5%</button>
+      <button class="tip-btn" data-tip="10">10%</button>
+      <button class="tip-btn" data-tip="15">15%</button>
+      <button class="tip-btn" data-tip="custom">Custom</button>
+    </div>
+    <div id="customTipWrap" style="display:none;margin-bottom:12px;">
+      <div class="field-input-wrap">
+        <span class="field-prefix" id="tipSym">₹</span>
+        <input type="number" class="field-input" id="customTipInput" placeholder="0" min="0" oninput="calculate()"/>
+      </div>
+    </div>
+    <div class="grand-total">
+      <span class="grand-total-label">Grand total</span>
+      <span class="grand-total-val" id="grandTotalVal">₹0</span>
+    </div>
+    <div class="grand-breakdown" id="grandBreakdown"></div>
+  </div>
+
+  <!-- Step 2: People -->
+  <div class="calc-card">
+    <div class="calc-card-title">👥 Who's splitting?</div>
+    <div class="people-list" id="peopleList"></div>
+    <button class="add-person-btn" onclick="addPerson()">+ Add person</button>
+  </div>
+
+  <!-- Step 3: Split mode -->
+  <div class="calc-card">
+    <div class="calc-card-title">✂️ How to split</div>
+    <div class="split-tabs" id="splitTabs">
+      <div class="split-tab active" data-mode="equal">Equal split</div>
+      <div class="split-tab" data-mode="percentage">By percentage</div>
+      <div class="split-tab" data-mode="custom">Custom amounts</div>
+    </div>
+
+    <!-- Who paid -->
+    <div class="payer-row">
+      <span class="payer-label">Who paid the bill?</span>
+      <select class="payer-select" id="payerSelect" onchange="calculate()">
+        <option value="">Nobody yet</option>
+      </select>
+    </div>
+
+    <!-- Equal -->
+    <div id="equalSection">
+      <div class="equal-result">
+        <div class="equal-per-label">Each person pays</div>
+        <div class="equal-per-val" id="equalPerVal">₹0</div>
+        <div class="equal-per-sub" id="equalPerSub">Split equally among 0 people</div>
+      </div>
+    </div>
+
+    <!-- Percentage -->
+    <div id="percentageSection" style="display:none;">
+      <div id="pctPeopleList"></div>
+      <div class="pct-total-row">
+        <span class="pct-total-label">Total percentage</span>
+        <span class="pct-total-val" id="pctTotal" style="color:var(--good)">0%</span>
+      </div>
+    </div>
+
+    <!-- Custom -->
+    <div id="customSection" style="display:none;">
+      <div id="customPeopleList"></div>
+      <div class="custom-remaining ok" id="customRemaining">
+        <span>Remaining unallocated</span>
+        <span id="customRemainingVal">₹0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-card" id="resultsCard" style="display:none;">
+    <div class="results-title">💰 What everyone pays</div>
+    <div id="resultsList"></div>
+    <div class="result-total-row">
+      <span class="result-total-label">Total</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="result-total-val" id="resultTotal">₹0</span>
+        <span class="result-total-check" id="resultCheck"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Who owes whom -->
+  <div class="owes-card" id="owesCard" style="display:none;">
+    <div class="owes-title">💸 Who owes whom</div>
+    <div id="owesList"></div>
+  </div>
+
+  <!-- Share -->
+  <div class="share-row" id="shareRow" style="display:none;">
+    <button class="share-btn-whatsapp" onclick="shareWhatsApp()">📱 Share on WhatsApp</button>
+    <button class="share-btn-copy" onclick="copyResult()">📋 Copy to clipboard</button>
+  </div>
+
+  <div class="tool-cta">
+    <div class="tool-cta-title">Log your share of the bill in Spentt</div>
+    <div class="tool-cta-sub">After splitting, log your share as an expense in Spentt. 5 seconds, and it's saved to your Google Drive. See your weekly dining spend every Sunday.</div>
+    <a href="/" class="tool-cta-btn">Start tracking free →</a>
+    <div class="tool-cta-note">Free forever · No bank linking · Your data in Google Drive</div>
+  </div>
+
+</div>
+
+<div class="content-section">
+  <h2>How to split a bill fairly</h2>
+  <p>Splitting bills fairly among friends, family, or colleagues is something most people do weekly — but it often leads to confusion, awkward calculations, or someone paying more than they should. This calculator handles all three common scenarios.</p>
+  <ul>
+    <li><strong>Equal split:</strong> The simplest approach. Total bill divided by the number of people. Works best when everyone ordered roughly the same amount.</li>
+    <li><strong>Percentage split:</strong> When one person ordered significantly more, or when you want to account for couples vs individuals. Flexible and fair.</li>
+    <li><strong>Custom amount:</strong> When you want to track exactly what each person ordered. The most precise method for large groups or expensive meals.</li>
+  </ul>
+  <h2>Should you include tip in the split?</h2>
+  <p>Yes — tip should always be split proportionally along with the bill. If you're splitting unequally (by percentage or custom amount), each person's tip contribution should match their share of the bill. This calculator handles this automatically for all three split modes.</p>
+  <h2>Frequently asked questions</h2>
+  <div class="faq-item">
+    <div class="faq-q">What's the easiest way to split a restaurant bill?</div>
+    <div class="faq-a">The easiest method is equal split — enter the total bill, add tip if applicable, add the number of people, and get the per-person amount instantly. For most casual dining with friends, this is the fairest and least awkward approach.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How do I split a bill when one person paid?</div>
+    <div class="faq-a">Select the person who paid in the "Who paid the bill?" field. The calculator will show who owes them and how much — a clear summary you can share directly on WhatsApp so everyone knows what they owe.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How should couples split bills in a group?</div>
+    <div class="faq-a">Couples typically split as two people (paying their combined share together) or as one combined unit (paying one share between them). The percentage split mode works well for this — assign the couple a combined percentage that reflects their order.</div>
+  </div>
+  <div class="related">
+    <div class="related-title">More free tools from Spentt</div>
+    <div class="related-links">
+      <a href="/tools/emi-calculator.html" class="related-link">EMI Calculator →</a>
+      <a href="/tools/50-30-20-budget-calculator.html" class="related-link">50/30/20 Budget Calculator →</a>
+      <a href="/tools/daily-spending-limit-calculator.html" class="related-link">Daily Spending Limit Calculator →</a>
+      <a href="/tools/" class="related-link">All free tools →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/tools/">Tools</a>
+    <a href="/blog/">Blog</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+<script>
+let sym = '₹'
+let tipPct = 0
+let splitMode = 'equal'
+let people = []
+let personCounter = 0
+let pctValues = {}
+let customValues = {}
+
+const avatarColors = ['#E8623A','#3AAE8A','#9B6EE8','#F5A623','#EF4444','#3B82F6','#EC4899','#14B8A6']
+
+function getColor(i) { return avatarColors[i % avatarColors.length] }
+function getInitial(name) { return name ? name.trim()[0].toUpperCase() : '?' }
+function fmt(n) { return sym + Math.round(n).toLocaleString('en-IN') }
+function showToast(msg) {
+  const t = document.getElementById('toast')
+  t.textContent = msg; t.classList.add('show')
+  setTimeout(() => t.classList.remove('show'), 2500)
+}
+
+// Currency
+document.getElementById('currencyRow').addEventListener('click', e => {
+  const btn = e.target.closest('.curr-btn')
+  if (!btn) return
+  document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  sym = btn.dataset.symbol
+  document.getElementById('billSym').textContent = sym
+  document.getElementById('taxSym').textContent = sym
+  document.getElementById('tipSym').textContent = sym
+  document.querySelectorAll('.custom-prefix').forEach(el => el.textContent = sym)
+  calculate()
+})
+
+// Tip
+document.getElementById('tipRow').addEventListener('click', e => {
+  const btn = e.target.closest('.tip-btn')
+  if (!btn) return
+  document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  if (btn.dataset.tip === 'custom') {
+    document.getElementById('customTipWrap').style.display = 'block'
+    tipPct = -1
+  } else {
+    document.getElementById('customTipWrap').style.display = 'none'
+    tipPct = parseFloat(btn.dataset.tip)
+  }
+  calculate()
+})
+
+// Split tabs
+document.getElementById('splitTabs').addEventListener('click', e => {
+  const tab = e.target.closest('.split-tab')
+  if (!tab) return
+  document.querySelectorAll('.split-tab').forEach(t => t.classList.remove('active'))
+  tab.classList.add('active')
+  splitMode = tab.dataset.mode
+  document.getElementById('equalSection').style.display = splitMode === 'equal' ? 'block' : 'none'
+  document.getElementById('percentageSection').style.display = splitMode === 'percentage' ? 'block' : 'none'
+  document.getElementById('customSection').style.display = splitMode === 'custom' ? 'block' : 'none'
+  renderSplitInputs()
+  calculate()
+})
+
+function addPerson(name='') {
+  const id = ++personCounter
+  people.push({ id, name: name || '' })
+  pctValues[id] = 0
+  customValues[id] = 0
+  renderPeople()
+  calculate()
+}
+
+function removePerson(id) {
+  people = people.filter(p => p.id !== id)
+  delete pctValues[id]
+  delete customValues[id]
+  renderPeople()
+  calculate()
+}
+
+function renderPeople() {
+  const list = document.getElementById('peopleList')
+  list.innerHTML = people.map((p, i) => `
+    <div class="person-row" id="person-${p.id}">
+      <div class="person-avatar" style="background:${getColor(i)}">${getInitial(p.name) || (i+1)}</div>
+      <input type="text" class="person-name-input" placeholder="Person ${i+1}" value="${p.name}"
+        oninput="updateName(${p.id}, this.value)"/>
+      ${people.length > 1 ? `<button class="person-del" onclick="removePerson(${p.id})">×</button>` : ''}
+    </div>
+  `).join('')
+
+  // Update payer select
+  const sel = document.getElementById('payerSelect')
+  const curr = sel.value
+  sel.innerHTML = '<option value="">Nobody yet</option>' + people.map((p, i) => `<option value="${p.id}" ${curr == p.id ? 'selected' : ''}>${p.name || 'Person ' + (i+1)}</option>`).join('')
+
+  renderSplitInputs()
+}
+
+function updateName(id, name) {
+  const p = people.find(p => p.id === id)
+  if (p) p.name = name
+  // Update avatar initial
+  const idx = people.indexOf(p)
+  const row = document.getElementById('person-' + id)
+  if (row) row.querySelector('.person-avatar').textContent = getInitial(name) || (idx+1)
+  // Update payer select
+  const sel = document.getElementById('payerSelect')
+  const opt = sel.querySelector(`option[value="${id}"]`)
+  if (opt) opt.textContent = name || 'Person ' + (idx+1)
+  renderSplitInputs()
+  calculate()
+}
+
+function renderSplitInputs() {
+  const grand = getGrandTotal()
+
+  if (splitMode === 'percentage') {
+    // Auto-distribute equally if all zero
+    const totalPct = Object.values(pctValues).reduce((s,v) => s+v, 0)
+    if (totalPct === 0 && people.length > 0) {
+      const each = Math.floor(100 / people.length)
+      people.forEach((p, i) => { pctValues[p.id] = i === people.length-1 ? 100 - each*(people.length-1) : each })
+    }
+
+    document.getElementById('pctPeopleList').innerHTML = people.map((p, i) => `
+      <div class="pct-person-row">
+        <div class="pct-avatar" style="background:${getColor(i)}">${getInitial(p.name) || (i+1)}</div>
+        <div class="pct-name">${p.name || 'Person ' + (i+1)}</div>
+        <input type="range" class="pct-slider" min="0" max="100" step="1" value="${pctValues[p.id] || 0}"
+          oninput="pctValues[${p.id}]=parseInt(this.value);document.getElementById('pctval-${p.id}').textContent=this.value+'%';document.getElementById('pctamt-${p.id}').textContent=fmt(grand*parseInt(this.value)/100);updatePctTotal()"/>
+        <div class="pct-val" id="pctval-${p.id}">${pctValues[p.id] || 0}%</div>
+        <div class="pct-amt" id="pctamt-${p.id}">${fmt(grand * (pctValues[p.id]||0) / 100)}</div>
+      </div>
+    `).join('')
+    updatePctTotal()
+  }
+
+  if (splitMode === 'custom') {
+    document.getElementById('customPeopleList').innerHTML = people.map((p, i) => `
+      <div class="custom-person-row">
+        <div class="custom-avatar" style="background:${getColor(i)}">${getInitial(p.name) || (i+1)}</div>
+        <div class="custom-name">${p.name || 'Person ' + (i+1)}</div>
+        <div class="custom-amt-wrap">
+          <span class="custom-prefix">${sym}</span>
+          <input type="number" class="custom-amt" placeholder="0" value="${customValues[p.id] || ''}" min="0"
+            oninput="customValues[${p.id}]=parseFloat(this.value)||0;updateCustomRemaining()"/>
+        </div>
+      </div>
+    `).join('')
+    updateCustomRemaining()
+  }
+}
+
+function updatePctTotal() {
+  const total = people.reduce((s, p) => s + (pctValues[p.id] || 0), 0)
+  const el = document.getElementById('pctTotal')
+  el.textContent = total + '%'
+  el.style.color = total === 100 ? 'var(--good)' : 'var(--bad)'
+  calculate()
+}
+
+function updateCustomRemaining() {
+  const grand = getGrandTotal()
+  const allocated = people.reduce((s, p) => s + (customValues[p.id] || 0), 0)
+  const remaining = grand - allocated
+  const el = document.getElementById('customRemaining')
+  const val = document.getElementById('customRemainingVal')
+  el.className = 'custom-remaining ' + (Math.abs(remaining) < 1 ? 'ok' : 'warn')
+  val.textContent = fmt(remaining)
+  document.getElementById('customRemaining').querySelector('span').textContent = remaining >= 0 ? 'Remaining unallocated' : 'Over-allocated by'
+  calculate()
+}
+
+function getGrandTotal() {
+  const bill = parseFloat(document.getElementById('billAmount').value) || 0
+  const tax = parseFloat(document.getElementById('taxAmount').value) || 0
+  let tip = 0
+  if (tipPct === -1) tip = parseFloat(document.getElementById('customTipInput').value) || 0
+  else tip = (bill + tax) * tipPct / 100
+  return bill + tax + tip
+}
+
+function calculate() {
+  const bill = parseFloat(document.getElementById('billAmount').value) || 0
+  const tax = parseFloat(document.getElementById('taxAmount').value) || 0
+  let tip = 0
+  if (tipPct === -1) tip = parseFloat(document.getElementById('customTipInput').value) || 0
+  else tip = (bill + tax) * tipPct / 100
+  const grand = bill + tax + tip
+
+  document.getElementById('grandTotalVal').textContent = fmt(grand)
+  const parts = []
+  if (bill > 0) parts.push('Bill ' + fmt(bill))
+  if (tax > 0) parts.push('Tax ' + fmt(tax))
+  if (tip > 0) parts.push('Tip ' + fmt(tip))
+  document.getElementById('grandBreakdown').textContent = parts.join(' + ')
+
+  if (people.length === 0 || grand === 0) {
+    document.getElementById('resultsCard').style.display = 'none'
+    document.getElementById('owesCard').style.display = 'none'
+    document.getElementById('shareRow').style.display = 'none'
+    return
+  }
+
+  // Calculate shares
+  let shares = {}
+  if (splitMode === 'equal') {
+    const each = grand / people.length
+    people.forEach(p => { shares[p.id] = each })
+    document.getElementById('equalPerVal').textContent = fmt(each)
+    document.getElementById('equalPerSub').textContent = 'Split equally among ' + people.length + ' people'
+  } else if (splitMode === 'percentage') {
+    const totalPct = people.reduce((s,p) => s + (pctValues[p.id]||0), 0)
+    if (totalPct !== 100) { document.getElementById('resultsCard').style.display = 'none'; return }
+    people.forEach(p => { shares[p.id] = grand * (pctValues[p.id]||0) / 100 })
+  } else {
+    const allocated = people.reduce((s,p) => s + (customValues[p.id]||0), 0)
+    if (Math.abs(grand - allocated) > 1) { document.getElementById('resultsCard').style.display = 'none'; return }
+    people.forEach(p => { shares[p.id] = customValues[p.id] || 0 })
+  }
+
+  // Render results
+  document.getElementById('resultsCard').style.display = 'block'
+  document.getElementById('shareRow').style.display = 'grid'
+
+  const totalShares = people.reduce((s,p) => s + shares[p.id], 0)
+  document.getElementById('resultsList').innerHTML = people.map((p, i) => `
+    <div class="result-person-row">
+      <div class="result-avatar" style="background:${getColor(i)}">${getInitial(p.name) || (i+1)}</div>
+      <span class="result-name">${p.name || 'Person ' + (i+1)}</span>
+      <span class="result-amt">${fmt(shares[p.id])}</span>
+    </div>
+  `).join('')
+
+  document.getElementById('resultTotal').textContent = fmt(totalShares)
+  document.getElementById('resultCheck').textContent = Math.abs(totalShares - grand) < 1 ? '✅' : '⚠️'
+
+  // Who owes whom
+  const payerId = parseInt(document.getElementById('payerSelect').value)
+  if (payerId && shares[payerId] !== undefined) {
+    document.getElementById('owesCard').style.display = 'block'
+    const payer = people.find(p => p.id === payerId)
+    const payerName = payer?.name || 'Person ' + (people.indexOf(payer)+1)
+    document.getElementById('owesTitle') && (document.getElementById('owesTitle').textContent = '💸 Who owes ' + payerName)
+    document.getElementById('owesList').innerHTML = people
+      .filter(p => p.id !== payerId)
+      .map((p, i) => `
+        <div class="owes-row">
+          <span class="owes-text">${p.name || 'Person ' + (people.indexOf(p)+1)} owes ${payerName}</span>
+          <span class="owes-amt">${fmt(shares[p.id])}</span>
+        </div>
+      `).join('')
+  } else {
+    document.getElementById('owesCard').style.display = 'none'
+  }
+}
+
+function generateShareText() {
+  const title = document.getElementById('billTitle').value.trim() || 'Bill split'
+  const grand = getGrandTotal()
+  const payerId = parseInt(document.getElementById('payerSelect').value)
+  const payer = people.find(p => p.id === payerId)
+
+  let text = '🧾 ' + title + '\n'
+  text += 'Total: ' + fmt(grand) + '\n\n'
+  people.forEach((p, i) => {
+    const shareEl = document.getElementById('resultsList')?.querySelector('.result-person-row:nth-child(' + (i+1) + ') .result-amt')
+    if (shareEl) text += (p.name || 'Person ' + (i+1)) + '  →  ' + shareEl.textContent + '\n'
+  })
+  if (payer) {
+    text += '\n' + (payer.name || 'Payer') + ' paid the full bill.'
+  }
+  text += '\n\nSplit on spentt.live/tools/split-bill-calculator.html'
+  return text
+}
+
+function shareWhatsApp() {
+  const text = generateShareText()
+  const url = 'https://wa.me/?text=' + encodeURIComponent(text)
+  window.open(url, '_blank')
+}
+
+function copyResult() {
+  const text = generateShareText()
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'))
+  } else {
+    const ta = document.createElement('textarea')
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta)
+    showToast('Copied to clipboard!')
+  }
+}
+
+// Init with 3 people
+addPerson(''); addPerson(''); addPerson('')
+document.getElementById('billAmount').focus()
+</script>
+</body>
+</html>
