@@ -86,7 +86,7 @@ export default function SettingsScreen({ user, goTo, showToast, dark, toggleDark
           />
           <SettingsRow icon="🔒" iconBg="#EAF2FF" label="Privacy policy" onClick={() => window.open('/privacy.html', '_blank')} />
           <SettingsRow icon="📄" iconBg="#F5EEFF" label="Terms of service" onClick={() => window.open('/terms.html', '_blank')} />
-          <SettingsRow icon="❓" iconBg="#EAF2FF" label="FAQ" onClick={() => goTo('faq')} />
+          <SettingsRow icon="❓" iconBg="#EAF2FF" label="FAQ & Help" onClick={() => window.open('/faq.html', '_blank')} />
         </div>
 
         {user?.email === 'spentt.live@gmail.com' && (
