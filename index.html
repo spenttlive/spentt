@@ -318,18 +318,17 @@
 
     <!-- Hide static landing when React loads -->
     <script>
-    // Hide static landing as soon as React module starts loading
-    document.addEventListener('DOMContentLoaded', function() {
-    var script = document.querySelector('script[type="module"]')
-    if (script) {
-      // Hide static landing immediately when JS executes
-      var staticLanding = document.getElementById('static-landing')
-      if (staticLanding) {
-        staticLanding.style.display = 'none'
-      }
-    }
-    })
-    </script>
+// Only hide static landing after React has actually rendered
+var observer = new MutationObserver(function() {
+  var root = document.getElementById('root')
+  if (root && root.children.length > 0) {
+    var staticLanding = document.getElementById('static-landing')
+    if (staticLanding) staticLanding.style.display = 'none'
+    observer.disconnect()
+  }
+})
+observer.observe(document.getElementById('root') || document.body, { childList: true, subtree: true })
+</script>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </body>
