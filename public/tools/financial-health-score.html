@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Financial Health Score — How Healthy Are Your Finances? | Spentt</title>
+<meta name="description" content="Free financial health score calculator. Answer 15 questions across savings, debt, investments and spending habits to get your personal financial health score out of 100."/>
+<link rel="canonical" href="https://www.spentt.live/tools/financial-health-score.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FG695T579C"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-FG695T579C");</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;--good:#3AAE8A;--bad:#EF4444;--warn:#F5A623;--invest:#9B6EE8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;min-height:100vh;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.nav-links{display:flex;gap:20px;align-items:center;}
+.nav-link{font-size:14px;color:var(--text2);text-decoration:none;font-weight:500;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+
+/* Hero */
+.hero{padding:48px 40px 0;max-width:680px;margin:0 auto;text-align:center;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:700;line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.hero-sub{font-size:16px;color:var(--text2);max-width:480px;margin:0 auto 40px;}
+
+/* Quiz wrap */
+.quiz-wrap{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+
+/* Progress */
+.progress-wrap{margin-bottom:24px;}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.progress-label{font-size:13px;font-weight:600;color:var(--text2);}
+.progress-count{font-size:13px;color:var(--text3);}
+.progress-bar-bg{background:var(--border);border-radius:99px;height:6px;overflow:hidden;}
+.progress-bar-fill{height:6px;background:var(--accent);border-radius:99px;transition:width 0.4s ease;}
+
+/* Section label */
+.section-label{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:99px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:16px;}
+
+/* Question card */
+.question-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:16px;animation:fadeIn 0.3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.question-num{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:8px;}
+.question-text{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.3;}
+.options{display:flex;flex-direction:column;gap:8px;}
+.option{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.15s;font-size:14px;color:var(--text2);}
+.option:hover{border-color:var(--accent);color:var(--text);}
+.option.selected{background:rgba(232,98,58,0.08);border-color:var(--accent);color:var(--text);font-weight:600;}
+.option-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all 0.15s;display:flex;align-items:center;justify-content:center;}
+.option.selected .option-dot{border-color:var(--accent);background:var(--accent);}
+.option.selected .option-dot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+
+/* Nav buttons */
+.nav-btns{display:flex;gap:10px;margin-top:16px;}
+.btn-prev{flex:1;padding:13px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;}
+.btn-next{flex:2;padding:13px;background:var(--accent);border:none;border-radius:14px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:opacity 0.2s;}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* Results */
+.results-wrap{display:none;animation:fadeIn 0.4s ease;}
+
+/* Score display */
+.score-display{background:var(--text);border-radius:24px;padding:36px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden;}
+.score-display::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.03);top:-100px;right:-80px;}
+.score-eyebrow{font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+.score-circle{width:120px;height:120px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;flex-direction:column;border:4px solid rgba(255,255,255,0.1);}
+.score-num{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:800;color:#fff;line-height:1;}
+.score-denom{font-size:13px;color:rgba(255,255,255,0.35);margin-top:2px;}
+.score-rating{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;}
+.score-tagline{font-size:14px;color:rgba(255,255,255,0.5);max-width:320px;margin:0 auto;}
+.score-badge{display:inline-block;padding:6px 16px;border-radius:99px;font-size:13px;font-weight:600;margin-top:14px;}
+
+/* Category breakdown */
+.category-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.category-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;}
+.cat-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.cat-name{font-size:12px;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:6px;}
+.cat-score{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:800;}
+.cat-bar-bg{background:var(--border);border-radius:99px;height:6px;overflow:hidden;}
+.cat-bar-fill{height:6px;border-radius:99px;transition:width 0.6s ease;}
+.cat-label{font-size:11px;color:var(--text3);margin-top:4px;}
+
+/* Insights */
+.insights-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:16px;}
+.insights-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;}
+.insight-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);}
+.insight-item:last-child{border-bottom:none;}
+.insight-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
+.insight-text{font-size:13px;color:var(--text2);line-height:1.6;}
+.insight-text strong{color:var(--text);}
+
+/* Share card */
+.share-section{margin-bottom:16px;}
+.share-title{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;margin-bottom:12px;}
+.share-card-preview{background:var(--text);border-radius:16px;padding:20px;margin-bottom:12px;text-align:center;}
+.sc-brand{font-family:'Gabarito',sans-serif;font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:4px;}
+.sc-score{font-family:'Gabarito',sans-serif;font-size:48px;font-weight:800;color:#fff;line-height:1;}
+.sc-label{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:8px;}
+.sc-rating{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;}
+.sc-url{font-size:11px;color:rgba(255,255,255,0.2);}
+.share-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.share-btn-wa{padding:12px;background:#25D366;border:none;border-radius:12px;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;color:#fff;cursor:pointer;}
+.share-btn-copy{padding:12px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;}
+
+/* Retake + CTA */
+.retake-btn{width:100%;padding:13px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;margin-bottom:16px;}
+.tool-cta{background:var(--accent);border-radius:20px;padding:28px;text-align:center;margin-bottom:48px;}
+.tool-cta-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.tool-cta-sub{font-size:14px;color:rgba(255,255,255,0.75);margin-bottom:20px;line-height:1.6;}
+.tool-cta-btn{display:inline-block;background:#fff;color:var(--accent);padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;}
+.tool-cta-note{font-size:12px;color:rgba(255,255,255,0.5);margin-top:10px;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:12px 24px;border-radius:99px;font-size:14px;font-weight:600;z-index:100;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+.toast.show{opacity:1;}
+
+/* Content */
+.content-section{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+strong{color:var(--text);font-weight:600;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+.related{padding-top:32px;border-top:1px solid var(--border);margin-top:40px;}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+@media(max-width:600px){nav,footer{padding:16px 20px;}.nav-links{display:none;}.hero{padding:32px 20px 0;}.quiz-wrap,.content-section{padding:0 16px 48px;}h1{font-size:28px;}.category-grid{grid-template-columns:1fr;}.share-btns{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="nav-links">
+    <a href="/tools/" class="nav-link">Tools</a>
+    <a href="/blog/" class="nav-link">Blog</a>
+  </div>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Free Financial Health Check</div>
+  <h1>What's your financial health score?</h1>
+  <p class="hero-sub">15 questions across savings, debt, spending, investments and habits. Get your score out of 100 with personalised insights — takes 3 minutes.</p>
+</div>
+
+<div class="quiz-wrap">
+
+  <!-- Quiz section -->
+  <div id="quizSection">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label" id="progressLabel">Savings & Emergency Fund</span>
+        <span class="progress-count" id="progressCount">1 of 15</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill" style="width:6.67%"></div>
+      </div>
+    </div>
+
+    <div id="sectionLabel" class="section-label">💰 Savings</div>
+    <div id="questionCard" class="question-card"></div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()" style="display:none">← Back</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next →</button>
+    </div>
+  </div>
+
+  <!-- Results section -->
+  <div class="results-wrap" id="resultsSection">
+    <div class="score-display" id="scoreDisplay">
+      <div class="score-eyebrow">Your financial health score</div>
+      <div class="score-circle" id="scoreCircle">
+        <div class="score-num" id="scoreNum">0</div>
+        <div class="score-denom">/100</div>
+      </div>
+      <div class="score-rating" id="scoreRating"></div>
+      <div class="score-tagline" id="scoreTagline"></div>
+      <div class="score-badge" id="scoreBadge"></div>
+    </div>
+
+    <div class="category-grid" id="categoryGrid"></div>
+
+    <div class="insights-card">
+      <div class="insights-title">💡 Your personalised insights</div>
+      <div id="insightsList"></div>
+    </div>
+
+    <div class="share-section">
+      <div class="share-title">📤 Share your score</div>
+      <div class="share-card-preview">
+        <div class="sc-brand">spentt · financial health score</div>
+        <div class="sc-score" id="scScore">0</div>
+        <div class="sc-label">out of 100</div>
+        <div class="sc-rating" id="scRating"></div>
+        <div class="sc-url">spentt.live/tools/financial-health-score.html</div>
+      </div>
+      <div class="share-btns">
+        <button class="share-btn-wa" onclick="shareWA()">📱 Share on WhatsApp</button>
+        <button class="share-btn-copy" onclick="copyScore()">📋 Copy result</button>
+      </div>
+    </div>
+
+    <button class="retake-btn" onclick="retake()">↺ Retake the quiz</button>
+
+    <div class="tool-cta">
+      <div class="tool-cta-title">Start tracking your expenses to improve your score</div>
+      <div class="tool-cta-sub">The single most impactful habit for financial health is knowing where your money goes. Spentt logs expenses in 5 seconds and shows your weekly breakdown every Sunday — free, private, no bank linking.</div>
+      <a href="/" class="tool-cta-btn">Start tracking free →</a>
+      <div class="tool-cta-note">Free forever · No bank linking · Your data in Google Drive</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="content-section">
+  <h2>What does your financial health score measure?</h2>
+  <p>Your financial health score is a composite measure across five key areas of personal finance. Unlike a credit score (which only measures your borrowing history), this score reflects your overall financial wellbeing — savings, debt, investments, spending habits, and financial awareness.</p>
+  <ul>
+    <li><strong>Savings & emergency fund (20 points):</strong> Do you have a financial cushion for unexpected expenses?</li>
+    <li><strong>Debt management (20 points):</strong> Is your debt under control relative to your income?</li>
+    <li><strong>Investments & wealth building (20 points):</strong> Are you building long-term wealth?</li>
+    <li><strong>Spending habits (20 points):</strong> Do you track and control your day-to-day spending?</li>
+    <li><strong>Financial awareness (20 points):</strong> Do you know your own financial numbers?</li>
+  </ul>
+  <h2>What's a good financial health score?</h2>
+  <p>Most people score between 35-65 on their first attempt. A score above 75 indicates strong financial habits across all five areas. A score below 40 suggests foundational habits — savings, tracking, and debt management — need attention before investing makes sense.</p>
+  <p>The score is most useful as a starting point. Retake it in 3-6 months and compare — the direction of change matters more than the absolute number.</p>
+  <h2>Frequently asked questions</h2>
+  <div class="faq-item">
+    <div class="faq-q">Is my data saved or stored anywhere?</div>
+    <div class="faq-a">No — this quiz runs entirely in your browser. No data is sent to any server, no account is required, and nothing is stored. Your answers disappear when you close the tab.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How is the score calculated?</div>
+    <div class="faq-a">Each question is worth a set number of points based on the category it belongs to. Your answer determines how many points you earn for that question. The five categories are equally weighted at 20 points each, for a maximum of 100.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How can I improve my score?</div>
+    <div class="faq-a">Focus on the category with the lowest score first. For most people, this is either emergency fund (building 3-6 months of expenses in savings) or spending habits (tracking expenses consistently). These two areas have the biggest impact on overall financial health.</div>
+  </div>
+  <div class="related">
+    <div class="related-title">More free tools from Spentt</div>
+    <div class="related-links">
+      <a href="/tools/net-worth-calculator.html" class="related-link">Net Worth Calculator — See your full financial picture →</a>
+      <a href="/tools/savings-goal-calculator.html" class="related-link">Savings Goal Calculator — How long to reach your target →</a>
+      <a href="/tools/50-30-20-budget-calculator.html" class="related-link">50/30/20 Budget Calculator →</a>
+      <a href="/tools/" class="related-link">All free tools →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/tools/">Tools</a>
+    <a href="/blog/">Blog</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+<script>
+const QUESTIONS = [
+  // SAVINGS (max 20pts)
+  {
+    id: 1, cat: 'savings', section: '💰 Savings & Emergency Fund',
+    text: 'How many months of expenses do you have saved as an emergency fund?',
+    options: [
+      { text: 'Less than 1 month', pts: 0 },
+      { text: '1-2 months', pts: 3 },
+      { text: '3-4 months', pts: 7 },
+      { text: '5-6 months', pts: 10 },
+      { text: 'More than 6 months', pts: 10 },
+    ]
+  },
+  {
+    id: 2, cat: 'savings', section: '💰 Savings & Emergency Fund',
+    text: 'What percentage of your monthly income do you save?',
+    options: [
+      { text: 'I don\'t save regularly', pts: 0 },
+      { text: 'Less than 5%', pts: 2 },
+      { text: '5-10%', pts: 4 },
+      { text: '10-20%', pts: 7 },
+      { text: 'More than 20%', pts: 10 },
+    ]
+  },
+  {
+    id: 3, cat: 'savings', section: '💰 Savings & Emergency Fund',
+    text: 'Do you save money before spending, or save whatever is left?',
+    options: [
+      { text: 'Whatever is left at the end of the month', pts: 0 },
+      { text: 'I try to save first but often spend it', pts: 2 },
+      { text: 'I save a fixed amount first, most months', pts: 6 },
+      { text: 'I always pay myself first before any spending', pts: 10 },
+    ]
+  },
+  // DEBT (max 20pts)
+  {
+    id: 4, cat: 'debt', section: '💳 Debt Management',
+    text: 'What percentage of your monthly income goes toward EMIs and loan repayments?',
+    options: [
+      { text: 'More than 60%', pts: 0 },
+      { text: '40-60%', pts: 2 },
+      { text: '20-40%', pts: 6 },
+      { text: 'Less than 20%', pts: 9 },
+      { text: 'I have no debt', pts: 10 },
+    ]
+  },
+  {
+    id: 5, cat: 'debt', section: '💳 Debt Management',
+    text: 'Do you pay your credit card bill in full every month?',
+    options: [
+      { text: 'I don\'t have a credit card', pts: 7 },
+      { text: 'No — I carry a balance regularly', pts: 0 },
+      { text: 'Sometimes — I miss occasionally', pts: 4 },
+      { text: 'Yes — always paid in full', pts: 10 },
+    ]
+  },
+  {
+    id: 6, cat: 'debt', section: '💳 Debt Management',
+    text: 'Have you ever taken a personal loan or borrowed money for non-essential purchases (gadgets, vacations, etc.)?',
+    options: [
+      { text: 'Yes, regularly', pts: 0 },
+      { text: 'Yes, occasionally', pts: 4 },
+      { text: 'Rarely — only once or twice', pts: 7 },
+      { text: 'Never', pts: 10 },
+    ]
+  },
+  // INVESTMENTS (max 20pts)
+  {
+    id: 7, cat: 'investments', section: '📈 Investments & Wealth Building',
+    text: 'Do you invest regularly (SIP, stocks, mutual funds, PPF, NPS)?',
+    options: [
+      { text: 'No — I don\'t invest at all', pts: 0 },
+      { text: 'I have some investments but nothing regular', pts: 3 },
+      { text: 'Yes — I invest occasionally', pts: 6 },
+      { text: 'Yes — I have a fixed monthly investment', pts: 10 },
+    ]
+  },
+  {
+    id: 8, cat: 'investments', section: '📈 Investments & Wealth Building',
+    text: 'How much of your monthly income do you invest (beyond PF)?',
+    options: [
+      { text: 'Nothing', pts: 0 },
+      { text: 'Less than 5%', pts: 2 },
+      { text: '5-10%', pts: 5 },
+      { text: '10-20%', pts: 8 },
+      { text: 'More than 20%', pts: 10 },
+    ]
+  },
+  {
+    id: 9, cat: 'investments', section: '📈 Investments & Wealth Building',
+    text: 'Do you have a retirement plan (EPF, NPS, PPF, or dedicated corpus)?',
+    options: [
+      { text: 'No — not thinking about retirement yet', pts: 0 },
+      { text: 'Only EPF from my employer', pts: 4 },
+      { text: 'EPF + some additional savings', pts: 7 },
+      { text: 'Yes — a clear plan with dedicated contributions', pts: 10 },
+    ]
+  },
+  // SPENDING (max 20pts)
+  {
+    id: 10, cat: 'spending', section: '🛍️ Spending Habits',
+    text: 'Do you track your daily expenses?',
+    options: [
+      { text: 'Never — I have no idea where my money goes', pts: 0 },
+      { text: 'Occasionally — I check my bank statement', pts: 3 },
+      { text: 'Sometimes — I track when I remember', pts: 6 },
+      { text: 'Yes — I log expenses regularly', pts: 10 },
+    ]
+  },
+  {
+    id: 11, cat: 'spending', section: '🛍️ Spending Habits',
+    text: 'How often do you make impulse purchases you later regret?',
+    options: [
+      { text: 'Very often — it\'s a real problem', pts: 0 },
+      { text: 'Often — at least once a week', pts: 3 },
+      { text: 'Sometimes — maybe once a month', pts: 6 },
+      { text: 'Rarely or never', pts: 10 },
+    ]
+  },
+  {
+    id: 12, cat: 'spending', section: '🛍️ Spending Habits',
+    text: 'How do you feel about your spending at the end of the month?',
+    options: [
+      { text: 'Shocked — where did all the money go?', pts: 0 },
+      { text: 'A bit anxious — I spent more than intended', pts: 3 },
+      { text: 'Mostly okay — a few surprises', pts: 6 },
+      { text: 'In control — I know where every rupee went', pts: 10 },
+    ]
+  },
+  // AWARENESS (max 20pts)
+  {
+    id: 13, cat: 'awareness', section: '🧠 Financial Awareness',
+    text: 'Do you know your exact monthly take-home salary?',
+    options: [
+      { text: 'Not really — roughly, maybe', pts: 0 },
+      { text: 'Yes — approximately', pts: 5 },
+      { text: 'Yes — exactly', pts: 10 },
+    ]
+  },
+  {
+    id: 14, cat: 'awareness', section: '🧠 Financial Awareness',
+    text: 'Do you know your net worth (assets minus liabilities)?',
+    options: [
+      { text: 'No idea', pts: 0 },
+      { text: 'Very roughly', pts: 3 },
+      { text: 'Approximately — I\'ve calculated it', pts: 7 },
+      { text: 'Yes — I track it regularly', pts: 10 },
+    ]
+  },
+  {
+    id: 15, cat: 'awareness', section: '🧠 Financial Awareness',
+    text: 'Do you have clear financial goals for the next 3-5 years?',
+    options: [
+      { text: 'No — I\'m taking it day by day', pts: 0 },
+      { text: 'Vague ideas but nothing specific', pts: 3 },
+      { text: 'Yes — I have goals but no concrete plan', pts: 6 },
+      { text: 'Yes — specific goals with a plan to reach them', pts: 10 },
+    ]
+  },
+]
+
+const CAT_META = {
+  savings:     { label: 'Savings', emoji: '💰', color: '#3AAE8A', max: 30 },
+  debt:        { label: 'Debt',    emoji: '💳', color: '#EF4444', max: 30 },
+  investments: { label: 'Investing', emoji: '📈', color: '#9B6EE8', max: 30 },
+  spending:    { label: 'Spending', emoji: '🛍️', color: '#F5A623', max: 30 },
+  awareness:   { label: 'Awareness', emoji: '🧠', color: '#3B82F6', max: 20 },
+}
+
+const RATINGS = [
+  { min: 85, label: '🏆 Financially Excellent', tagline: 'You\'re in the top tier. Strong habits across all areas.', badge: '🏆 Top 10%', badgeBg: 'rgba(58,174,138,0.2)', badgeColor: '#3AAE8A', circleBorder: '#3AAE8A' },
+  { min: 70, label: '💪 Financially Fit', tagline: 'Solid foundation. A few areas to sharpen.', badge: '💪 Strong habits', badgeBg: 'rgba(58,174,138,0.15)', badgeColor: '#3AAE8A', circleBorder: '#3AAE8A' },
+  { min: 55, label: '📈 On The Right Track', tagline: 'Good start. Some habits need consistent attention.', badge: '📈 Growing', badgeBg: 'rgba(155,110,232,0.15)', badgeColor: '#9B6EE8', circleBorder: '#9B6EE8' },
+  { min: 40, label: '🌱 Room To Grow', tagline: 'Building phase. Focus on the basics first.', badge: '🌱 Building', badgeBg: 'rgba(245,166,35,0.15)', badgeColor: '#F5A623', circleBorder: '#F5A623' },
+  { min: 0,  label: '🚨 Needs Attention', tagline: 'Important foundations are missing. Start with one habit at a time.', badge: '🚨 Action needed', badgeBg: 'rgba(239,68,68,0.15)', badgeColor: '#EF4444', circleBorder: '#EF4444' },
+]
+
+let currentQ = 0
+let answers = {}
+let finalScore = 0
+let finalRating = {}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ]
+  const prevQ = currentQ > 0 ? QUESTIONS[currentQ - 1] : null
+  const sectionChanged = !prevQ || prevQ.section !== q.section
+
+  document.getElementById('progressLabel').textContent = q.section.replace(/^.{2}\s/, '')
+  document.getElementById('progressCount').textContent = (currentQ + 1) + ' of ' + QUESTIONS.length
+  document.getElementById('progressFill').style.width = ((currentQ + 1) / QUESTIONS.length * 100) + '%'
+  document.getElementById('sectionLabel').textContent = q.section
+
+  const selected = answers[q.id]
+  document.getElementById('questionCard').innerHTML = `
+    <div class="question-num">Question ${currentQ + 1}</div>
+    <div class="question-text">${q.text}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option ${selected === i ? 'selected' : ''}" onclick="selectOption(${i})">
+          <div class="option-dot"></div>
+          ${opt.text}
+        </div>
+      `).join('')}
+    </div>
+  `
+
+  document.getElementById('btnPrev').style.display = currentQ === 0 ? 'none' : 'block'
+  document.getElementById('btnNext').disabled = selected === undefined
+  document.getElementById('btnNext').textContent = currentQ === QUESTIONS.length - 1 ? 'See my score →' : 'Next →'
+}
+
+function selectOption(i) {
+  answers[QUESTIONS[currentQ].id] = i
+  document.querySelectorAll('.option').forEach((el, idx) => {
+    el.classList.toggle('selected', idx === i)
+  })
+  document.getElementById('btnNext').disabled = false
+}
+
+function nextQ() {
+  if (answers[QUESTIONS[currentQ].id] === undefined) return
+  if (currentQ === QUESTIONS.length - 1) {
+    showResults()
+  } else {
+    currentQ++
+    renderQuestion()
+  }
+}
+
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQuestion() }
+}
+
+function showResults() {
+  document.getElementById('quizSection').style.display = 'none'
+  document.getElementById('resultsSection').style.display = 'block'
+
+  // Calculate scores per category
+  const catScores = { savings: 0, debt: 0, investments: 0, spending: 0, awareness: 0 }
+  const catMax = { savings: 0, debt: 0, investments: 0, spending: 0, awareness: 0 }
+
+  QUESTIONS.forEach(q => {
+    const sel = answers[q.id]
+    if (sel !== undefined) {
+      catScores[q.cat] += q.options[sel].pts
+      catMax[q.cat] += Math.max(...q.options.map(o => o.pts))
+    }
+  })
+
+  // Normalize to 20 points each
+  const normalized = {}
+  Object.keys(catScores).forEach(cat => {
+    normalized[cat] = Math.round((catScores[cat] / catMax[cat]) * 20)
+  })
+
+  finalScore = Object.values(normalized).reduce((s, v) => s + v, 0)
+  finalRating = RATINGS.find(r => finalScore >= r.min)
+
+  // Animate score
+  let displayed = 0
+  const interval = setInterval(() => {
+    displayed = Math.min(displayed + 2, finalScore)
+    document.getElementById('scoreNum').textContent = displayed
+    document.getElementById('scScore').textContent = displayed
+    if (displayed >= finalScore) clearInterval(interval)
+  }, 20)
+
+  document.getElementById('scoreRating').textContent = finalRating.label
+  document.getElementById('scoreTagline').textContent = finalRating.tagline
+  document.getElementById('scoreBadge').textContent = finalRating.badge
+  document.getElementById('scoreBadge').style.background = finalRating.badgeBg
+  document.getElementById('scoreBadge').style.color = finalRating.badgeColor
+  document.getElementById('scoreCircle').style.borderColor = finalRating.circleBorder
+  document.getElementById('scRating').textContent = finalRating.label
+
+  // Category breakdown
+  const cats = ['savings', 'debt', 'investments', 'spending', 'awareness']
+  document.getElementById('categoryGrid').innerHTML = cats.map(cat => {
+    const meta = CAT_META[cat]
+    const score = normalized[cat]
+    const pct = Math.round(score / 20 * 100)
+    const label = pct >= 80 ? 'Excellent' : pct >= 60 ? 'Good' : pct >= 40 ? 'Fair' : 'Needs work'
+    return `
+      <div class="category-card">
+        <div class="cat-top">
+          <div class="cat-name">${meta.emoji} ${meta.label}</div>
+          <div class="cat-score" style="color:${meta.color}">${score}/20</div>
+        </div>
+        <div class="cat-bar-bg">
+          <div class="cat-bar-fill" style="width:${pct}%;background:${meta.color}"></div>
+        </div>
+        <div class="cat-label">${label}</div>
+      </div>
+    `
+  }).join('')
+
+  // Personalised insights
+  const insights = []
+  const weakest = cats.sort((a, b) => normalized[a] - normalized[b])[0]
+  const strongest = cats.sort((a, b) => normalized[b] - normalized[a])[0]
+
+  if (normalized.savings < 10) insights.push({ icon: '🏦', text: '<strong>Build your emergency fund first.</strong> Before investing, aim for 3 months of expenses in a liquid savings account or FD. This is your financial safety net.' })
+  if (normalized.debt < 10) insights.push({ icon: '💳', text: '<strong>High-interest debt is your biggest enemy.</strong> Credit card debt at 36-42% p.a. destroys wealth faster than any investment can build it. Pay it off aggressively.' })
+  if (normalized.investments < 10) insights.push({ icon: '📈', text: '<strong>Start a SIP today — even ₹500/month.</strong> The habit of investing matters more than the amount. Time in the market beats timing the market.' })
+  if (normalized.spending < 10) insights.push({ icon: '📊', text: '<strong>Start tracking your expenses.</strong> You can\'t improve what you can\'t see. Even 30 days of tracking reveals patterns that change how you spend.' })
+  if (normalized.awareness < 10) insights.push({ icon: '🧠', text: '<strong>Know your numbers.</strong> Your monthly income, monthly expenses, and net worth are the three numbers every financially healthy person knows by heart.' })
+
+  if (normalized[strongest] >= 15) insights.push({ icon: '✅', text: `<strong>${CAT_META[strongest].label} is your strongest area</strong> — you\'re doing well here. Make sure the other areas aren\'t being neglected.` })
+  if (finalScore >= 70) insights.push({ icon: '🎯', text: '<strong>You\'re in strong shape.</strong> Focus now on optimising — increasing your savings rate by 2-3%, diversifying investments, and automating your finances so good habits run on autopilot.' })
+
+  if (insights.length === 0) insights.push({ icon: '🌱', text: '<strong>Pick one habit to start this week.</strong> Don\'t try to fix everything at once. The highest ROI first step for most people is simply tracking expenses for 30 days.' })
+
+  document.getElementById('insightsList').innerHTML = insights.map(i => `
+    <div class="insight-item">
+      <div class="insight-icon">${i.icon}</div>
+      <div class="insight-text">${i.text}</div>
+    </div>
+  `).join('')
+}
+
+function generateShareText() {
+  return `💰 My Financial Health Score: ${finalScore}/100\n${finalRating.label}\n\nCheck yours at spentt.live/tools/financial-health-score.html`
+}
+
+function shareWA() {
+  window.open('https://wa.me/?text=' + encodeURIComponent(generateShareText()), '_blank')
+}
+
+function copyScore() {
+  const text = generateShareText()
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('Copied!'))
+  } else {
+    const ta = document.createElement('textarea')
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta)
+    showToast('Copied!')
+  }
+}
+
+function retake() {
+  currentQ = 0
+  answers = {}
+  document.getElementById('quizSection').style.display = 'block'
+  document.getElementById('resultsSection').style.display = 'none'
+  renderQuestion()
+  window.scrollTo(0, 0)
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast')
+  t.textContent = msg; t.classList.add('show')
+  setTimeout(() => t.classList.remove('show'), 2500)
+}
+
+renderQuestion()
+</script>
+</body>
+</html>
