@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Excel vs App for Expense Tracking — Which Is Actually Better? | Spentt</title>
+<meta name="description" content="Still using Excel or Google Sheets to track expenses? Here's an honest comparison of spreadsheets vs expense tracker apps — and what actually works best for most people."/>
+<link rel="canonical" href="https://www.spentt.live/blog/expense-tracker-excel-vs-app.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FG695T579C"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-FG695T579C");</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Excel vs App for Expense Tracking — Which Is Actually Better?",
+  "description": "An honest comparison of using Excel or Google Sheets vs a dedicated expense tracker app. What works, what doesn't, and what most people actually stick with.",
+  "url": "https://www.spentt.live/blog/expense-tracker-excel-vs-app.html",
+  "author": { "@type": "Organization", "name": "Spentt" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" },
+  "datePublished": "2026-08-01",
+  "keywords": "excel expense tracker, google sheets expense tracker, expense tracker app vs excel, spreadsheet vs app expense tracking, best way to track expenses, expense tracking spreadsheet, excel vs app budget"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Excel good for tracking expenses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Excel is good for people who want complete control over their data structure and analysis. It works well for monthly reviews and custom reporting. The main limitation is friction — opening a laptop to log a coffee purchase is unrealistic, so most people end up logging expenses in batches at the end of the day or week, which reduces accuracy and awareness."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is better than Excel for tracking expenses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A mobile expense tracker app is better than Excel for daily logging because it's always in your pocket and takes 5 seconds per expense. The best apps combine the data ownership of a spreadsheet with the convenience of a mobile app — for example, Spentt stores your data in your own Google Drive while letting you log from your phone instantly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I track expenses without an app?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can track expenses using a notebook, Excel, or Google Sheets. The most effective no-app method is a simple notebook carried everywhere, with expenses logged immediately after spending. Google Sheets on mobile is a reasonable middle ground — more accessible than desktop Excel but still more friction than a dedicated app."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.content{max-width:680px;margin:0 auto;padding:48px 40px 80px;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:38px;font-weight:700;line-height:1.15;margin-bottom:16px;letter-spacing:-0.02em;}
+.meta{font-size:13px;color:var(--text3);margin-bottom:32px;display:flex;align-items:center;gap:12px;}
+.meta-dot{width:4px;height:4px;border-radius:50%;background:var(--text3);display:inline-block;}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:20px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+h3{font-family:'Gabarito',sans-serif;font-size:19px;font-weight:600;margin:28px 0 8px;color:var(--text);}
+ul,ol{margin:8px 0 20px 20px;}
+ul li,ol li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:8px;}
+strong{color:var(--text);font-weight:600;}
+.highlight{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:20px 24px;margin:28px 0;}
+.highlight p{margin:0;font-size:15px;}
+
+/* Comparison table */
+.comparison{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin:32px 0;}
+.comp-header{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;background:var(--text);padding:14px 16px;gap:8px;}
+.comp-head{font-family:'Gabarito',sans-serif;font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.06em;}
+.comp-head.hl{color:var(--accent);}
+.comp-row{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;padding:12px 16px;border-bottom:1px solid var(--border);gap:8px;align-items:center;}
+.comp-row:last-child{border-bottom:none;}
+.comp-feat{font-size:13px;color:var(--text2);font-weight:500;}
+.comp-cell{font-size:13px;text-align:center;}
+.comp-good{color:#3AAE8A;font-weight:600;}
+.comp-mid{color:var(--accent);font-weight:600;}
+.comp-bad{color:#EF4444;font-weight:600;}
+
+/* Method cards */
+.method-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:28px 0;}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;}
+.method-icon{font-size:28px;margin-bottom:8px;}
+.method-name{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.method-best{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px;}
+.method-desc{font-size:13px;color:var(--text2);line-height:1.5;}
+.method-card.winner{border-color:var(--accent);background:rgba(232,98,58,0.04);}
+.method-card.winner .method-name{color:var(--accent);}
+
+/* Pros cons */
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;}
+.pros-col,.cons-col{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;}
+.pros-col-title{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:#3AAE8A;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.cons-col-title{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:#EF4444;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.pc-item{font-size:13px;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);line-height:1.5;}
+.pc-item:last-child{border-bottom:none;}
+
+/* Scenario cards */
+.scenario-grid{display:flex;flex-direction:column;gap:10px;margin:24px 0;}
+.scenario{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;}
+.scenario-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+.scenario-title{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.scenario-desc{font-size:13px;color:var(--text2);line-height:1.5;}
+.scenario-rec{font-size:12px;font-weight:700;margin-top:6px;padding:3px 10px;border-radius:99px;display:inline-block;}
+.scenario-rec.excel{background:rgba(58,174,138,0.1);color:#3AAE8A;}
+.scenario-rec.app{background:rgba(232,98,58,0.1);color:var(--accent);}
+.scenario-rec.both{background:rgba(155,110,232,0.1);color:#9B6EE8;}
+
+/* Day in life */
+.day-comparison{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.day-col{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;}
+.day-col-title{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;}
+.day-item{font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
+.day-item:last-child{border-bottom:none;}
+.day-time{font-size:11px;color:var(--text3);flex-shrink:0;width:40px;}
+.day-pain{color:#EF4444;font-size:11px;display:block;margin-top:2px;}
+.day-good{color:#3AAE8A;font-size:11px;display:block;margin-top:2px;}
+
+/* FAQ */
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+
+/* CTA */
+.cta-box{background:var(--accent);border-radius:24px;padding:36px;text-align:center;margin:48px 0;}
+.cta-box h3{font-family:'Gabarito',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;margin-top:0;}
+.cta-box p{color:rgba(255,255,255,0.75);font-size:15px;margin-bottom:24px;}
+.cta-box a{background:#fff;color:var(--accent);padding:14px 32px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;display:inline-block;}
+.cta-note{font-size:12px;color:rgba(255,255,255,0.6);margin-top:12px;margin-bottom:0;}
+.related{margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+@media(max-width:600px){
+  nav,footer{padding:16px 20px;}
+  .content{padding:32px 20px 60px;}
+  h1{font-size:28px;}
+  h2{font-size:22px;}
+  .comp-header,.comp-row{grid-template-columns:1.4fr 1fr 1fr;}
+  .comp-head:last-child,.comp-cell:last-child{display:none;}
+  .method-grid{grid-template-columns:1fr;}
+  .pros-cons{grid-template-columns:1fr;}
+  .day-comparison{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+
+<div class="content">
+  <div class="eyebrow">Expense Tracking · Personal Finance</div>
+  <h1>Excel vs App for Expense Tracking — Which Is Actually Better?</h1>
+  <div class="meta">
+    <span>By Spentt</span>
+    <span class="meta-dot"></span>
+    <span>August 2026</span>
+    <span class="meta-dot"></span>
+    <span>8 min read</span>
+  </div>
+
+  <p>If you track your expenses at all, you probably started with a spreadsheet. Excel or Google Sheets, a simple table with dates and amounts, maybe some category columns — functional, flexible, and completely under your control.</p>
+
+  <p>Then you downloaded an expense tracker app. Maybe you stuck with it for a week. Maybe you're still using it. Or maybe you went back to the spreadsheet, or gave up entirely.</p>
+
+  <p>The Excel vs app debate isn't as simple as "one is better." Both have real strengths. The right answer depends on how you actually spend money and when you actually do your tracking. This piece gives you an honest comparison so you can decide which approach — or which combination — will actually work for you.</p>
+
+  <div class="highlight">
+    <p><strong>The short answer:</strong> Excel is better for analysis and monthly reviews. Apps are better for logging in real time. The best outcome for most people is an app that gives you the data control and privacy of a spreadsheet — without the friction of opening a laptop every time you buy a coffee.</p>
+  </div>
+
+  <h2>Why 38% of people still use spreadsheets</h2>
+
+  <p>Research consistently shows that a significant portion of people who track expenses — roughly a third to half — still use Excel or Google Sheets rather than a dedicated app. This isn't ignorance of better tools. These are deliberate choices, and the reasons are legitimate.</p>
+
+  <h3>What spreadsheets do genuinely well</h3>
+
+  <div class="pros-cons">
+    <div class="pros-col">
+      <div class="pros-col-title">✅ Real strengths</div>
+      <div class="pc-item">Complete control over structure and categories</div>
+      <div class="pc-item">Powerful formulas, pivot tables, custom charts</div>
+      <div class="pc-item">Data is truly yours — stored in your files</div>
+      <div class="pc-item">No app account, no permissions, no sync issues</div>
+      <div class="pc-item">Free — no subscription</div>
+      <div class="pc-item">Works offline, always</div>
+      <div class="pc-item">Familiar to most office workers</div>
+    </div>
+    <div class="cons-col">
+      <div class="cons-col-title">❌ Real limitations</div>
+      <div class="pc-item">Requires opening a laptop or fighting with mobile Excel</div>
+      <div class="pc-item">Logging in real time is impractical</div>
+      <div class="pc-item">No notifications or reminders</div>
+      <div class="pc-item">Manual category summaries</div>
+      <div class="pc-item">No weekly summary or pattern detection</div>
+      <div class="pc-item">Easy to forget to log for days</div>
+      <div class="pc-item">Accuracy suffers when logging from memory</div>
+    </div>
+  </div>
+
+  <p>The fundamental problem with spreadsheet expense tracking isn't the analysis — it's the logging. You're not near your laptop when you pay for a coffee at 8am, a lunch at 1pm, and a cab at 7pm. You tell yourself you'll enter it all at the end of the day. Then you do it from memory. Memory is unreliable. You miss things, round amounts, forget categories. Your data becomes an approximation rather than a record.</p>
+
+  <h2>What expense tracker apps do genuinely well</h2>
+
+  <div class="pros-cons">
+    <div class="pros-col">
+      <div class="pros-col-title">✅ Real strengths</div>
+      <div class="pc-item">Always in your pocket — log anywhere in seconds</div>
+      <div class="pc-item">Immediate logging before you forget</div>
+      <div class="pc-item">Automatic category summaries and charts</div>
+      <div class="pc-item">Spending streaks and reminders</div>
+      <div class="pc-item">Weekly reviews built in</div>
+      <div class="pc-item">Works on any device</div>
+    </div>
+    <div class="cons-col">
+      <div class="cons-col-title">❌ Real limitations</div>
+      <div class="pc-item">Your data usually on their servers</div>
+      <div class="pc-item">Many require bank linking</div>
+      <div class="pc-item">Often freemium with key features locked</div>
+      <div class="pc-item">Less flexible than a custom spreadsheet</div>
+      <div class="pc-item">App can shut down — data risk</div>
+      <div class="pc-item">Learning curve for each new app</div>
+    </div>
+  </div>
+
+  <h2>The head-to-head comparison</h2>
+
+  <div class="comparison">
+    <div class="comp-header">
+      <div class="comp-head">Feature</div>
+      <div class="comp-head">Excel</div>
+      <div class="comp-head">Most apps</div>
+      <div class="comp-head hl">Spentt</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-feat">Log on the go</div>
+      <div class="comp-cell comp-bad">Hard</div>
+      <div class="comp-cell comp-good">Easy</div>
+      <div class="comp-cell comp-good">5 seconds</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-feat">Data ownership</div>
+      <div class="comp-cell comp-good">Your files</div>
+      <div class="comp-cell comp-bad">Their servers</div>
+      <div class="comp-cell comp-good">Your Drive</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-feat">No bank linking</div>
+      <div class="comp-cell comp-good">Never needed</div>
+      <div class="comp-cell comp-bad">Often required</div>
+      <div class="comp-cell comp-good">Never required</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-feat">Custom categories</div>
+      <div class="comp-cell comp-good">Fully flexible</div>
+      <div class="comp-cell comp-mid">Limited</div>
+      <div class="comp-cell comp-mid">30 built-in</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-feat">Weekly summary</div>
+      <div class="comp-cell comp-bad">Manual</div>
+      <div class="comp-cell comp-mid">Charts only</div>
+      <div class="comp-cell comp-good">Receipt + personality</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-feat">Cost</div>
+      <div class="comp-cell comp-good">Free</div>
+      <div class="comp-cell comp-mid">Often freemium</div>
+      <div class="comp-cell comp-good">Free forever</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-feat">Works offline</div>
+      <div class="comp-cell comp-good">Always</div>
+      <div class="comp-cell comp-mid">Partial</div>
+      <div class="comp-cell comp-mid">Cached data</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-feat">Advanced analysis</div>
+      <div class="comp-cell comp-good">Pivot tables, formulas</div>
+      <div class="comp-cell comp-mid">Built-in charts</div>
+      <div class="comp-cell comp-mid">Monthly insights</div>
+    </div>
+  </div>
+
+  <h2>A day in the life — which method actually works</h2>
+
+  <div class="day-comparison">
+    <div class="day-col">
+      <div class="day-col-title" style="color:#6B5B45;">📊 Using Excel</div>
+      <div class="day-item">
+        <span class="day-time">8am</span>
+        <div>Buy coffee — ₹180<span class="day-pain">Mental note. Will enter later.</span></div>
+      </div>
+      <div class="day-item">
+        <span class="day-time">1pm</span>
+        <div>Lunch — ₹340<span class="day-pain">Another mental note.</span></div>
+      </div>
+      <div class="day-item">
+        <span class="day-time">3pm</span>
+        <div>Zomato order — ₹450<span class="day-pain">I'll definitely remember this one.</span></div>
+      </div>
+      <div class="day-item">
+        <span class="day-time">7pm</span>
+        <div>Cab home — ₹210<span class="day-pain">Added to the mental list.</span></div>
+      </div>
+      <div class="day-item">
+        <span class="day-time">10pm</span>
+        <div>Open laptop, open Excel<span class="day-pain">Was it ₹180 or ₹200 for the coffee? Skip. Miss the cab. Enter ₹800 total, roughly.</span></div>
+      </div>
+    </div>
+    <div class="day-col">
+      <div class="day-col-title" style="color:var(--accent);">⚡ Using Spentt</div>
+      <div class="day-item">
+        <span class="day-time">8am</span>
+        <div>Buy coffee — ₹180<span class="day-good">Tap +. "Blue Tokai". ₹180. Coffee. Done in 5 seconds.</span></div>
+      </div>
+      <div class="day-item">
+        <span class="day-time">1pm</span>
+        <div>Lunch — ₹340<span class="day-good">Tap +. "Lunch". ₹340. Dining. 5 seconds.</span></div>
+      </div>
+      <div class="day-item">
+        <span class="day-time">3pm</span>
+        <div>Zomato order — ₹450<span class="day-good">Tap +. "Zomato". ₹450. Food Delivery. 5 seconds.</span></div>
+      </div>
+      <div class="day-item">
+        <span class="day-time">7pm</span>
+        <div>Cab home — ₹210<span class="day-good">Tap +. "Ola". ₹210. Transport. 5 seconds.</span></div>
+      </div>
+      <div class="day-item">
+        <span class="day-time">10pm</span>
+        <div>Nothing to do<span class="day-good">Everything is already logged. Accurately. Total: ₹1,180.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p>The Excel user logged ₹800 instead of ₹1,180 — a 32% undercount. They missed one expense entirely and approximated others. This isn't a failure of discipline. It's a failure of the system. No human reliably remembers 4-6 transactions accurately across a full day.</p>
+
+  <h2>Which method is right for you</h2>
+
+  <div class="scenario-grid">
+    <div class="scenario">
+      <div class="scenario-icon">📊</div>
+      <div>
+        <div class="scenario-title">You're an analyst who reviews finances monthly</div>
+        <div class="scenario-desc">You sit down at the end of each month, reconcile your bank statement, and build your own pivot table analysis. You care more about the monthly picture than daily accuracy.</div>
+        <span class="scenario-rec excel">Excel works well for you</span>
+      </div>
+    </div>
+    <div class="scenario">
+      <div class="scenario-icon">🏃</div>
+      <div>
+        <div class="scenario-title">You spend money throughout the day and forget by evening</div>
+        <div class="scenario-desc">Multiple small transactions — coffee, cab, lunch, snacks. By 9pm you can't remember what you spent or where. You need to log at the point of spending.</div>
+        <span class="scenario-rec app">A mobile app is essential</span>
+      </div>
+    </div>
+    <div class="scenario">
+      <div class="scenario-icon">🔒</div>
+      <div>
+        <div class="scenario-title">You care about data privacy and ownership</div>
+        <div class="scenario-desc">You don't want your spending patterns on a company's server. You want to own your data completely and be able to export or delete it anytime.</div>
+        <span class="scenario-rec both">Excel or Spentt — both respect data ownership</span>
+      </div>
+    </div>
+    <div class="scenario">
+      <div class="scenario-icon">📱</div>
+      <div>
+        <div class="scenario-title">You want the habit to stick long-term</div>
+        <div class="scenario-desc">You've tried spreadsheets before and dropped them within a month. The logging friction was too high to maintain as a daily habit.</div>
+        <span class="scenario-rec app">An app — friction kills habits</span>
+      </div>
+    </div>
+    <div class="scenario">
+      <div class="scenario-icon">🧮</div>
+      <div>
+        <div class="scenario-title">You need complex custom analysis</div>
+        <div class="scenario-desc">You want custom formulas, year-over-year comparisons, or integration with other financial data. No app gives you this flexibility.</div>
+        <span class="scenario-rec excel">Excel — nothing matches its flexibility</span>
+      </div>
+    </div>
+    <div class="scenario">
+      <div class="scenario-icon">🆕</div>
+      <div>
+        <div class="scenario-title">You're just starting to track expenses</div>
+        <div class="scenario-desc">You've never tracked expenses consistently before and want to build the habit from scratch. Complexity is the enemy of starting.</div>
+        <span class="scenario-rec app">An app — lower friction to begin</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>The best of both worlds</h2>
+
+  <p>The ideal setup for most people isn't a binary choice. It's using the right tool for each job:</p>
+
+  <ul>
+    <li><strong>Daily logging:</strong> Mobile app — immediate, frictionless, accurate</li>
+    <li><strong>Monthly deep analysis:</strong> Export to CSV and open in Excel for custom analysis</li>
+    <li><strong>Data storage:</strong> An app that stores data in your own cloud storage (like Spentt's Google Drive approach) gives you both mobile convenience and spreadsheet-level data ownership</li>
+  </ul>
+
+  <p>This is exactly how Spentt is designed. Log on your phone in 5 seconds. Your data is stored in your own Google Drive as a JSON file — which you can export to CSV at any time and open in Excel for any analysis you want. You get the convenience of an app and the data control of a spreadsheet.</p>
+
+  <h2>Why manual logging beats automatic bank import</h2>
+
+  <p>Both Excel and manual apps require you to log expenses yourself. Many people see this as a weakness compared to apps that automatically import from your bank. It isn't.</p>
+
+  <p>The act of logging — even typing five words and a number — creates a moment of conscious engagement with your spending that automatic import bypasses. Research consistently shows that people who log expenses manually spend 15-20% less than people who rely on automatic imports — not because they restrict themselves, but because the act of logging makes spending conscious.</p>
+
+  <p>When your bank auto-imports a ₹450 Zomato order, you don't engage with it. When you type "Zomato ₹450" yourself, you spend a half-second thinking about whether it was worth it. That half-second is where financial awareness lives.</p>
+
+  <h2>Frequently asked questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Is Excel good for tracking expenses?</div>
+    <div class="faq-a">Excel is good for monthly analysis, custom reporting, and people who reconcile transactions from bank statements at the end of each month. It's not good for daily real-time logging — the friction of opening a laptop makes consistent logging impractical for most people.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What is better than Excel for tracking expenses?</div>
+    <div class="faq-a">A mobile expense tracker app is better for daily logging because it's in your pocket at the moment you spend. The best option combines app convenience with spreadsheet-level data ownership — for example, Spentt logs in 5 seconds on your phone and stores your data in your own Google Drive, which you can export to Excel anytime.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I use Google Sheets as an expense tracker?</div>
+    <div class="faq-a">Yes — Google Sheets is more accessible than desktop Excel because it works on mobile. The Google Sheets mobile app is functional but still more friction than a dedicated expense tracker. Entering a new row, selecting a cell, typing the date, amount, and category takes 30-60 seconds per transaction versus 5 seconds in a purpose-built app. Over 365 days, that friction difference matters significantly for consistency.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How do I transfer my Excel expense data to an app?</div>
+    <div class="faq-a">Most expense tracker apps don't support CSV import from Excel — you'd typically start fresh. If continuity matters, consider keeping your historical Excel data as an archive and starting new logging in an app. Going forward, you can export from most apps (including Spentt) back to CSV/Excel for analysis at any time.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Is pen and paper still a valid way to track expenses?</div>
+    <div class="faq-a">Pen and paper is valid and underrated — especially for people who carry a notebook everywhere. The act of writing by hand creates stronger memory encoding than typing. The limitation is the same as Excel: you need the notebook with you at all times, and reviewing or analyzing the data requires manual work. For most people in the smartphone era, a mobile app provides equivalent immediacy with much better analysis.</div>
+  </div>
+
+  <div class="cta-box">
+    <h3>The best of both — try Spentt free</h3>
+    <p>Log in 5 seconds on your phone. Your data stored in your Google Drive — export to Excel anytime. No bank linking, no subscription, no server storage.</p>
+    <a href="/">Start tracking free →</a>
+    <p class="cta-note">Free forever · No bank linking · Export to CSV anytime</p>
+  </div>
+
+  <div class="related">
+    <div class="related-title">More from Spentt</div>
+    <div class="related-links">
+      <a href="/blog/better-way-to-track-expenses.html" class="related-link">Need a Better Way to Track Expenses? Here's What Actually Works →</a>
+      <a href="/blog/why-people-struggle-to-track-spending.html" class="related-link">Why People Struggle to Track Where Their Money Goes →</a>
+      <a href="/blog/personal-finance-for-beginners.html" class="related-link">Personal Finance for Beginners — The Only Habit You Need →</a>
+      <a href="/blog/expense-tracker-no-bank-linking.html" class="related-link">Why Track Expenses Without Linking Your Bank Account →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/blog/">Blog</a>
+    <a href="/tools/">Tools</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+</body>
+</html>
