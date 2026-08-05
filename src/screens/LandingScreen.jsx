@@ -446,20 +446,6 @@ export default function LandingScreen({ onGetStarted }) {
         <a href="https://www.tinystartups.com/startup/spentt" target="_blank" rel="noopener noreferrer">
         <img src="https://www.tinystartups.com/api/badge/featured/spentt" alt="Featured on Tiny Startups" />
         </a>
-        <a href="https://findyoursaas.com/tool/spentt" target="_blank" style={{ textDecoration: 'none', display: 'inline-block', color: 'inherit' }}>
-  <div style={{
-    display: 'flex', alignItems: 'center', backgroundColor: '#F9FAFB',
-    border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 10px',
-    fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
-    boxShadow: '0 2px 4px -1px rgba(0,0,0,0.05)', lineHeight: 1,
-  }}>
-    <img src="https://findyoursaas.com/fys-logo.png" alt="FYS Logo"
-      style={{ width: 18, height: 18, borderRadius: '50%', marginRight: 6, display: 'block' }} />
-    <span style={{ fontSize: 12, fontWeight: 500, color: '#1F2937', whiteSpace: 'nowrap' }}>
-      Featured on FYS
-    </span>
-  </div>
-</a>
       </footer>
     </div>
   )
