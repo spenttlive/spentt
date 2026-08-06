@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Daily Habit Cost Calculator — How Much Is Your Habit Costing You? | Spentt</title>
+<meta name="description" content="Free daily habit cost calculator. See exactly how much your daily coffee, cigarettes, eating out or any habit costs per month, per year and over 10 years — including what it would be worth if invested."/>
+<link rel="canonical" href="https://www.spentt.live/tools/daily-habit-cost-calculator.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FG695T579C"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-FG695T579C");</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Daily Habit Cost Calculator",
+  "description": "Calculate how much your daily habit costs per month, year and decade — and what it would be worth if invested instead.",
+  "url": "https://www.spentt.live/tools/daily-habit-cost-calculator.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" }
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;--good:#3AAE8A;--invest:#9B6EE8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.nav-links{display:flex;gap:20px;align-items:center;}
+.nav-link{font-size:14px;color:var(--text2);text-decoration:none;font-weight:500;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.hero{padding:48px 40px 0;max-width:860px;margin:0 auto;text-align:center;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:40px;font-weight:700;line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.hero-sub{font-size:16px;color:var(--text2);max-width:520px;margin:0 auto 40px;}
+.calc-wrap{max-width:860px;margin:0 auto;padding:0 40px 60px;}
+
+/* Popular habits */
+.habits-label{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:10px;}
+.habits-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.habit-pill{padding:8px 16px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:6px;}
+.habit-pill:hover{border-color:var(--accent);color:var(--accent);}
+.habit-pill.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.habit-emoji{font-size:16px;}
+
+/* Input card */
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:16px;}
+.calc-card-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;}
+.currency-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.curr-btn{padding:4px 10px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;}
+.curr-btn.active{background:var(--text);color:#fff;border-color:var(--text);}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field-label{font-size:13px;font-weight:600;color:var(--text2);}
+.field-hint{font-size:11px;color:var(--text3);}
+.field-input-wrap{position:relative;}
+.field-prefix{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:600;color:var(--text3);}
+.field-suffix{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text3);}
+.field-input{width:100%;padding:11px 12px 11px 32px;font-family:'Gabarito',sans-serif;font-size:16px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:12px;outline:none;transition:border-color 0.2s;}
+.field-input.no-prefix{padding-left:12px;}
+.field-input.has-suffix{padding-right:36px;}
+.field-input:focus{border-color:var(--accent);}
+.habit-name-input{width:100%;padding:11px 12px;font-size:15px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:12px;outline:none;font-family:'DM Sans',sans-serif;}
+.habit-name-input:focus{border-color:var(--accent);}
+.freq-row{display:flex;gap:6px;flex-wrap:wrap;}
+.freq-btn{flex:1;padding:9px 8px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;text-align:center;transition:all 0.15s;min-width:60px;}
+.freq-btn.active{background:var(--text);color:#fff;border-color:var(--text);}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 24px;background:var(--card);border:1px solid var(--border);border-radius:20px;margin-bottom:16px;}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.empty-sub{font-size:14px;color:var(--text3);}
+
+/* Shock reveal */
+.shock-card{background:var(--text);border-radius:20px;padding:28px;text-align:center;margin-bottom:16px;}
+.shock-habit{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;}
+.shock-label{font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;}
+.shock-amount{font-family:'Gabarito',sans-serif;font-size:52px;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1;margin-bottom:4px;}
+.shock-period{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:20px;}
+.shock-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:16px;}
+.shock-tab{padding:6px 16px;border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);transition:all 0.15s;}
+.shock-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* Timeline */
+.timeline-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.timeline-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;}
+.timeline-period{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:6px;}
+.timeline-amount{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:800;color:var(--text);}
+.timeline-sub{font-size:11px;color:var(--text3);margin-top:3px;}
+.timeline-card.big{background:rgba(232,98,58,0.06);border-color:rgba(232,98,58,0.2);}
+.timeline-card.big .timeline-amount{color:var(--accent);}
+
+/* Investment comparison */
+.invest-card{background:rgba(155,110,232,0.06);border:1.5px solid rgba(155,110,232,0.2);border-radius:20px;padding:24px;margin-bottom:16px;}
+.invest-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:var(--invest);margin-bottom:6px;}
+.invest-sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5;}
+.invest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.invest-box{background:#fff;border-radius:12px;padding:14px;text-align:center;}
+.invest-years{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:4px;}
+.invest-val{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:800;color:var(--invest);}
+.invest-invested{font-size:11px;color:var(--text3);margin-top:2px;}
+
+/* What else card */
+.whatelse-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:16px;}
+.whatelse-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;}
+.whatelse-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+.whatelse-row:last-child{border-bottom:none;}
+.whatelse-left{display:flex;align-items:center;gap:10px;}
+.whatelse-emoji{font-size:20px;}
+.whatelse-name{font-size:14px;color:var(--text2);}
+.whatelse-days{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:var(--text);}
+
+/* Verdict */
+.verdict-card{border-radius:16px;padding:18px 20px;margin-bottom:16px;text-align:center;}
+.verdict-card.worth-it{background:rgba(58,174,138,0.08);border:1.5px solid rgba(58,174,138,0.2);}
+.verdict-card.think-twice{background:rgba(245,166,35,0.08);border:1.5px solid rgba(245,166,35,0.2);}
+.verdict-card.quit{background:rgba(239,68,68,0.08);border:1.5px solid rgba(239,68,68,0.2);}
+.verdict-emoji{font-size:32px;margin-bottom:8px;}
+.verdict-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px;}
+.verdict-desc{font-size:13px;color:var(--text2);line-height:1.6;}
+
+/* Share */
+.share-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.share-wa{padding:13px;background:#25D366;border:none;border-radius:14px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;}
+.share-copy{padding:13px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:var(--text);cursor:pointer;}
+
+/* CTA */
+.tool-cta{background:var(--text);border-radius:20px;padding:28px;text-align:center;margin-bottom:48px;}
+.tool-cta-title{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.tool-cta-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px;line-height:1.6;}
+.tool-cta-btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:600;}
+.tool-cta-note{font-size:12px;color:rgba(255,255,255,0.3);margin-top:10px;}
+
+/* Content */
+.content-section{max-width:680px;margin:0 auto;padding:0 40px 60px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+ul{margin:8px 0 16px 20px;}
+ul li{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:6px;}
+strong{color:var(--text);font-weight:600;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+.related{padding-top:32px;border-top:1px solid var(--border);margin-top:40px;}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:12px 24px;border-radius:99px;font-size:14px;font-weight:600;z-index:100;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+.toast.show{opacity:1;}
+@media(max-width:600px){
+  nav,footer{padding:16px 20px;}
+  .nav-links{display:none;}
+  .hero{padding:32px 20px 0;}
+  .calc-wrap,.content-section{padding:0 16px 48px;}
+  h1{font-size:28px;}
+  .field-grid{grid-template-columns:1fr;}
+  .timeline-grid{grid-template-columns:1fr 1fr;}
+  .invest-grid{grid-template-columns:1fr;}
+  .share-row{grid-template-columns:1fr;}
+  .shock-amount{font-size:38px;}
+}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="nav-links">
+    <a href="/tools/" class="nav-link">Tools</a>
+    <a href="/blog/" class="nav-link">Blog</a>
+  </div>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Free Habit Cost Calculator</div>
+  <h1>How much is your daily habit<br/>actually costing you?</h1>
+  <p class="hero-sub">Coffee, food delivery, cigarettes, cab instead of metro — enter any daily habit and see the true cost over months, years and decades.</p>
+</div>
+
+<div class="calc-wrap">
+
+  <!-- Popular habits -->
+  <div class="calc-card">
+    <div class="habits-label">Popular habits — tap to pre-fill</div>
+    <div class="habits-grid" id="habitsGrid">
+      <div class="habit-pill" onclick="fillHabit('Daily coffee', 180, 1)"><span class="habit-emoji">☕</span> Daily coffee</div>
+      <div class="habit-pill" onclick="fillHabit('Food delivery', 450, 1)"><span class="habit-emoji">📦</span> Food delivery</div>
+      <div class="habit-pill" onclick="fillHabit('Cigarettes', 250, 1)"><span class="habit-emoji">🚬</span> Cigarettes</div>
+      <div class="habit-pill" onclick="fillHabit('Cab instead of metro', 200, 1)"><span class="habit-emoji">🚗</span> Cab instead of metro</div>
+      <div class="habit-pill" onclick="fillHabit('Eating out for lunch', 350, 5)"><span class="habit-emoji">🍔</span> Eating out for lunch</div>
+      <div class="habit-pill" onclick="fillHabit('Evening chai & snacks', 80, 1)"><span class="habit-emoji">🍵</span> Evening chai & snacks</div>
+      <div class="habit-pill" onclick="fillHabit('Weekend drinks', 1200, 0.14)"><span class="habit-emoji">🍺</span> Weekend drinks</div>
+      <div class="habit-pill" onclick="fillHabit('Morning newspaper', 15, 1)"><span class="habit-emoji">📰</span> Morning newspaper</div>
+      <div class="habit-pill" onclick="fillHabit('Gym session', 2000, 0.033)"><span class="habit-emoji">💪</span> Gym membership</div>
+      <div class="habit-pill" onclick="fillHabit('Streaming subscriptions', 649, 0.033)"><span class="habit-emoji">📱</span> Streaming subscriptions</div>
+    </div>
+
+    <div class="calc-card-title">Or enter your own habit</div>
+    <div style="margin-bottom:14px;">
+      <div class="field-label" style="margin-bottom:5px;">What's the habit?</div>
+      <input type="text" class="habit-name-input" id="habitName" placeholder="e.g. Daily coffee, cigarettes, cab rides..." oninput="calculate()"/>
+    </div>
+
+    <div class="currency-row" id="currencyRow">
+      <button class="curr-btn active" data-symbol="₹">₹ INR</button>
+      <button class="curr-btn" data-symbol="$">$ USD</button>
+      <button class="curr-btn" data-symbol="€">€ EUR</button>
+      <button class="curr-btn" data-symbol="£">£ GBP</button>
+    </div>
+
+    <div class="field-grid">
+      <div class="field">
+        <div class="field-label">Cost per instance</div>
+        <div class="field-hint">How much does it cost each time?</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sym1">₹</span>
+          <input type="number" class="field-input" id="costInput" placeholder="180" min="0" oninput="calculate()"/>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">How often per day?</div>
+        <div class="field-hint">Use decimals for less than daily</div>
+        <div class="field-input-wrap">
+          <input type="number" class="field-input no-prefix has-suffix" id="freqInput" placeholder="1" min="0" step="0.1" oninput="calculate()"/>
+          <span class="field-suffix">× /day</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:8px;">
+      <div class="field-label" style="margin-bottom:8px;">Or select frequency</div>
+      <div class="freq-row">
+        <button class="freq-btn" onclick="setFreq(1)">Daily</button>
+        <button class="freq-btn" onclick="setFreq(0.5)">Every 2 days</button>
+        <button class="freq-btn" onclick="setFreq(0.14)">Weekly</button>
+        <button class="freq-btn" onclick="setFreq(0.033)">Monthly</button>
+        <button class="freq-btn" onclick="setFreq(2)">Twice daily</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div id="resultsWrap">
+    <div class="empty-state">
+      <div class="empty-icon">💸</div>
+      <div class="empty-title">Enter your habit above</div>
+      <div class="empty-sub">The true cost will appear here — it might surprise you</div>
+    </div>
+  </div>
+
+  <div class="tool-cta">
+    <div class="tool-cta-title">Start tracking what you actually spend</div>
+    <div class="tool-cta-sub">Now that you know the cost of your habits — see where all your money goes. Spentt logs every expense in 5 seconds and shows your weekly breakdown every Sunday.</div>
+    <a href="/" class="tool-cta-btn">Start tracking free →</a>
+    <div class="tool-cta-note">Free forever · No bank linking · Your data in Google Drive</div>
+  </div>
+
+</div>
+
+<div class="content-section">
+  <h2>Why small daily habits cost so much</h2>
+  <p>A ₹180 coffee feels insignificant. It's less than 0.01% of a monthly salary for most people. But habits compound just like investments — in the opposite direction. The same daily ₹180 becomes ₹65,700 per year. Over 10 years, that's ₹6.57 lakh spent on coffee — and if that money had been invested at 12% SIP returns, it would be worth over ₹12 lakh.</p>
+  <p>This isn't an argument to never spend on things you enjoy. It's an argument to spend <strong>consciously</strong> — knowing the true cost of a habit before you decide whether it's worth it to you.</p>
+
+  <h2>The latte factor — does it actually work?</h2>
+  <p>The "latte factor" concept — popularised by David Bach — suggests that cutting small daily expenses and investing the savings leads to significant wealth over time. Critics argue that small cuts don't matter as much as earning more or making big financial decisions correctly.</p>
+  <p>Both are right. Cutting your daily coffee won't make you rich if you're not investing and growing your income. But <strong>awareness of the true cost of habits</strong> — which this calculator provides — changes how you evaluate spending decisions, which does change financial outcomes over time.</p>
+  <p>The question isn't "should I cut this habit?" The question is: "knowing the real cost, do I still think this is worth it?" That's a better question, and only you can answer it.</p>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq-item">
+    <div class="faq-q">How is the investment value calculated?</div>
+    <div class="faq-a">The investment value assumes you invest the daily habit cost as a monthly SIP (Systematic Investment Plan) at 12% annual returns, compounded monthly. This is a reasonable long-term average for Indian equity mutual funds. The actual return will vary based on market performance.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Should I actually quit my daily coffee to save money?</div>
+    <div class="faq-a">That depends on how much value it adds to your life. A ₹180 coffee that genuinely improves your morning, productivity, or enjoyment might be worth more than the ₹65,700/year it costs. The point of this calculator isn't to make you feel guilty — it's to make the decision conscious. Know the cost, then decide if it's worth it.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What's the most expensive common daily habit?</div>
+    <div class="faq-a">Among common Indian habits, smoking is typically the most expensive — a pack-a-day habit at ₹250/pack costs ₹91,250/year. Daily food delivery (₹450/day) costs ₹1,64,250/year. Daily Ola/Uber instead of metro (₹200/day) costs ₹73,000/year. These numbers often shock people who see them for the first time.</div>
+  </div>
+  <div class="related">
+    <div class="related-title">More free tools from Spentt</div>
+    <div class="related-links">
+      <a href="/tools/sip-calculator.html" class="related-link">SIP Returns Calculator — See how investments grow →</a>
+      <a href="/tools/savings-goal-calculator.html" class="related-link">Savings Goal Calculator — How long to reach your target →</a>
+      <a href="/tools/daily-spending-limit-calculator.html" class="related-link">Daily Spending Limit Calculator →</a>
+      <a href="/tools/" class="related-link">All free tools →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/tools/">Tools</a>
+    <a href="/blog/">Blog</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+<script>
+let sym = '₹'
+let activeTab = 'yearly'
+let lastCost = 0
+let lastFreq = 0
+let lastName = ''
+
+const WHATELSE = [
+  { emoji: '🛒', name: 'Months of groceries', cost: 8000 },
+  { emoji: '✈️', name: 'Domestic flight tickets', cost: 5000 },
+  { emoji: '🏖️', name: 'Weekend getaways', cost: 15000 },
+  { emoji: '📱', name: 'Mid-range smartphones', cost: 20000 },
+  { emoji: '💪', name: 'Annual gym memberships', cost: 18000 },
+  { emoji: '📚', name: 'Online courses', cost: 5000 },
+  { emoji: '🎬', name: 'Movie nights (with popcorn)', cost: 500 },
+  { emoji: '🍕', name: 'Pizza nights', cost: 800 },
+]
+
+document.getElementById('currencyRow').addEventListener('click', e => {
+  const btn = e.target.closest('.curr-btn')
+  if (!btn) return
+  document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  sym = btn.dataset.symbol
+  document.getElementById('sym1').textContent = sym
+  calculate()
+})
+
+function fillHabit(name, cost, freq) {
+  document.getElementById('habitName').value = name
+  document.getElementById('costInput').value = cost
+  document.getElementById('freqInput').value = freq
+  document.querySelectorAll('.habit-pill').forEach(p => p.classList.remove('active'))
+  event.target.closest('.habit-pill').classList.add('active')
+  calculate()
+}
+
+function setFreq(f) {
+  document.getElementById('freqInput').value = f
+  document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'))
+  event.target.classList.add('active')
+  calculate()
+}
+
+function fmt(n) { return sym + Math.round(n).toLocaleString('en-IN') }
+
+function fmtCompact(n) {
+  n = Math.round(n)
+  if (n >= 10000000) return sym + (n/10000000).toFixed(2) + ' Cr'
+  if (n >= 100000) return sym + (n/100000).toFixed(2) + ' L'
+  return sym + n.toLocaleString('en-IN')
+}
+
+function sipFV(monthly, annualRate, years) {
+  const r = annualRate / 100 / 12
+  const n = years * 12
+  return monthly * ((Math.pow(1+r,n)-1)/r) * (1+r)
+}
+
+function getVerdict(yearly) {
+  if (yearly < 15000) return { cls: 'worth-it', emoji: '😌', title: 'Manageable cost', desc: 'This habit costs less than ₹15,000/year — relatively low impact on your finances. If you enjoy it, it\'s probably worth it.' }
+  if (yearly < 50000) return { cls: 'think-twice', emoji: '🤔', title: 'Worth thinking about', desc: 'This adds up to a significant annual expense. Not necessarily worth cutting — but worth knowing, and worth asking if you\'re getting that value back.' }
+  return { cls: 'quit', emoji: '😱', title: 'Seriously expensive habit', desc: 'This habit costs over ₹50,000/year. That\'s a real financial impact. Whether or not to change it is your call — but now you know the true cost.' }
+}
+
+function getShockLabel(tab) {
+  if (tab === 'daily') return 'per day'
+  if (tab === 'monthly') return 'per month'
+  if (tab === 'yearly') return 'per year'
+  if (tab === '5years') return 'over 5 years'
+  return 'over 10 years'
+}
+
+function getShockAmount(cost, freq, tab) {
+  const daily = cost * freq
+  if (tab === 'daily') return daily
+  if (tab === 'monthly') return daily * 30.4
+  if (tab === 'yearly') return daily * 365
+  if (tab === '5years') return daily * 365 * 5
+  return daily * 365 * 10
+}
+
+function calculate() {
+  const cost = parseFloat(document.getElementById('costInput').value) || 0
+  const freq = parseFloat(document.getElementById('freqInput').value) || 0
+  const name = document.getElementById('habitName').value.trim() || 'Your habit'
+  const wrap = document.getElementById('resultsWrap')
+
+  if (!cost || !freq || cost <= 0 || freq <= 0) {
+    wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">💸</div><div class="empty-title">Enter your habit above</div><div class="empty-sub">The true cost will appear here — it might surprise you</div></div>`
+    return
+  }
+
+  lastCost = cost; lastFreq = freq; lastName = name
+
+  const daily = cost * freq
+  const monthly = daily * 30.4
+  const yearly = daily * 365
+  const fiveYear = yearly * 5
+  const tenYear = yearly * 10
+
+  const monthlyForSIP = monthly
+  const sip5 = sipFV(monthlyForSIP, 12, 5)
+  const sip10 = sipFV(monthlyForSIP, 12, 10)
+  const sip20 = sipFV(monthlyForSIP, 12, 20)
+
+  const verdict = getVerdict(yearly)
+
+  wrap.innerHTML = `
+    <div class="shock-card">
+      <div class="shock-habit">${name}</div>
+      <div class="shock-label">costs you</div>
+      <div class="shock-amount" id="shockAmt">${fmtCompact(yearly)}</div>
+      <div class="shock-period" id="shockPeriod">per year</div>
+      <div class="shock-tabs">
+        <div class="shock-tab" onclick="switchTab('daily',${cost},${freq})">Daily</div>
+        <div class="shock-tab" onclick="switchTab('monthly',${cost},${freq})">Monthly</div>
+        <div class="shock-tab active" onclick="switchTab('yearly',${cost},${freq})">Yearly</div>
+        <div class="shock-tab" onclick="switchTab('5years',${cost},${freq})">5 Years</div>
+        <div class="shock-tab" onclick="switchTab('10years',${cost},${freq})">10 Years</div>
+      </div>
+    </div>
+
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <div class="timeline-period">Per day</div>
+        <div class="timeline-amount">${fmt(daily)}</div>
+        <div class="timeline-sub">${freq < 1 ? (1/freq).toFixed(1) + 'x per week' : freq + 'x per day'}</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-period">Per month</div>
+        <div class="timeline-amount">${fmt(monthly)}</div>
+        <div class="timeline-sub">${Math.round(freq * 30.4)} times/month</div>
+      </div>
+      <div class="timeline-card big">
+        <div class="timeline-period">Per year</div>
+        <div class="timeline-amount">${fmtCompact(yearly)}</div>
+        <div class="timeline-sub">${Math.round(freq * 365)} times/year</div>
+      </div>
+      <div class="timeline-card big">
+        <div class="timeline-period">Over 10 years</div>
+        <div class="timeline-amount">${fmtCompact(tenYear)}</div>
+        <div class="timeline-sub">at same frequency</div>
+      </div>
+    </div>
+
+    <div class="invest-card">
+      <div class="invest-title">📈 What if you invested it instead?</div>
+      <div class="invest-sub">If you invested ${fmt(monthly)}/month (the monthly cost of this habit) as a SIP at 12% annual returns:</div>
+      <div class="invest-grid">
+        <div class="invest-box">
+          <div class="invest-years">After 5 years</div>
+          <div class="invest-val">${fmtCompact(sip5)}</div>
+          <div class="invest-invested">invested ${fmtCompact(monthly * 60)}</div>
+        </div>
+        <div class="invest-box">
+          <div class="invest-years">After 10 years</div>
+          <div class="invest-val">${fmtCompact(sip10)}</div>
+          <div class="invest-invested">invested ${fmtCompact(monthly * 120)}</div>
+        </div>
+        <div class="invest-box">
+          <div class="invest-years">After 20 years</div>
+          <div class="invest-val">${fmtCompact(sip20)}</div>
+          <div class="invest-invested">invested ${fmtCompact(monthly * 240)}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="whatelse-card">
+      <div class="whatelse-title">💡 What else could ${fmtCompact(yearly)}/year buy you?</div>
+      ${WHATELSE.map(w => {
+        const count = Math.floor(yearly / w.cost)
+        if (count < 1) return ''
+        return `<div class="whatelse-row">
+          <div class="whatelse-left">
+            <span class="whatelse-emoji">${w.emoji}</span>
+            <span class="whatelse-name">${w.name}</span>
+          </div>
+          <div class="whatelse-days">${count} per year</div>
+        </div>`
+      }).join('')}
+    </div>
+
+    <div class="verdict-card ${verdict.cls}">
+      <div class="verdict-emoji">${verdict.emoji}</div>
+      <div class="verdict-title">${verdict.title}</div>
+      <div class="verdict-desc">${verdict.desc}</div>
+    </div>
+
+    <div class="share-row">
+      <button class="share-wa" onclick="shareWA()">📱 Share on WhatsApp</button>
+      <button class="share-copy" onclick="copyResult()">📋 Copy result</button>
+    </div>
+  `
+  activeTab = 'yearly'
+}
+
+function switchTab(tab, cost, freq) {
+  activeTab = tab
+  document.querySelectorAll('.shock-tab').forEach(t => t.classList.remove('active'))
+  event.target.classList.add('active')
+  const amt = getShockAmount(cost, freq, tab)
+  document.getElementById('shockAmt').textContent = fmtCompact(amt)
+  document.getElementById('shockPeriod').textContent = getShockLabel(tab)
+}
+
+function generateText() {
+  const daily = lastCost * lastFreq
+  const yearly = daily * 365
+  const monthly = daily * 30.4
+  const sip10 = sipFV(monthly, 12, 10)
+  return `💸 My "${lastName}" habit costs:\n${fmtCompact(yearly)}/year\n${fmtCompact(sip10)} if invested for 10 years at 12% returns\n\nWhat's YOUR habit costing you?\nspentt.live/tools/daily-habit-cost-calculator.html`
+}
+
+function shareWA() { window.open('https://wa.me/?text=' + encodeURIComponent(generateText()), '_blank') }
+
+function copyResult() {
+  const t = generateText()
+  if (navigator.clipboard) { navigator.clipboard.writeText(t).then(() => showToast('Copied!')) }
+  else { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('Copied!') }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast')
+  t.textContent = msg; t.classList.add('show')
+  setTimeout(() => t.classList.remove('show'), 2500)
+}
+</script>
+</body>
+</html>
