@@ -446,6 +446,9 @@ export default function LandingScreen({ onGetStarted }) {
         <a href="https://www.tinystartups.com/startup/spentt" target="_blank" rel="noopener noreferrer">
         <img src="https://www.tinystartups.com/api/badge/featured/spentt" alt="Featured on Tiny Startups" />
         </a>
+        <a href="https://vibeking.fun/product/3617" target="_blank" rel="noopener">
+        <img src="https://vibeking.fun/badge/3617.svg?theme=light" alt="Featured on VibeKing" width="250" height="60"/>
+        </a>
       </footer>
     </div>
   )
