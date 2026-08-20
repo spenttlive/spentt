@@ -1,162 +1,121 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { SAMPLE_EXPENSES } from '../data/sampleExpenses'
 import { readFromDrive, writeToDrive } from '../services/driveSync'
 
 export function useExpenses(accessToken, userEmail) {
   const [syncing, setSyncing] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const saveTimer = useRef(null)
+
   const [expenses, setExpenses] = useState(() => {
-  try {
-    const cached = localStorage.getItem('spentt-expenses-cache')
-    if (cached) {
-      const parsed = JSON.parse(cached)
-      return parsed.map((e) => ({ ...e, ts: new Date(e.ts) }))
-    }
-  } catch (e) {}
-  return []
+    try {
+      const cached = localStorage.getItem('spentt-expenses-cache')
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        return parsed.map((e) => ({ ...e, ts: new Date(e.ts) }))
+      }
+    } catch (e) {}
+    return []
   })
 
   // Load from Drive on mount
-useEffect(() => {
-  if (!accessToken) {
-    setLoaded(true)
-    return
-  }
-  setSyncing(true)
-  readFromDrive(accessToken)
-    .then((data) => {
-      if (data?.expenses && data.expenses.length > 0) {
-        const parsed = data.expenses.map((e) => ({
-          ...e,
-          ts: new Date(e.ts),
-        }))
-
-        // Auto-add recurring expenses for current month
-        const now = new Date()
-        const currentMonth = now.getMonth()
-        const currentYear = now.getFullYear()
-        // Only original recurring expenses (not auto-generated copies)
-        const recurringExpenses = parsed.filter((e) => e.recurring && !e.recurringSourceId)
-        const newRecurring = []
-
-        recurringExpenses.forEach((e) => {
-  const sourceId = e.recurringId || e.id
-  const expDay = new Date(e.ts).getDate()
-
-  // Check if a copy for this source already exists this month
-  const alreadyExists = parsed.some((p) => {
-    const pDate = new Date(p.ts)
-    return (
-      p.recurringSourceId === sourceId &&
-      pDate.getMonth() === currentMonth &&
-      pDate.getFullYear() === currentYear
-    )
-  })
-
-  if (!alreadyExists) {
-    const newDate = new Date(currentYear, currentMonth, expDay)
-    if (newDate <= now) {
-      newRecurring.push({
-        ...e,
-        id: Date.now() + Math.random(),
-        ts: newDate,
-        recurring: true,
-        recurringSourceId: sourceId,
-      })
-    }
-  }
-})
-
-        const finalExpenses = newRecurring.length > 0
-          ? [...newRecurring, ...parsed]
-          : parsed
-
-        setExpenses(finalExpenses)
-        try {
-          localStorage.setItem('spentt-expenses-cache', JSON.stringify(finalExpenses))
-        } catch (e) {}
-
-        if (newRecurring.length > 0) {
-          writeToDrive(accessToken, finalExpenses).catch(console.error)
-        }
-
-        // Sync count to Supabase
-        if (userEmail) {
-          fetch('/api/track-user', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              email: userEmail,
-              expense_count: finalExpenses.length,
-              secret: import.meta.env.VITE_API_SECRET,
-            }),
-          }).catch(console.error)
-        }
-      } else {
-        setExpenses([])
-      }
-    })
-    .catch((err) => {
-      console.error('Drive read failed:', err)
-      if (err?.status === 401) {
-        localStorage.removeItem('spentt-access-token')
-        localStorage.removeItem('spentt-had-drive-access')
-      }
-      setExpenses([])
-    })
-    .finally(() => {
-      setSyncing(false)
+  useEffect(() => {
+    if (!accessToken) {
       setLoaded(true)
-    })
-}, [accessToken])
+      return
+    }
+    setSyncing(true)
+    readFromDrive(accessToken)
+      .then((data) => {
+        if (data?.expenses && data.expenses.length > 0) {
+          const parsed = data.expenses.map((e) => ({
+            ...e,
+            ts: new Date(e.ts),
+          }))
+
+          // One-time cleanup — remove all auto-generated recurring copies
+          const cleaned = parsed.filter((e) => !e.recurringSourceId)
+
+          setExpenses(cleaned)
+          try {
+            localStorage.setItem('spentt-expenses-cache', JSON.stringify(cleaned))
+          } catch (e) {}
+
+          // If we removed recurring copies, save the cleaned data back to Drive
+          if (cleaned.length !== parsed.length) {
+            writeToDrive(accessToken, cleaned).catch(console.error)
+          }
+
+          if (userEmail) {
+            fetch('/api/track-user', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email: userEmail,
+                expense_count: cleaned.length,
+                secret: import.meta.env.VITE_API_SECRET,
+              }),
+            }).catch(console.error)
+          }
+        } else {
+          setExpenses([])
+        }
+      })
+      .catch((err) => {
+        console.error('Drive read failed:', err)
+        if (err?.status === 401) {
+          localStorage.removeItem('spentt-access-token')
+          localStorage.removeItem('spentt-had-drive-access')
+        }
+        setExpenses([])
+      })
+      .finally(() => {
+        setSyncing(false)
+        setLoaded(true)
+      })
+  }, [accessToken])
 
   // Save to Drive with debounce
   const saveToCloud = useCallback((newExpenses) => {
-  if (!accessToken) return
-  if (saveTimer.current) clearTimeout(saveTimer.current)
-  saveTimer.current = setTimeout(() => {
-    writeToDrive(accessToken, newExpenses).catch((err) => {
-    console.error('Drive write failed:', err)
-    if (err?.status === 401 || err?.message?.includes('401')) {
-    localStorage.removeItem('spentt-access-token')
-    localStorage.removeItem('spentt-had-drive-access')
-    }
-    })
-    try {
-    localStorage.setItem('spentt-expenses-cache', JSON.stringify(newExpenses))
-    } catch (e) {}
-    // Track expense count
-    if (userEmail) {
-    fetch('/api/track-user', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      email: userEmail,
-      expense_count: newExpenses.length,
-      secret: import.meta.env.VITE_API_SECRET,
-    }),
-    }).catch(console.error)
-    }
-  }, 1000)
+    if (!accessToken) return
+    if (saveTimer.current) clearTimeout(saveTimer.current)
+    saveTimer.current = setTimeout(() => {
+      writeToDrive(accessToken, newExpenses).catch((err) => {
+        console.error('Drive write failed:', err)
+        if (err?.status === 401 || err?.message?.includes('401')) {
+          localStorage.removeItem('spentt-access-token')
+          localStorage.removeItem('spentt-had-drive-access')
+        }
+      })
+      try {
+        localStorage.setItem('spentt-expenses-cache', JSON.stringify(newExpenses))
+      } catch (e) {}
+      if (userEmail) {
+        fetch('/api/track-user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: userEmail,
+            expense_count: newExpenses.length,
+            secret: import.meta.env.VITE_API_SECRET,
+          }),
+        }).catch(console.error)
+      }
+    }, 1000)
   }, [accessToken, userEmail])
 
   const addExpense = useCallback((data) => {
-  const newExp = {
-    id: Date.now(),
-    ...data,
-    ts: data.ts || new Date(),
-    recurring: data.recurring || false,
-    // If recurring, assign a stable recurringId for future reference
-    ...(data.recurring ? { recurringId: Date.now() } : {}),
-  }
-  setExpenses((prev) => {
-    const updated = [newExp, ...prev]
-    saveToCloud(updated)
-    return updated
-  })
-  return newExp
-}, [saveToCloud])
+    const newExp = {
+      id: Date.now(),
+      ...data,
+      ts: data.ts || new Date(),
+    }
+    setExpenses((prev) => {
+      const updated = [newExp, ...prev]
+      saveToCloud(updated)
+      return updated
+    })
+    return newExp
+  }, [saveToCloud])
 
   const editExpense = useCallback((id, updates) => {
     setExpenses((prev) => {
