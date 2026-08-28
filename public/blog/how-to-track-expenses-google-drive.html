@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>How to Track Expenses on Google Drive — Free & Private | Spentt</title>
+<meta name="description" content="Learn how to track your expenses using Google Drive — free, completely private, and accessible on any device. No app subscriptions, no bank linking, your data always yours."/>
+<link rel="canonical" href="https://www.spentt.live/blog/how-to-track-expenses-google-drive.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FG695T579C"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-FG695T579C");</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Track Expenses on Google Drive — Free and Private",
+  "description": "Two ways to track your expenses using Google Drive — using Google Sheets manually, or using Spentt which stores data in your Drive automatically.",
+  "url": "https://www.spentt.live/blog/how-to-track-expenses-google-drive.html",
+  "author": { "@type": "Organization", "name": "Spentt" },
+  "publisher": { "@type": "Organization", "name": "Spentt", "url": "https://www.spentt.live" },
+  "datePublished": "2026-08-22",
+  "keywords": "track expenses google drive, google drive expense tracker, expense tracker google sheets, google sheets budget tracker india, expense tracking google drive free"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I track expenses on Google Drive?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — there are two ways to track expenses on Google Drive. First, you can use Google Sheets to create a manual expense spreadsheet. Second, you can use Spentt, which automatically stores your expense data as a private file in your Google Drive while giving you a mobile-friendly logging experience. Spentt's approach is faster since you log expenses in 5 seconds on your phone rather than opening a spreadsheet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Google Drive good for tracking expenses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Google Drive is excellent for storing expense data because it's free, secure, accessible on any device, and the data is owned entirely by you. The main limitation is that Google Sheets requires opening a laptop or navigating a spreadsheet on mobile — which makes daily logging inconvenient. Spentt solves this by using Google Drive as storage while providing a mobile-first logging experience."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I create a free expense tracker in Google Sheets?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "To create a free expense tracker in Google Sheets: open Google Drive, create a new Google Sheet, add columns for Date, Description, Category, and Amount. Create a new row for each expense. Use the SUM formula to calculate totals by category. For a mobile-friendly alternative that also stores data in your Google Drive, try Spentt — it logs expenses in 5 seconds and stores them in your Drive automatically."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root{--bg:#FDF8F3;--text:#1C1409;--text2:#6B5B45;--text3:#A8937A;--accent:#E8623A;--border:rgba(28,20,9,0.08);--card:#FFFCF9;--good:#3AAE8A;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(253,248,243,0.92);backdrop-filter:blur(20px);z-index:10;}
+.logo{font-family:'Gabarito',sans-serif;font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:1px;}
+.cta-btn{background:var(--accent);color:#fff;padding:8px 18px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+.content{max-width:680px;margin:0 auto;padding:48px 40px 80px;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+h1{font-family:'Gabarito',sans-serif;font-size:38px;font-weight:700;line-height:1.15;margin-bottom:16px;letter-spacing:-0.02em;}
+.meta{font-size:13px;color:var(--text3);margin-bottom:32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.meta-dot{width:4px;height:4px;border-radius:50%;background:var(--text3);display:inline-block;}
+p{font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:20px;}
+h2{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:700;margin:40px 0 12px;color:var(--text);}
+h3{font-family:'Gabarito',sans-serif;font-size:19px;font-weight:600;margin:28px 0 8px;color:var(--text);}
+ul,ol{margin:8px 0 20px 20px;}
+ul li,ol li{font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:8px;}
+strong{color:var(--text);font-weight:600;}
+.highlight{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:20px 24px;margin:28px 0;}
+.highlight p{margin:0;font-size:15px;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;}
+.step{display:flex;gap:20px;align-items:flex-start;padding-bottom:24px;position:relative;}
+.step:last-child{padding-bottom:0;}
+.step:not(:last-child)::after{content:'';position:absolute;left:17px;top:38px;bottom:0;width:2px;background:var(--border);}
+.step-num{width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;z-index:1;}
+.step-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.step-desc{font-size:14px;color:var(--text2);line-height:1.6;}
+
+/* Comparison */
+.vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0;}
+.vs-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;}
+.vs-title{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.vs-item{font-size:13px;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:6px;line-height:1.4;}
+.vs-item:last-child{border-bottom:none;}
+.vs-good{color:var(--good);}
+.vs-bad{color:#EF4444;}
+
+/* Sheets template */
+.sheets-template{background:var(--text);border-radius:16px;padding:20px;margin:24px 0;overflow-x:auto;}
+.sheets-table{width:100%;border-collapse:collapse;font-size:12px;font-family:monospace;}
+.sheets-table th{color:rgba(255,255,255,0.4);padding:6px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1);font-size:11px;text-transform:uppercase;letter-spacing:.06em;}
+.sheets-table td{color:rgba(255,255,255,0.75);padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.sheets-table tr:last-child td{border-bottom:none;}
+.sheets-table .formula{color:#3AAE8A;}
+
+/* Inline CTA */
+.inline-cta{background:rgba(232,98,58,0.06);border:1.5px solid rgba(232,98,58,0.2);border-radius:16px;padding:20px 24px;margin:32px 0;display:flex;gap:16px;align-items:center;}
+.inline-cta-icon{font-size:32px;flex-shrink:0;}
+.inline-cta-title{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.inline-cta-desc{font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;}
+.inline-cta-link{display:inline-block;background:var(--accent);color:#fff;padding:9px 20px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:13px;font-weight:600;}
+
+/* Privacy callout */
+.privacy-callout{background:var(--text);border-radius:16px;padding:24px;margin:28px 0;}
+.privacy-callout h3{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:10px;}
+.privacy-callout p{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:0;}
+
+/* Final CTA */
+.cta-box{background:var(--accent);border-radius:24px;padding:36px;text-align:center;margin:48px 0;}
+.cta-box h3{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;margin-top:0;}
+.cta-box p{color:rgba(255,255,255,0.75);font-size:15px;margin-bottom:24px;}
+.cta-box a{background:#fff;color:var(--accent);padding:13px 28px;border-radius:99px;text-decoration:none;font-family:'Gabarito',sans-serif;font-size:15px;font-weight:700;display:inline-block;}
+.cta-note{font-size:12px;color:rgba(255,255,255,0.55);margin-top:12px;margin-bottom:0;}
+
+/* FAQ */
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;}
+.faq-q{font-family:'Gabarito',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.7;}
+
+/* Related */
+.related{margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+.related-title{font-family:'Gabarito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:8px;}
+.related-link{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;}
+.related-link:hover{border-color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;}
+@media(max-width:600px){nav,footer{padding:16px 20px;}.content{padding:32px 20px 60px;}h1{font-size:28px;}h2{font-size:22px;}.vs-grid{grid-template-columns:1fr;}.inline-cta{flex-direction:column;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <a href="/" class="cta-btn">Try Spentt free →</a>
+</nav>
+
+<div class="content">
+  <div class="eyebrow">Personal Finance · Google Drive</div>
+  <h1>How to Track Expenses on Google Drive — Free and Private</h1>
+  <div class="meta">
+    <span>By Spentt</span>
+    <span class="meta-dot"></span>
+    <span>August 2026</span>
+    <span class="meta-dot"></span>
+    <span>7 min read</span>
+  </div>
+
+  <p>Google Drive is one of the best places to store your expense data — it's free, secure, backed up automatically, and accessible on every device you own. The challenge is that most people don't know the best way to actually use it for expense tracking.</p>
+
+  <p>There are two ways to track expenses on Google Drive. The first is using Google Sheets directly — building your own spreadsheet. The second is using Spentt, an app that stores your expense data privately in your Google Drive while giving you a fast mobile-first logging experience. This guide covers both.</p>
+
+  <div class="highlight">
+    <p><strong>The key advantage of Google Drive for expense tracking:</strong> your financial data is owned entirely by you, stored in your own account, and protected by Google's security — not stored on a company's server where it could be breached, sold, or lost if the company shuts down.</p>
+  </div>
+
+  <h2>Method 1 — Google Sheets expense tracker</h2>
+
+  <p>Google Sheets is free, always accessible, and gives you complete control over your expense data. Here's how to set up a simple but effective expense tracker in Google Sheets.</p>
+
+  <h3>Step by step setup</h3>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Create a new Google Sheet</div>
+        <div class="step-desc">Open Google Drive → click New → Google Sheets. Name it "Expense Tracker 2026" or similar.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Set up your columns</div>
+        <div class="step-desc">Row 1 should be your headers. Add: Date, Description, Category, Amount, Notes. Freeze this row so it stays visible as you scroll (View → Freeze → 1 row).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Add a category dropdown</div>
+        <div class="step-desc">Select the Category column → Data → Data validation → List of items. Add your categories: Food, Transport, Shopping, Entertainment, Medical, Groceries, Utilities, Other. This keeps data consistent for analysis.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">Add summary formulas</div>
+        <div class="step-desc">On a separate sheet or section, use SUMIF to get totals by category. Example: =SUMIF(C:C,"Food",D:D) gives you total food spending. Use SUM(D:D) for the monthly total.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">Log expenses daily</div>
+        <div class="step-desc">Add a new row for each expense — date, what you bought, category, amount. The more consistently you log, the more useful the data becomes.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>What your sheet should look like</h3>
+
+  <div class="sheets-template">
+    <table class="sheets-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Amount (₹)</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>22 Aug</td><td>Blue Tokai coffee</td><td>Coffee</td><td>180</td><td></td></tr>
+        <tr><td>22 Aug</td><td>Lunch at office canteen</td><td>Food</td><td>120</td><td></td></tr>
+        <tr><td>22 Aug</td><td>Ola cab to client</td><td>Transport</td><td>340</td><td></td></tr>
+        <tr><td>22 Aug</td><td>Swiggy dinner</td><td>Food</td><td>450</td><td>Late night</td></tr>
+        <tr><td style="color:rgba(255,255,255,0.3)" colspan="3">Monthly total →</td><td class="formula">=SUM(D2:D100)</td><td></td></tr>
+        <tr><td style="color:rgba(255,255,255,0.3)" colspan="3">Food total →</td><td class="formula">=SUMIF(C:C,"Food",D:D)</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Limitations of the Google Sheets approach</h3>
+
+  <p>Google Sheets works well for monthly reviews but has one significant practical problem: <strong>logging in real time is too slow on mobile.</strong> Opening the app, navigating to the right sheet, finding the next empty row, entering four fields — this takes 30-60 seconds per transaction. Most people start logging in batches at the end of the day, which means logging from memory, which means inaccurate data.</p>
+
+  <p>If you spend money in five separate transactions across a day — coffee, cab, lunch, snack, dinner — and try to log them all at 10pm, you'll miss at least one and approximate the amounts on most. Your data becomes an estimate rather than a record.</p>
+
+  <div class="inline-cta">
+    <div class="inline-cta-icon">⚡</div>
+    <div>
+      <div class="inline-cta-title">Method 2: Spentt — Google Drive storage with 5-second logging</div>
+      <div class="inline-cta-desc">Get the privacy of Google Drive storage with the speed of a mobile app. Log expenses in 5 seconds, get a weekly receipt every Sunday. Free forever.</div>
+      <a href="/" class="inline-cta-link">Try Spentt free →</a>
+    </div>
+  </div>
+
+  <h2>Method 2 — Spentt with Google Drive storage</h2>
+
+  <p>Spentt is built specifically around the idea that your expense data should live in your Google Drive — not on a company server. When you log an expense in Spentt, it's saved directly to a private file in your Google Drive called <code style="background:rgba(28,20,9,0.06);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">spentt-expenses.json</code> stored in your Drive's <code style="background:rgba(28,20,9,0.06);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">appDataFolder</code>.</p>
+
+  <p>This gives you the privacy and ownership of Google Sheets, with the speed and convenience of a mobile app.</p>
+
+  <h3>How it works</h3>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Sign in with Google</div>
+        <div class="step-desc">Open spentt.live on your phone. Sign in with your Google account. Spentt requests access only to its own private folder in your Drive — not your files, Gmail, or anything else.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Add to your home screen</div>
+        <div class="step-desc">On iPhone: Share → Add to Home Screen. On Android: Menu → Add to Home Screen. Spentt installs like a native app — no App Store required.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Log each expense in 5 seconds</div>
+        <div class="step-desc">Tap +. Enter what you spent on, the amount, pick a category, confirm the date. Done — saved to your Google Drive before you put your phone away.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">Get your Sunday receipt</div>
+        <div class="step-desc">Every Sunday, Spentt generates a receipt-style summary of your week — category breakdown, total, and a spending personality verdict. Your data, analysed automatically.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">Export to Google Sheets anytime</div>
+        <div class="step-desc">Settings → Export CSV. Open the CSV in Google Sheets for any custom analysis, pivot tables, or charts you want. Best of both worlds.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="privacy-callout">
+    <h3>Your data in your Drive — what this actually means</h3>
+    <p>Most expense apps store your data on their servers. When Mint shut down, users lost years of history. When Walnut was acquired by SBI Cards, the app effectively died and data disappeared. With Spentt, your expenses live in your Google Drive account. Even if Spentt shuts down tomorrow, your data is still there — in your Drive, accessible forever, exportable to any spreadsheet.</p>
+  </div>
+
+  <h2>Google Sheets vs Spentt — which should you use?</h2>
+
+  <div class="vs-grid">
+    <div class="vs-card">
+      <div class="vs-title">📊 Google Sheets</div>
+      <div class="vs-item"><span class="vs-good">✓</span> Complete flexibility and control</div>
+      <div class="vs-item"><span class="vs-good">✓</span> Powerful analysis with formulas</div>
+      <div class="vs-item"><span class="vs-good">✓</span> Data in your Drive natively</div>
+      <div class="vs-item"><span class="vs-bad">✗</span> Slow to log on mobile</div>
+      <div class="vs-item"><span class="vs-bad">✗</span> No automatic weekly summary</div>
+      <div class="vs-item"><span class="vs-bad">✗</span> Easy to skip logging for days</div>
+    </div>
+    <div class="vs-card">
+      <div class="vs-title">⚡ Spentt</div>
+      <div class="vs-item"><span class="vs-good">✓</span> 5-second logging on mobile</div>
+      <div class="vs-item"><span class="vs-good">✓</span> Data stored in your Google Drive</div>
+      <div class="vs-item"><span class="vs-good">✓</span> Weekly receipt automatically</div>
+      <div class="vs-item"><span class="vs-good">✓</span> Export to CSV for Sheets analysis</div>
+      <div class="vs-item"><span class="vs-bad">✗</span> Less flexible than custom Sheets</div>
+      <div class="vs-item"><span class="vs-bad">✗</span> No formula-based analysis built in</div>
+    </div>
+  </div>
+
+  <p>The best approach for most people is to use both: <strong>Spentt for daily logging</strong> (fast, always in your pocket) and <strong>Google Sheets for monthly deep analysis</strong> (export your Spentt CSV once a month and analyse with formulas). You get the speed of an app and the power of a spreadsheet.</p>
+
+  <h2>Why storing expense data in Google Drive is the right choice</h2>
+
+  <p>Every time you use an expense tracker that stores data on their servers, you're trusting that company to protect your financial data, stay in business, and not sell your spending patterns to advertisers. That trust has been broken repeatedly — Mint shut down, Walnut was acquired, dozens of smaller apps have disappeared taking user data with them.</p>
+
+  <p>Google Drive is different. Google has been operating Drive since 2012. Your data is protected by Google's security infrastructure — the same infrastructure that protects Gmail, Google Photos, and Google Pay. And crucially, <strong>your Drive data belongs to you</strong> — Google doesn't own it, can't sell it, and gives you complete control over it.</p>
+
+  <p>For financial data specifically — where privacy matters most — Google Drive is the right place for it to live.</p>
+
+  <h2>Frequently asked questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I track expenses on Google Drive?</div>
+    <div class="faq-a">Yes — two ways. First, use Google Sheets to build a manual expense spreadsheet with columns for date, description, category and amount. Second, use Spentt, which automatically stores your expense data as a private file in your Google Drive while giving you a fast mobile logging experience. Spentt is faster for daily use, while Google Sheets is better for custom analysis.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Is Google Drive safe for storing financial data?</div>
+    <div class="faq-a">Yes — Google Drive is one of the safest places to store financial data. It's protected by Google's security infrastructure, backed up automatically, and the data belongs entirely to you. It's significantly safer than storing your financial data on a small app company's servers, which may not have the same security standards and can disappear if the company shuts down.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How do I access my Spentt data in Google Drive?</div>
+    <div class="faq-a">Your Spentt data is stored in the appDataFolder — a hidden private folder that only Spentt can access. You can't see it directly in Drive, but you can access it by going to Settings → Export CSV in Spentt, which downloads all your expense data as a spreadsheet. You can also revoke Spentt's access at any time via Google Account → Security → Third-party apps.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What happens to my data if Spentt shuts down?</div>
+    <div class="faq-a">Your data remains in your Google Drive. The appDataFolder file stays in your account even if Spentt's servers go offline. You can export it to CSV from Spentt before that happens, or access the raw JSON file directly through Google's Drive API. Your financial history is never dependent on Spentt staying in business.</div>
+  </div>
+
+  <div class="cta-box">
+    <h3>Start tracking — your data in your Google Drive</h3>
+    <p>5-second logging on your phone. Weekly receipt every Sunday. Your expenses stored privately in your own Google Drive — never on our servers.</p>
+    <a href="/">Try Spentt free →</a>
+    <p class="cta-note">Free forever · No bank linking · No App Store needed</p>
+  </div>
+
+  <div class="related">
+    <div class="related-title">More from Spentt</div>
+    <div class="related-links">
+      <a href="/blog/best-free-expense-tracker-india.html" class="related-link">Best Free Expense Tracker App India 2026 →</a>
+      <a href="/blog/expense-tracker-no-bank-linking.html" class="related-link">Why Track Expenses Without Linking Your Bank Account →</a>
+      <a href="/blog/expense-tracker-excel-vs-app.html" class="related-link">Excel vs App for Expense Tracking — Which Is Better? →</a>
+      <a href="/blog/daily-spending-limit.html" class="related-link">Daily Spending Limit — How to Set One and Stick to It →</a>
+      <a href="/tools/" class="related-link">12 Free Financial Calculators →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/" class="logo">spentt<span class="logo-dot"></span></a>
+  <div class="footer-links">
+    <a href="/blog/">Blog</a>
+    <a href="/tools/">Tools</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+</body>
+</html>
